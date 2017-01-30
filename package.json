@@ -35,8 +35,6 @@
     "url": "https://github.com/zefoy/ngx-color-picker.git"
   },
   "dependencies": {
-    "angular2-perfect-scrollbar": "~2.0.0",
-    "webfontloader": "~1.6.26"
   },
   "devDependencies": {
     "@angular/common": "~2.4.0",

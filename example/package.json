@@ -23,7 +23,7 @@
   },
   "config": {
     "deployToGit": {
-      "repository": "git@github.com:zefoy/ngx-font-picker.git",
+      "repository": "git@github.com:zefoy/ngx-color-picker.git",
       "branch": "gh-pages",
       "folder": "dist",
       "script": "npm run build",

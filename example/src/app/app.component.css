@@ -1,0 +1,51 @@
+#changeme{
+    font-size:30px;
+    font-weight: bolder;
+    cursor: pointer;
+}
+.cmyk{
+    margin-left: 11px;
+}
+.cmyk div{
+    height: 72px;
+    width: 72px;
+    line-height: 72px;
+    text-align: center;
+    float:left; 
+}
+.cmyk span{
+    font-weight: bolder;
+    text-shadow: 1px 1px 2px #bbb;
+}    
+
+#color-comparator button{ 
+    height: 26px;
+    width: 26px;
+    display: block;
+    float:left;
+    border:none;
+    margin:0;
+    padding:0;
+    border: 2px solid #888;
+}
+
+#color-comparator > input{ 
+    height: 26px;
+    width: 182px;
+    display: block;
+    float:left;
+    border:none;
+    margin:0;
+    padding:0;
+}
+
+.array-colors-element{
+    width: 100px;
+    height: 25px;
+    margin-bottom: 15px;
+}
+
+.col-md-5 > input{
+    margin-bottom: 10px;
+    width: 182px;
+}

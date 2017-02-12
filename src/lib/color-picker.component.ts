@@ -12,21 +12,41 @@ import { SliderPosition, SliderDimension } from './helpers';
 })
 
 export class ColorPickerComponent implements OnInit, AfterViewInit {
+    public cpPosition: string;
+    public cpPositionOffset: number;
+    public cpOutputFormat: string;
+    public cpPresetLabel: string;
+    public cpPresetColors: Array<string>;
+    public cpCancelButton: boolean;
+    public cpCancelButtonClass: string;
+    public cpCancelButtonText: string;
+    public cpOKButton: boolean;
+    public cpOKButtonClass: string;
+    public cpOKButtonText: string;
+    public cpHeight: number;
+    public cpWidth: number;
+    public cpIgnoredElements: any;
+    public cpDialogDisplay: string;
+    public cpSaveClickOutside: boolean;
+    public cpAlphaChannel: string;
+
+    public rgbaText: Rgba;
+    public hslaText: Hsla;
+    public selectedColor: string;
+    public alphaSliderColor: string;
+    public hueSliderColor: string;
+    public slider: SliderPosition;
+    public show: boolean;
+    public top: number;
+    public left: number;
+    public position: string;
+    public format: number;
+    public hexText: string;
+    public arrowTop: number;
+
     private hsva: Hsva;
-    private rgbaText: Rgba;
-    private hslaText: Hsla;
-    private hexText: string;
     private outputColor: string;
-    private selectedColor: string;
-    private alphaSliderColor: string;
-    private hueSliderColor: string;
-    private slider: SliderPosition;
     private sliderDimMax: SliderDimension;
-    private format: number;
-    private show: boolean;
-    private top: number;
-    private left: number;
-    private position: string;
     private directiveInstance: any;
     private initialColor: string;
     private directiveElementRef: ElementRef;
@@ -34,31 +54,11 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     private listenerMouseDown: any;
     private listenerResize: any;
 
-    private cpPosition: string;
-    private cpPositionOffset: number;
-    private cpOutputFormat: string;
-    private cpPresetLabel: string;
-    private cpPresetColors: Array<string>;
-    private cpCancelButton: boolean;
-    private cpCancelButtonClass: string;
-    private cpCancelButtonText: string;
-    private cpOKButton: boolean;
-    private cpOKButtonClass: string;
-    private cpOKButtonText: string;
-    private cpHeight: number;
-    private cpWidth: number;
-    private cpIgnoredElements: any;
-    private cpDialogDisplay: string;
-    private cpSaveClickOutside: boolean;
-    private cpAlphaChannel: string;
-
     private dialogArrowSize: number = 10;
     private dialogArrowOffset: number = 15;
-    private arrowTop: number;
 
     @ViewChild('hueSlider') hueSlider: any;
     @ViewChild('alphaSlider') alphaSlider: any;
-
     @ViewChild('dialogPopup') dialogElement: any;
 
     constructor(private el: ElementRef, private cdr: ChangeDetectorRef, private service: ColorPickerService) { }

@@ -1,3 +1,7 @@
+4.0.0 Feature release
+
+  - Switched to using Angular 4.0.0 version
+
 2.0.2 Bug fix release
 
   - Small bug fixes and source updates

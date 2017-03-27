@@ -21,29 +21,31 @@ export class AppComponent {
         this.arrayColors['color5'] = 'rgba(45,208,45,1)';
     }
 
-    private color: string = '#2889e9';
-    private color2: string = "hsla(300,82%,52%)";
-    private color3: string = "#fff500";
-    private color4: string = "rgb(236,64,64)";
-    private color5: string = "rgba(45,208,45,1)";
-    private color6: string = "#1973c0";
-    private color7: string = "#f200bd";
-    private color8: string = "#a8ff00";
-    private color9: string = "#278ce2";
-    private color10: string = "#0a6211";
-    private color11: string = "#f2ff00";
-    private color12: string = "#f200bd";
-    private color13: string = "#1973c0";
-    private color14: string = "#a8ff00";
-    private color15: string = "#a51ad6a3";
+    public rgbaText: string = '';
 
-    private arrayColors: any = {};
-    private selectedColor: string = 'color';
+    public color: string = '#2889e9';
+    public color2: string = "hsla(300,82%,52%)";
+    public color3: string = "#fff500";
+    public color4: string = "rgb(236,64,64)";
+    public color5: string = "rgba(45,208,45,1)";
+    public color6: string = "#1973c0";
+    public color7: string = "#f200bd";
+    public color8: string = "#a8ff00";
+    public color9: string = "#278ce2";
+    public color10: string = "#0a6211";
+    public color11: string = "#f2ff00";
+    public color12: string = "#f200bd";
+    public color13: string = "#1973c0";
+    public color14: string = "#a8ff00";
+    public color15: string = "#a51ad6a3";
 
-    private toggle: boolean;
-    private toggle2: boolean;
+    public arrayColors: any = {};
+    public selectedColor: string = 'color';
+
+    public toggle: boolean;
+    public toggle2: boolean;
     private lastColor = '#ff0';
-    private cmyk: Cmyk = new Cmyk(0, 0, 0, 0);
+    public cmyk: Cmyk = new Cmyk(0, 0, 0, 0);
 
     onChangeColor(color: string): Cmyk {
         return this.rgbaToCmyk(this.cpService.hsvaToRgba(this.cpService.stringToHsva(color)));

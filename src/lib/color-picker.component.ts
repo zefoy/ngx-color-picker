@@ -157,6 +157,10 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         if (this.cpDialogDisplay === 'popup') {
             this.closeColorPicker();
         }
+
+        if (this.outputColor) {
+            this.directiveInstance.colorSelected(this.outputColor);
+        }
     }
 
     setColorFromString(value: string, emit: boolean = true) {

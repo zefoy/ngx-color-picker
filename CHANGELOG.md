@@ -1,3 +1,7 @@
+4.0.1 Bug fix release
+
+  - Added missing color select event
+
 4.0.0 Feature release
 
   - Switched to using Angular 4.0.0 version

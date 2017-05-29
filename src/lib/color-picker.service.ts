@@ -91,6 +91,10 @@ export class ColorPickerService {
     }
 
     stringToHsva(colorString: string = '', hex8: boolean = false): Hsva {
+        // if the color string is empty or null return null
+        if(!colorString) {
+            return null;
+        }
         let stringParsers = [
             {
                 re: /(rgb)a?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*%?,\s*(\d{1,3})\s*%?(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,

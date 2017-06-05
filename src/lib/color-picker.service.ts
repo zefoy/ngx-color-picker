@@ -141,9 +141,9 @@ export class ColorPickerService {
                     }
                 });
         }
-        
 
-        colorString = colorString.toLowerCase();
+
+        colorString = (colorString || '').toLowerCase();
         let hsva: Hsva = null;
         for (let key in stringParsers) {
             if (stringParsers.hasOwnProperty(key)) {

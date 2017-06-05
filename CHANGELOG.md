@@ -1,5 +1,7 @@
 4.0.2 Bug fix release
 
+  - Fixed error when color is set to null
+
   - Fixed hue change on main slider changes
 
 4.0.1 Bug fix release

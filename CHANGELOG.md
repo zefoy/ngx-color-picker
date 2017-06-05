@@ -1,3 +1,7 @@
+4.0.2 Bug fix release
+
+  - Fixed hue change on main slider changes
+
 4.0.1 Bug fix release
 
   - Added missing color select event

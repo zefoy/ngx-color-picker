@@ -37,6 +37,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     public hueSliderColor: string;
     public slider: SliderPosition;
     public show: boolean;
+    public hidden: boolean;
     public top: number;
     public left: number;
     public position: string;
@@ -196,8 +197,12 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
 
     openColorPicker() {
         if (!this.show) {
-            this.setDialogPosition();
             this.show = true;
+            this.hidden = true;
+            setTimeout(() => {
+              this.setDialogPosition();
+              this.hidden = false;
+            }, 0);
             this.directiveInstance.toggle(true);
             document.addEventListener('mousedown', this.listenerMouseDown);
             window.addEventListener('resize', this.listenerResize);
@@ -220,6 +225,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     }
 
     setDialogPosition() {
+console.log(this.dialogElement.nativeElement);
         let dialogHeight = this.dialogElement.nativeElement.offsetHeight;
         let node = this.directiveElementRef.nativeElement, position = 'static';
         let parentNode: any = null;
@@ -249,6 +255,9 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
             this.left -= this.cpWidth + this.dialogArrowSize - 2;
         } else if (this.cpPosition === 'top') {
+console.log(this.top);
+console.log(dialogHeight);
+console.log(this.dialogArrowSize);
             this.top -= dialogHeight + this.dialogArrowSize;
             this.left += this.cpPositionOffset / 100 * boxDirective.width - this.dialogArrowOffset;
             this.arrowTop = dialogHeight - 1;
@@ -257,7 +266,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             this.left += this.cpPositionOffset / 100 * boxDirective.width - this.dialogArrowOffset;
         } else {
             this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
-            this.left += boxDirective.width + this.dialogArrowSize;
+            this.left += boxDirective.width + this.dialogArrowSize - 2;
         }
     }
 

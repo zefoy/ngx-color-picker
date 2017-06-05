@@ -4,6 +4,8 @@
 
   - Fixed hue change on main slider changes
 
+  - Fixed dialog positioning for first open
+
 4.0.1 Bug fix release
 
   - Added missing color select event

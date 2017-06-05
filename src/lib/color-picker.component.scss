@@ -21,7 +21,6 @@
 }
 
 .color-picker{
-    overflow: hidden;
     cursor: default;
     width: 230px;
     height: auto;
@@ -117,7 +116,7 @@
         border-width: 5px 10px;
         border-color: rgba(0,0,0,0) rgba(0,0,0,0) rgba(0,0,0,0) #777;
         top: 10px;
-        left:231px;
+        left:100%;
     }
 
     .arrow-bottom{

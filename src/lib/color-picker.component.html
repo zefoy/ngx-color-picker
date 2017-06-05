@@ -1,4 +1,4 @@
-<div class="color-picker" [hidden]="!show" [style.height.px]="cpHeight" [style.width.px]="cpWidth" [style.top.px]="top" [style.left.px]="left" [style.position]="position" #dialogPopup>
+<div class="color-picker" [hidden]="!show" [style.visibility]="this.hidden ? 'hidden' : 'visible'" [style.height.px]="cpHeight" [style.width.px]="cpWidth" [style.top.px]="top" [style.left.px]="left" [style.position]="position" #dialogPopup>
     <div *ngIf="cpDialogDisplay=='popup'" class="arrow arrow-{{cpPosition}}" [style.top.px]="arrowTop"></div>
 
     <div [slider] [style.background-color]="hueSliderColor" [rgX]="1" [rgY]="1" (newValue)="setSaturationAndBrightness($event)" class="saturation-lightness">

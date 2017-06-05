@@ -17,6 +17,8 @@ export class ColorPickerDirective implements OnInit, OnChanges {
     @Output('colorPickerChange') colorPickerChange = new EventEmitter<string>(true);
     @Output('colorPickerSelect') colorPickerSelect = new EventEmitter<string>(true);
     @Input('cpToggle') cpToggle: boolean;
+    @Output('cpInputChange') cpInputChange = new EventEmitter<any>(true);
+    @Output('cpSliderChange') cpSliderChange = new EventEmitter<any>(true);
     @Output('cpToggleChange') cpToggleChange = new EventEmitter<boolean>(true);
     @Input('cpPosition') cpPosition: string = 'right';
     @Input('cpPositionOffset') cpPositionOffset: string = '0%';
@@ -107,6 +109,14 @@ export class ColorPickerDirective implements OnInit, OnChanges {
 
     colorSelected(value: string) {
         this.colorPickerSelect.emit(value);
+    }
+
+    inputChanged(event: any) {
+        this.cpInputChange.emit(event);
+    }
+
+    sliderChanged(event: any) {
+        this.cpSliderChange.emit(event);
     }
 
     changeInput(value: string) {

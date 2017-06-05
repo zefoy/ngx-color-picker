@@ -225,7 +225,6 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     }
 
     setDialogPosition() {
-console.log(this.dialogElement.nativeElement);
         let dialogHeight = this.dialogElement.nativeElement.offsetHeight;
         let node = this.directiveElementRef.nativeElement, position = 'static';
         let parentNode: any = null;
@@ -255,9 +254,6 @@ console.log(this.dialogElement.nativeElement);
             this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
             this.left -= this.cpWidth + this.dialogArrowSize - 2;
         } else if (this.cpPosition === 'top') {
-console.log(this.top);
-console.log(dialogHeight);
-console.log(this.dialogArrowSize);
             this.top -= dialogHeight + this.dialogArrowSize;
             this.left += this.cpPositionOffset / 100 * boxDirective.width - this.dialogArrowOffset;
             this.arrowTop = dialogHeight - 1;
@@ -275,6 +271,8 @@ console.log(this.dialogArrowSize);
         hsla.s = val.v / val.rg;
         this.hsva = this.service.hsla2hsva(hsla);
         this.update();
+
+        this.directiveInstance.inputChanged({slider: 'saturation', value: val});
     }
 
     setLightness(val: { v: number, rg: number }) {
@@ -282,16 +280,22 @@ console.log(this.dialogArrowSize);
         hsla.l = val.v / val.rg;
         this.hsva = this.service.hsla2hsva(hsla);
         this.update();
+
+        this.directiveInstance.inputChanged({slider: 'lightness', value: val});
     }
 
     setHue(val: { v: number, rg: number }) {
         this.hsva.h = val.v / val.rg;
         this.update();
+
+        this.directiveInstance.sliderChanged({slider: 'hue', value: val});
     }
 
     setAlpha(val: { v: number, rg: number }) {
         this.hsva.a = val.v / val.rg;
         this.update();
+
+        this.directiveInstance.sliderChanged({slider: 'alpha', value: val});
     }
 
     setR(val: { v: number, rg: number }) {
@@ -299,24 +303,43 @@ console.log(this.dialogArrowSize);
         rgba.r = val.v / val.rg;
         this.hsva = this.service.rgbaToHsva(rgba);
         this.update();
+
+        this.directiveInstance.inputChanged({slider: 'red', value: val});
     }
     setG(val: { v: number, rg: number }) {
         let rgba = this.service.hsvaToRgba(this.hsva);
         rgba.g = val.v / val.rg;
         this.hsva = this.service.rgbaToHsva(rgba);
         this.update();
+
+        this.directiveInstance.inputChanged({slider: 'green', value: val});
     }
     setB(val: { v: number, rg: number }) {
         let rgba = this.service.hsvaToRgba(this.hsva);
         rgba.b = val.v / val.rg;
         this.hsva = this.service.rgbaToHsva(rgba);
         this.update();
+
+        this.directiveInstance.inputChanged({slider: 'blue', value: val});
+    }
+    setA(val: { v: number, rg: number }) {
+        this.hsva.a = val.v / val.rg;
+        this.update();
+
+        this.directiveInstance.inputChanged({slider: 'alpha', value: val});
+    }
+
+    setHex(val: string) {
+      this.setColorFromString(val);
+
+      this.directiveInstance.inputChanged({slider: 'hex', value: val});
     }
 
     setSaturationAndBrightness(val: { s: number, v: number, rgX: number, rgY: number }) {
         this.hsva.s = val.s / val.rgX;
         this.hsva.v = val.v / val.rgY;
         this.update();
+        this.directiveInstance.sliderChanged({slider: 'saturation-lightness', value: val});
     }
 
     formatPolicy(): number {

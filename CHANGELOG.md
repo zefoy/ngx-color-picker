@@ -4,7 +4,9 @@
 
   - Fixed hue change on main slider changes
 
-  - Fixed dialog positioning for first open
+  - Fixed dialog positioning for first opening
+
+  - Added cpInputChange and cpSliderChange outputs
 
 4.0.1 Bug fix release
 

@@ -1,3 +1,9 @@
+4.0.3 Bug fix release
+
+  - Fixed bug when using on push strategy
+
+  - Fixed bug caused by the previous hue fix
+
 4.0.2 Bug fix release
 
   - Fixed error when color is set to null

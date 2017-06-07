@@ -199,6 +199,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             setTimeout(() => {
               this.setDialogPosition();
               this.hidden = false;
+              this.cdr.detectChanges();
             }, 0);
             this.directiveInstance.toggle(true);
             document.addEventListener('mousedown', this.listenerMouseDown);

@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, AfterViewInit, ViewChild, ChangeDetectorR
 
 import { ColorPickerService } from './color-picker.service';
 
-import { Rgba, Hsla, Hsva } from './formats';
+import { Rgba, Hsla, Hsva, Cmyk } from './formats';
 import { SliderPosition, SliderDimension } from './helpers';
 
 @Component({
@@ -32,6 +32,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
 
     public rgbaText: Rgba;
     public hslaText: Hsla;
+    public cmykText: Rgba;
     public selectedColor: string;
     public alphaSliderColor: string;
     public hueSliderColor: string;
@@ -62,7 +63,9 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     @ViewChild('alphaSlider') alphaSlider: any;
     @ViewChild('dialogPopup') dialogElement: any;
 
-    constructor(private el: ElementRef, private cdr: ChangeDetectorRef, private service: ColorPickerService) { }
+    constructor(private el: ElementRef, private cdr: ChangeDetectorRef, private service: ColorPickerService) {
+    }
+
 
     setDialog(instance: any, elementRef: ElementRef, color: any, cpPosition: string, cpPositionOffset: string,
         cpPositionRelativeToArrow: boolean, cpOutputFormat: string, cpPresetLabel: string, cpPresetColors: Array<string>,
@@ -111,6 +114,8 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             this.format = 1;
         } else if (this.cpOutputFormat === 'hsla') {
             this.format = 2;
+            } else if (this.cpOutputFormat === 'cmyk') {
+            this.format = 3;
         } else {
             this.format = 0;
         }

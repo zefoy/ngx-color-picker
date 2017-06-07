@@ -14,8 +14,8 @@ import { SliderPosition, SliderDimension} from './helpers';
 })
 export class ColorPickerDirective implements OnInit, OnChanges {
     @Input('colorPicker') colorPicker: string;
-    @Output('colorPickerChange') colorPickerChange = new EventEmitter<string>(true);
     @Output('colorPickerSelect') colorPickerSelect = new EventEmitter<string>(true);
+    @Output('colorPickerChange') colorPickerChange = new EventEmitter<string>(false);
     @Input('cpToggle') cpToggle: boolean;
     @Output('cpInputChange') cpInputChange = new EventEmitter<any>(true);
     @Output('cpSliderChange') cpSliderChange = new EventEmitter<any>(true);
@@ -78,8 +78,10 @@ export class ColorPickerDirective implements OnInit, OnChanges {
         }
         let color = this.service.outputFormat(hsva, this.cpOutputFormat, this.cpAlphaChannel === 'hex8');
         if (color !== this.colorPicker) {
-            this.colorPickerChange.emit(color);
-            this.cdr.detectChanges();
+            //setTimeout(() => {
+              this.colorPickerChange.emit(color);
+              this.cdr.detectChanges();
+            //}, 0);
         }
     }
 

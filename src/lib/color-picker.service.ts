@@ -5,7 +5,7 @@ import { Rgba, Hsla, Hsva, Cmyk } from './formats';
 
 @Injectable()
 export class ColorPickerService {
-    constructor( ) { }
+    constructor() { }
 
     rgba2cmyk(rgba: Rgba): Cmyk {
         let r = rgba.r / 255;
@@ -15,12 +15,28 @@ export class ColorPickerService {
         console.log(r);
         console.log(g);
         console.log(b);
-        return new Cmyk(1, 1, 1, 1);
+
+        let c;
+        let m;
+        let y;
+        let k;
+
+        k = Math.min(1 - r, 1 - g, 1 - b);
+        c = (1 - r - k) / (1 - k) || 0;
+        m = (1 - g - k) / (1 - k) || 0;
+        y = (1 - b - k) / (1 - k) || 0;
+
+        c = c * 100;
+        m = m * 100;
+        y = y * 100;
+        k = k * 100;
+
+        return new Cmyk(c, m, y, k);
     }
 
     hsla2hsva(hsla: Hsla): Hsva {
-       const x = this.rgba2cmyk(r: 2, g: 4, b: 5);
         let h = Math.min(hsla.h, 1), s = Math.min(hsla.s, 1), l = Math.min(hsla.l, 1), a = Math.min(hsla.a, 1);
+        // let d = this.rgba2cmyk(r: 2, g: 3, b2,1);
         if (l === 0) {
             return new Hsva(h, 0, 0, a);
         } else {

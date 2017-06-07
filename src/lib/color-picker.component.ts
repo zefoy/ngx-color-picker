@@ -175,9 +175,6 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             hsva = this.service.stringToHsva(value, false);
         }
         if (hsva) {
-            if (!emit && hsva && this.hsva) {
-                hsva.h = this.hsva.h;
-            }
             this.hsva = hsva;
             this.update(emit);
         }

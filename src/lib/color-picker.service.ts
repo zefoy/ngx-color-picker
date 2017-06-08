@@ -106,25 +106,29 @@ export class ColorPickerService {
     }
 
     cmyk2Hsva(cmyk: Cmyk): Hsva {
-        // let c = cmyk.c, m = cmyk.m, y = cmyk.y, k = cmyk.k;
         let h: number, s: number, v: number, a: number;
-
         let rgba = this.cmyk2rgba(cmyk);
         let myhsva = this.rgbaToHsva(rgba);
+
         h = myhsva.h;
         s = myhsva.s;
         v = myhsva.v;
         a = myhsva.a;
 
-        // return new Hsva(1, 1, 1, 1);
         return new Hsva(h, s, v, a);
     }
-    hsva2Cmyk(hsva: Hsva): Cmyk {
-        let h = hsva.h, s = hsva.s, v = hsva.v, a = hsva.a;
-        let c: number, m: number, y: number, k: number;
 
-        return new Cmyk(1, 1, 1, 1);
-        // return new Cmyk(c, m, y, k);
+    hsva2Cmyk(hsva: Hsva): Cmyk {
+        let c: number, m: number, y: number, k: number;
+        let rgba = this.hsvaToRgba(hsva);
+        let mycmyk = this.rgba2cmyk(rgba);
+
+        c = mycmyk.c;
+        m = mycmyk.m;
+        y = mycmyk.y;
+        k = mycmyk.k;
+
+        return new Cmyk(c, m, y, k);
     }
 
     hsvaToRgba(hsva: Hsva): Rgba {

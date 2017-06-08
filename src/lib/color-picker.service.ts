@@ -22,6 +22,11 @@ export class ColorPickerService {
         y = y * 100;
         k = k * 100;
 
+        console.log('c ' + c);
+        console.log('m ' + m);
+        console.log('y ' + y);
+        console.log('k ' + k);
+
         return new Cmyk(c, m, y, k);
     }
 

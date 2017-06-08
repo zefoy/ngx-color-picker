@@ -55,9 +55,9 @@ export class ColorPickerService {
         let b = 1 - Math.min(1, y * (1 - k) + k);
 
 
-        r = Math.round( r * 255 );
-        g = Math.round( g * 255 );
-        b = Math.round( b * 255 );
+        r = Math.round(r * 255);
+        g = Math.round(g * 255);
+        b = Math.round(b * 255);
 
         return new Rgba(r, g, b, 1);
     }
@@ -111,6 +111,20 @@ export class ColorPickerService {
         }
 
         return new Hsva(h, s, v, a)
+    }
+
+    cmyk2Hsva(cmyk: Cmyk): Hsva {
+        let c = cmyk.c, m = cmyk.m, y = cmyk.y, k = cmyk.k;
+        let h: number, s: number, v: number, a: number;
+
+        return new Hsva(h, s, v, a);
+    }
+    hsva2Cmyk(hsva: Hsva): Cmyk {
+        let h = hsva.h, s = hsva.s, v = hsva.v, a = hsva.a;
+        let c: number, m: number, y: number, k: number;
+
+
+        return new Cmyk(c, m, y, k);
     }
 
     hsvaToRgba(hsva: Hsva): Rgba {

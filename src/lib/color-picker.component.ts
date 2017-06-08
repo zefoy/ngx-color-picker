@@ -303,6 +303,38 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.directiveInstance.sliderChanged({ slider: 'alpha', value: val });
     }
 
+    setCyan(val: { v: number, rg: number }) {
+        let cmyk = this.service.hsva2Cmyk(this.hsva);
+        cmyk.c = val.v / val.rg;
+        this.hsva = this.service.cmyk2Hsva(cmyk);
+        this.update();
+        this.directiveInstance.inputChanged({ slider: 'cyan', value: val });
+    }
+
+    setMagenta(val: { v: number, rg: number }) {
+        let cmyk = this.service.hsva2Cmyk(this.hsva);
+        cmyk.m = val.v / val.rg;
+        this.hsva = this.service.cmyk2Hsva(cmyk);
+        this.update();
+        this.directiveInstance.inputChanged({ slider: 'magenta', value: val });
+    }
+
+    setYellow(val: { v: number, rg: number }) {
+        let cmyk = this.service.hsva2Cmyk(this.hsva);
+        cmyk.y = val.v / val.rg;
+        this.hsva = this.service.cmyk2Hsva(cmyk);
+        this.update();
+        this.directiveInstance.inputChanged({ slider: 'yellow', value: val });
+    }
+
+    setKey(val: { v: number, rg: number }) {
+        let cmyk = this.service.hsva2Cmyk(this.hsva);
+        cmyk.k = val.v / val.rg;
+        this.hsva = this.service.cmyk2Hsva(cmyk);
+        this.update();
+        this.directiveInstance.inputChanged({ slider: 'key', value: val });
+    }
+
     setR(val: { v: number, rg: number }) {
         let rgba = this.service.hsvaToRgba(this.hsva);
         rgba.r = val.v / val.rg;
@@ -334,7 +366,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.directiveInstance.inputChanged({ slider: 'alpha', value: val });
     }
 
-   
+
 
     setHex(val: string) {
         this.setColorFromString(val);
@@ -360,10 +392,12 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     update(emit: boolean = true) {
         if (this.sliderDimMax) {
             let hsla = this.service.hsva2hsla(this.hsva);
+            let cmyk = this.service.hsva2Cmyk(this.hsva);
             let rgba = this.service.denormalizeRGBA(this.service.hsvaToRgba(this.hsva));
             let hueRgba = this.service.denormalizeRGBA(this.service.hsvaToRgba(new Hsva(this.hsva.h, 1, 1, 1)));
 
             this.hslaText = new Hsla(Math.round((hsla.h) * 360), Math.round(hsla.s * 100), Math.round(hsla.l * 100), Math.round(hsla.a * 100) / 100);
+            this.cmykText = new Cmyk(Math.round((cmyk.c) * 100), Math.round(cmyk.m * 100), Math.round(cmyk.y * 100),  Math.round(cmyk.k * 100) );
             this.rgbaText = new Rgba(rgba.r, rgba.g, rgba.b, Math.round(rgba.a * 100) / 100);
             this.hexText = this.service.hexText(rgba, this.cpAlphaChannel === 'hex8');
 

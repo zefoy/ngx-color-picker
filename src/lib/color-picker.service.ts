@@ -12,10 +12,6 @@ export class ColorPickerService {
         let g = rgba.g / 255;
         let b = rgba.b / 255;
 
-        console.log(r);
-        console.log(g);
-        console.log(b);
-
         let k = Math.min(1 - r, 1 - g, 1 - b);
         let c = (1 - r - k) / (1 - k) || 0;
         let m = (1 - g - k) / (1 - k) || 0;
@@ -30,10 +26,7 @@ export class ColorPickerService {
     }
 
     cmyk2rgba(cmyk: Cmyk): Rgba {
-        let c = cmyk.c;
-        let m = cmyk.m;
-        let y = cmyk.y;
-        let k = cmyk.k;
+        let c = cmyk.c, m = cmyk.m, y = cmyk.y, k = cmyk.k;
 
         if (c <= 0 || isNaN(c)) { c = 0; }
         if (m <= 0 || isNaN(m)) { m = 0; }
@@ -64,7 +57,6 @@ export class ColorPickerService {
 
     hsla2hsva(hsla: Hsla): Hsva {
         let h = Math.min(hsla.h, 1), s = Math.min(hsla.s, 1), l = Math.min(hsla.l, 1), a = Math.min(hsla.a, 1);
-        // let d = this.rgba2cmyk(r: 2, g: 3, b2,1);
         if (l === 0) {
             return new Hsva(h, 0, 0, a);
         } else {
@@ -114,17 +106,25 @@ export class ColorPickerService {
     }
 
     cmyk2Hsva(cmyk: Cmyk): Hsva {
-        let c = cmyk.c, m = cmyk.m, y = cmyk.y, k = cmyk.k;
+        // let c = cmyk.c, m = cmyk.m, y = cmyk.y, k = cmyk.k;
         let h: number, s: number, v: number, a: number;
 
+        let rgba = this.cmyk2rgba(cmyk);
+        let myhsva = this.rgbaToHsva(rgba);
+        h = myhsva.h;
+        s = myhsva.s;
+        v = myhsva.v;
+        a = myhsva.a;
+
+        // return new Hsva(1, 1, 1, 1);
         return new Hsva(h, s, v, a);
     }
     hsva2Cmyk(hsva: Hsva): Cmyk {
         let h = hsva.h, s = hsva.s, v = hsva.v, a = hsva.a;
         let c: number, m: number, y: number, k: number;
 
-
-        return new Cmyk(c, m, y, k);
+        return new Cmyk(1, 1, 1, 1);
+        // return new Cmyk(c, m, y, k);
     }
 
     hsvaToRgba(hsva: Hsva): Rgba {

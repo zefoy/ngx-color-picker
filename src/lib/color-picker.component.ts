@@ -350,7 +350,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     }
 
     formatPolicy(): number {
-        this.format = (this.format + 1) % 3;
+        this.format = (this.format + 1) % 4;
         if (this.format === 0 && this.hsva.a < 1 && this.cpAlphaChannel === 'hex6') {
             this.format++;
         }

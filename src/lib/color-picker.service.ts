@@ -16,15 +16,10 @@ export class ColorPickerService {
         console.log(g);
         console.log(b);
 
-        let c;
-        let m;
-        let y;
-        let k;
-
-        k = Math.min(1 - r, 1 - g, 1 - b);
-        c = (1 - r - k) / (1 - k) || 0;
-        m = (1 - g - k) / (1 - k) || 0;
-        y = (1 - b - k) / (1 - k) || 0;
+        let k = Math.min(1 - r, 1 - g, 1 - b);
+        let c = (1 - r - k) / (1 - k) || 0;
+        let m = (1 - g - k) / (1 - k) || 0;
+        let y = (1 - b - k) / (1 - k) || 0;
 
         c = c * 100;
         m = m * 100;
@@ -32,6 +27,39 @@ export class ColorPickerService {
         k = k * 100;
 
         return new Cmyk(c, m, y, k);
+    }
+
+    cmyk2rgba(cmyk: Cmyk): Rgba {
+        let c = cmyk.c;
+        let m = cmyk.m;
+        let y = cmyk.y;
+        let k = cmyk.k;
+
+        if (c <= 0 || isNaN(c)) { c = 0; }
+        if (m <= 0 || isNaN(m)) { m = 0; }
+        if (y <= 0 || isNaN(y)) { y = 0; }
+        if (k <= 0 || isNaN(k)) { k = 0; }
+
+        if (c > 100) { c = 100; }
+        if (m > 100) { m = 100; }
+        if (y > 100) { y = 100; }
+        if (k > 100) { k = 100; }
+
+        c /= 100;
+        m /= 100;
+        y /= 100;
+        k /= 100;
+
+        let r = 1 - Math.min(1, c * (1 - k) + k);
+        let g = 1 - Math.min(1, m * (1 - k) + k);
+        let b = 1 - Math.min(1, y * (1 - k) + k);
+
+
+        r = Math.round( r * 255 );
+        g = Math.round( g * 255 );
+        b = Math.round( b * 255 );
+
+        return new Rgba(r, g, b, 1);
     }
 
     hsla2hsva(hsla: Hsla): Hsva {
@@ -119,7 +147,7 @@ export class ColorPickerService {
         return new Rgba(r, g, b, a)
     }
 
-    stringToHsva(colorString: string = '', hex8: boolean = false): Hsva {
+    stringToHsva(colorString = '', hex8 = false): Hsva {
         let stringParsers = [
             {
                 re: /(rgb)a?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*%?,\s*(\d{1,3})\s*%?(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,

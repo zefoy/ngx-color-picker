@@ -234,6 +234,9 @@ export class ColorPickerService {
             }
         } else {
             switch (outputFormat) {
+                case 'cmyk':
+                    let cmyk = this.hsva2cmyk(hsva);
+                    let cmykText = new Cmyk(Math.round((cmyk.c) * 100), Math.round(cmyk.m * 100), Math.round(cmyk.y * 100), Math.round(cmyk.k * 100))
                 case 'hsla':
                     let hsla = this.hsva2hsla(hsva);
                     let hslaText = new Hsla(Math.round((hsla.h) * 360), Math.round(hsla.s * 100), Math.round(hsla.l * 100), Math.round(hsla.a * 100) / 100);

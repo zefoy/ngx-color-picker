@@ -52,6 +52,10 @@
                 [style.background]="color4" 
                 [value]="color4"    
                 [cpOutputFormat]="'hsla'"/>
+            <input [(colorPicker)]="color2" 
+                [style.background]="color2" 
+                [value]="color2"    
+                [cpOutputFormat]="'cmyk'"/>
         </div>   
         <div class="col-md-7">  
             <p>Output format:</p>
@@ -372,7 +376,7 @@
                     <tr>
                         <td>cpOutputFormat</td>
                         <td>
-                            <b>'hex'</b>, 'rgba', 'hsla'
+                            <b>'hex'</b>, 'rgba', 'hsla', 'cmyk'
                         </td>
                     </tr>
                     <tr>

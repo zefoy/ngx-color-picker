@@ -1,8 +1,8 @@
-import {Component, ElementRef, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef} from '@angular/core';
+import { Component, ElementRef, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 
 import { ColorPickerService } from './color-picker.service';
 
-import { Rgba, Hsla, Hsva } from './formats';
+import { Rgba, Hsla, Hsva, Cmyk } from './formats';
 import { SliderPosition, SliderDimension } from './helpers';
 
 @Component({
@@ -32,6 +32,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
 
     public rgbaText: Rgba;
     public hslaText: Hsla;
+    public cmykText: Cmyk;
     public selectedColor: string;
     public alphaSliderColor: string;
     public hueSliderColor: string;
@@ -62,7 +63,9 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     @ViewChild('alphaSlider') alphaSlider: any;
     @ViewChild('dialogPopup') dialogElement: any;
 
-    constructor(private el: ElementRef, private cdr: ChangeDetectorRef, private service: ColorPickerService) { }
+    constructor(private el: ElementRef, private cdr: ChangeDetectorRef, private service: ColorPickerService) {
+    }
+
 
     setDialog(instance: any, elementRef: ElementRef, color: any, cpPosition: string, cpPositionOffset: string,
         cpPositionRelativeToArrow: boolean, cpOutputFormat: string, cpPresetLabel: string, cpPresetColors: Array<string>,
@@ -111,6 +114,8 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             this.format = 1;
         } else if (this.cpOutputFormat === 'hsla') {
             this.format = 2;
+        } else if (this.cpOutputFormat === 'cmyk') {
+            this.format = 3;
         } else {
             this.format = 0;
         }
@@ -200,8 +205,8 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             this.show = true;
             this.hidden = true;
             setTimeout(() => {
-              this.setDialogPosition();
-              this.hidden = false;
+                this.setDialogPosition();
+                this.hidden = false;
             }, 0);
             this.directiveInstance.toggle(true);
             document.addEventListener('mousedown', this.listenerMouseDown);
@@ -272,7 +277,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.hsva = this.service.hsla2hsva(hsla);
         this.update();
 
-        this.directiveInstance.inputChanged({slider: 'saturation', value: val});
+        this.directiveInstance.inputChanged({ slider: 'saturation', value: val });
     }
 
     setLightness(val: { v: number, rg: number }) {
@@ -281,21 +286,53 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.hsva = this.service.hsla2hsva(hsla);
         this.update();
 
-        this.directiveInstance.inputChanged({slider: 'lightness', value: val});
+        this.directiveInstance.inputChanged({ slider: 'lightness', value: val });
     }
 
     setHue(val: { v: number, rg: number }) {
         this.hsva.h = val.v / val.rg;
         this.update();
 
-        this.directiveInstance.sliderChanged({slider: 'hue', value: val});
+        this.directiveInstance.sliderChanged({ slider: 'hue', value: val });
     }
 
     setAlpha(val: { v: number, rg: number }) {
         this.hsva.a = val.v / val.rg;
         this.update();
 
-        this.directiveInstance.sliderChanged({slider: 'alpha', value: val});
+        this.directiveInstance.sliderChanged({ slider: 'alpha', value: val });
+    }
+
+    setCyan(val: { v: number, rg: number }) {
+        let cmyk = this.service.hsva2Cmyk(this.hsva);
+        cmyk.c = val.v / val.rg;
+        this.hsva = this.service.cmyk2Hsva(cmyk);
+        this.update();
+        this.directiveInstance.inputChanged({ slider: 'cyan', value: val });
+    }
+
+    setMagenta(val: { v: number, rg: number }) {
+        let cmyk = this.service.hsva2Cmyk(this.hsva);
+        cmyk.m = val.v / val.rg;
+        this.hsva = this.service.cmyk2Hsva(cmyk);
+        this.update();
+        this.directiveInstance.inputChanged({ slider: 'magenta', value: val });
+    }
+
+    setYellow(val: { v: number, rg: number }) {
+        let cmyk = this.service.hsva2Cmyk(this.hsva);
+        cmyk.y = val.v / val.rg;
+        this.hsva = this.service.cmyk2Hsva(cmyk);
+        this.update();
+        this.directiveInstance.inputChanged({ slider: 'yellow', value: val });
+    }
+
+    setKey(val: { v: number, rg: number }) {
+        let cmyk = this.service.hsva2Cmyk(this.hsva);
+        cmyk.k = val.v / val.rg;
+        this.hsva = this.service.cmyk2Hsva(cmyk);
+        this.update();
+        this.directiveInstance.inputChanged({ slider: 'key', value: val });
     }
 
     setR(val: { v: number, rg: number }) {
@@ -304,7 +341,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.hsva = this.service.rgbaToHsva(rgba);
         this.update();
 
-        this.directiveInstance.inputChanged({slider: 'red', value: val});
+        this.directiveInstance.inputChanged({ slider: 'red', value: val });
     }
     setG(val: { v: number, rg: number }) {
         let rgba = this.service.hsvaToRgba(this.hsva);
@@ -312,7 +349,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.hsva = this.service.rgbaToHsva(rgba);
         this.update();
 
-        this.directiveInstance.inputChanged({slider: 'green', value: val});
+        this.directiveInstance.inputChanged({ slider: 'green', value: val });
     }
     setB(val: { v: number, rg: number }) {
         let rgba = this.service.hsvaToRgba(this.hsva);
@@ -320,30 +357,32 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.hsva = this.service.rgbaToHsva(rgba);
         this.update();
 
-        this.directiveInstance.inputChanged({slider: 'blue', value: val});
+        this.directiveInstance.inputChanged({ slider: 'blue', value: val });
     }
     setA(val: { v: number, rg: number }) {
         this.hsva.a = val.v / val.rg;
         this.update();
 
-        this.directiveInstance.inputChanged({slider: 'alpha', value: val});
+        this.directiveInstance.inputChanged({ slider: 'alpha', value: val });
     }
 
-    setHex(val: string) {
-      this.setColorFromString(val);
 
-      this.directiveInstance.inputChanged({slider: 'hex', value: val});
+
+    setHex(val: string) {
+        this.setColorFromString(val);
+
+        this.directiveInstance.inputChanged({ slider: 'hex', value: val });
     }
 
     setSaturationAndBrightness(val: { s: number, v: number, rgX: number, rgY: number }) {
         this.hsva.s = val.s / val.rgX;
         this.hsva.v = val.v / val.rgY;
         this.update();
-        this.directiveInstance.sliderChanged({slider: 'saturation-lightness', value: val});
+        this.directiveInstance.sliderChanged({ slider: 'saturation-lightness', value: val });
     }
 
     formatPolicy(): number {
-        this.format = (this.format + 1) % 3;
+        this.format = (this.format + 1) % 4;
         if (this.format === 0 && this.hsva.a < 1 && this.cpAlphaChannel === 'hex6') {
             this.format++;
         }
@@ -353,10 +392,12 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     update(emit: boolean = true) {
         if (this.sliderDimMax) {
             let hsla = this.service.hsva2hsla(this.hsva);
+            let cmyk = this.service.hsva2Cmyk(this.hsva);
             let rgba = this.service.denormalizeRGBA(this.service.hsvaToRgba(this.hsva));
             let hueRgba = this.service.denormalizeRGBA(this.service.hsvaToRgba(new Hsva(this.hsva.h, 1, 1, 1)));
 
             this.hslaText = new Hsla(Math.round((hsla.h) * 360), Math.round(hsla.s * 100), Math.round(hsla.l * 100), Math.round(hsla.a * 100) / 100);
+            this.cmykText = new Cmyk(Math.round((cmyk.c) * 100), Math.round(cmyk.m * 100), Math.round(cmyk.y * 100),  Math.round(cmyk.k * 100) );
             this.rgbaText = new Rgba(rgba.r, rgba.g, rgba.b, Math.round(rgba.a * 100) / 100);
             this.hexText = this.service.hexText(rgba, this.cpAlphaChannel === 'hex8');
 

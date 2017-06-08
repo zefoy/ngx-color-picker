@@ -1,10 +1,64 @@
 import { Injectable } from '@angular/core';
 
-import { Rgba, Hsla, Hsva } from './formats';
+
+import { Rgba, Hsla, Hsva, Cmyk } from './formats';
 
 @Injectable()
 export class ColorPickerService {
     constructor() { }
+
+    rgba2cmyk(rgba: Rgba): Cmyk {
+        let r = rgba.r / 255;
+        let g = rgba.g / 255;
+        let b = rgba.b / 255;
+
+        let k = Math.min(1 - r, 1 - g, 1 - b);
+        let c = (1 - r - k) / (1 - k) || 0;
+        let m = (1 - g - k) / (1 - k) || 0;
+        let y = (1 - b - k) / (1 - k) || 0;
+
+        c = c * 100;
+        m = m * 100;
+        y = y * 100;
+        k = k * 100;
+
+        console.log('c ' + c);
+        console.log('m ' + m);
+        console.log('y ' + y);
+        console.log('k ' + k);
+
+        return new Cmyk(c, m, y, k);
+    }
+
+    cmyk2rgba(cmyk: Cmyk): Rgba {
+        let c = cmyk.c, m = cmyk.m, y = cmyk.y, k = cmyk.k;
+
+        if (c <= 0 || isNaN(c)) { c = 0; }
+        if (m <= 0 || isNaN(m)) { m = 0; }
+        if (y <= 0 || isNaN(y)) { y = 0; }
+        if (k <= 0 || isNaN(k)) { k = 0; }
+
+        if (c > 100) { c = 100; }
+        if (m > 100) { m = 100; }
+        if (y > 100) { y = 100; }
+        if (k > 100) { k = 100; }
+
+        c /= 100;
+        m /= 100;
+        y /= 100;
+        k /= 100;
+
+        let r = 1 - Math.min(1, c * (1 - k) + k);
+        let g = 1 - Math.min(1, m * (1 - k) + k);
+        let b = 1 - Math.min(1, y * (1 - k) + k);
+
+
+        r = Math.round(r * 255);
+        g = Math.round(g * 255);
+        b = Math.round(b * 255);
+
+        return new Rgba(r, g, b, 1);
+    }
 
     hsla2hsva(hsla: Hsla): Hsva {
         let h = Math.min(hsla.h, 1), s = Math.min(hsla.s, 1), l = Math.min(hsla.l, 1), a = Math.min(hsla.a, 1);
@@ -56,6 +110,32 @@ export class ColorPickerService {
         return new Hsva(h, s, v, a)
     }
 
+    cmyk2Hsva(cmyk: Cmyk): Hsva {
+        let h: number, s: number, v: number, a: number;
+        let rgba = this.cmyk2rgba(cmyk);
+        let myhsva = this.rgbaToHsva(rgba);
+
+        h = myhsva.h;
+        s = myhsva.s;
+        v = myhsva.v;
+        a = myhsva.a;
+
+        return new Hsva(h, s, v, a);
+    }
+
+    hsva2Cmyk(hsva: Hsva): Cmyk {
+        let c: number, m: number, y: number, k: number;
+        let rgba = this.hsvaToRgba(hsva);
+        let mycmyk = this.rgba2cmyk(rgba);
+
+        c = mycmyk.c;
+        m = mycmyk.m;
+        y = mycmyk.y;
+        k = mycmyk.k;
+
+        return new Cmyk(c, m, y, k);
+    }
+
     hsvaToRgba(hsva: Hsva): Rgba {
         let h = hsva.h, s = hsva.s, v = hsva.v, a = hsva.a;
         let r: number, g: number, b: number;
@@ -90,11 +170,11 @@ export class ColorPickerService {
         return new Rgba(r, g, b, a)
     }
 
-    stringToHsva(colorString: string = '', hex8: boolean = false): Hsva {
+    stringToHsva(colorString = '', hex8 = false): Hsva {
         let stringParsers = [
             {
                 re: /(rgb)a?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*%?,\s*(\d{1,3})\s*%?(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
-                parse: function(execResult: any) {
+                parse: function (execResult: any) {
                     return new Rgba(parseInt(execResult[2]) / 255,
                         parseInt(execResult[3]) / 255,
                         parseInt(execResult[4]) / 255,
@@ -103,7 +183,7 @@ export class ColorPickerService {
             },
             {
                 re: /(hsl)a?\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
-                parse: function(execResult: any) {
+                parse: function (execResult: any) {
                     return new Hsla(parseInt(execResult[2]) / 360,
                         parseInt(execResult[3]) / 100,
                         parseInt(execResult[4]) / 100,
@@ -114,7 +194,7 @@ export class ColorPickerService {
         if (hex8) {
             stringParsers.push({
                 re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})$/,
-                parse: function(execResult: any) {
+                parse: function (execResult: any) {
                     return new Rgba(parseInt(execResult[1], 16) / 255,
                         parseInt(execResult[2], 16) / 255,
                         parseInt(execResult[3], 16) / 255,
@@ -124,7 +204,7 @@ export class ColorPickerService {
         } else {
             stringParsers.push({
                 re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})$/,
-                parse: function(execResult: any) {
+                parse: function (execResult: any) {
                     return new Rgba(parseInt(execResult[1], 16) / 255,
                         parseInt(execResult[2], 16) / 255,
                         parseInt(execResult[3], 16) / 255,
@@ -133,7 +213,7 @@ export class ColorPickerService {
             },
                 {
                     re: /#([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])$/,
-                    parse: function(execResult: any) {
+                    parse: function (execResult: any) {
                         return new Rgba(parseInt(execResult[1] + execResult[1], 16) / 255,
                             parseInt(execResult[2] + execResult[2], 16) / 255,
                             parseInt(execResult[3] + execResult[3], 16) / 255,
@@ -177,6 +257,9 @@ export class ColorPickerService {
             }
         } else {
             switch (outputFormat) {
+                case 'cmyk':
+                    let cmyk = this.hsva2Cmyk(hsva);
+                    let cmykText = new Cmyk(Math.round((cmyk.c) * 100), Math.round(cmyk.m * 100), Math.round(cmyk.y * 100), Math.round(cmyk.k * 100))
                 case 'hsla':
                     let hsla = this.hsva2hsla(hsva);
                     let hslaText = new Hsla(Math.round((hsla.h) * 360), Math.round(hsla.s * 100), Math.round(hsla.l * 100), Math.round(hsla.a * 100) / 100);

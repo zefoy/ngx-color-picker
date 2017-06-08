@@ -213,6 +213,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             this.directiveInstance.toggle(false);
             document.removeEventListener('mousedown', this.listenerMouseDown);
             window.removeEventListener('resize', this.listenerResize);
+            this.cdr.detectChanges();
         }
     }
 

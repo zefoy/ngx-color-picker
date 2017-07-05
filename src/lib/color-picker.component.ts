@@ -271,7 +271,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.hsva = this.service.hsla2hsva(hsla);
         this.update();
 
-        this.directiveInstance.inputChanged({slider: 'saturation', value: val});
+        this.directiveInstance.inputChanged({input: 'saturation', value: val});
     }
 
     setLightness(val: { v: number, rg: number }) {
@@ -280,7 +280,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.hsva = this.service.hsla2hsva(hsla);
         this.update();
 
-        this.directiveInstance.inputChanged({slider: 'lightness', value: val});
+        this.directiveInstance.inputChanged({input: 'lightness', value: val});
     }
 
     setHue(val: { v: number, rg: number }) {
@@ -303,7 +303,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.hsva = this.service.rgbaToHsva(rgba);
         this.update();
 
-        this.directiveInstance.inputChanged({slider: 'red', value: val});
+        this.directiveInstance.inputChanged({input: 'red', value: val});
     }
     setG(val: { v: number, rg: number }) {
         let rgba = this.service.hsvaToRgba(this.hsva);
@@ -311,7 +311,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.hsva = this.service.rgbaToHsva(rgba);
         this.update();
 
-        this.directiveInstance.inputChanged({slider: 'green', value: val});
+        this.directiveInstance.inputChanged({input: 'green', value: val});
     }
     setB(val: { v: number, rg: number }) {
         let rgba = this.service.hsvaToRgba(this.hsva);
@@ -319,19 +319,19 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.hsva = this.service.rgbaToHsva(rgba);
         this.update();
 
-        this.directiveInstance.inputChanged({slider: 'blue', value: val});
+        this.directiveInstance.inputChanged({input: 'blue', value: val});
     }
     setA(val: { v: number, rg: number }) {
         this.hsva.a = val.v / val.rg;
         this.update();
 
-        this.directiveInstance.inputChanged({slider: 'alpha', value: val});
+        this.directiveInstance.inputChanged({input: 'alpha', value: val});
     }
 
     setHex(val: string) {
       this.setColorFromString(val);
 
-      this.directiveInstance.inputChanged({slider: 'hex', value: val});
+      this.directiveInstance.inputChanged({input: 'hex', value: val});
     }
 
     setSaturationAndBrightness(val: { s: number, v: number, rgX: number, rgY: number }) {

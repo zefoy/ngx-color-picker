@@ -1,3 +1,11 @@
+4.1.0 Feature release
+
+  - Removed the initial colorPickerChange event
+
+  - Added popover option for the cpDialogDisplay
+
+  - Fixed input change event to use correct naming
+
 4.0.3 Bug fix release
 
   - Fixed bug when using on push strategy

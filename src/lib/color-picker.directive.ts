@@ -71,6 +71,7 @@ export class ColorPickerDirective implements OnInit, OnChanges {
     }
 
     ngOnInit() {
+        this.colorPicker = this.colorPicker || 'rgba(0, 0, 0, 1)';
         let hsva = this.service.stringToHsva(this.colorPicker);
         if (hsva === null) hsva = this.service.stringToHsva(this.colorPicker, true);
         if (hsva == null) {

@@ -77,12 +77,12 @@ export class ColorPickerDirective implements OnInit, OnChanges {
             hsva = this.service.stringToHsva(this.cpFallbackColor);
         }
         let color = this.service.outputFormat(hsva, this.cpOutputFormat, this.cpAlphaChannel === 'hex8');
-        if (color !== this.colorPicker) {
+        /*if (color !== this.colorPicker) {
             //setTimeout(() => {
               this.colorPickerChange.emit(color);
               this.cdr.detectChanges();
             //}, 0);
-        }
+        }*/
     }
 
     onClick() {

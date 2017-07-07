@@ -32,7 +32,7 @@ export class ColorPickerDirective implements OnInit, OnChanges {
     @Input('cpOKButton') cpOKButton: boolean = false;
     @Input('cpOKButtonClass') cpOKButtonClass: string = 'cp-ok-button-class';
     @Input('cpOKButtonText') cpOKButtonText: string = 'OK';
-    @Input('cpFallbackColor') cpFallbackColor: string = '#fff';
+    @Input('cpFallbackColor') cpFallbackColor: string = '#000';
     @Input('cpHeight') cpHeight: string = 'auto';
     @Input('cpWidth') cpWidth: string = '230px';
     @Input('cpIgnoredElements') cpIgnoredElements: any = [];
@@ -71,7 +71,7 @@ export class ColorPickerDirective implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        this.colorPicker = this.colorPicker || 'rgba(0, 0, 0, 1)';
+        this.colorPicker = this.colorPicker || this.cpFallbackColor || 'rgba(0, 0, 0, 1)';
         let hsva = this.service.stringToHsva(this.colorPicker);
         if (hsva === null) hsva = this.service.stringToHsva(this.colorPicker, true);
         if (hsva == null) {

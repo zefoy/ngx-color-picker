@@ -1,4 +1,4 @@
-4.1.0 Feature release
+4.1.0 Upcoming release
 
   - Removed the initial colorPickerChange event
 

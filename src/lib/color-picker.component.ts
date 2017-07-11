@@ -237,7 +237,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             if (position !== 'static' && parentNode === null) {
                 parentNode = node;
             }
-            if (transform && transformNode === null) {
+            if (transform && transform !== 'none' && transformNode === null) {
               transformNode = node;
             }
             if (position === 'fixed') {

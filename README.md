@@ -62,14 +62,14 @@ import { ColorPickerModule } from 'ngx-color-picker';
 
 [cpOutputFormat]             // Output color format: 'hex', 'rgba', 'hsla' ('hex').
 [cpFallbackColor]            // Is used when the color is not well-formed or undefined ('#000').
-
 [cpAlphaChannel]             // Allow alpha for HEX values: 'hex6', 'hex8', 'disabled' ('hex6').
 
 [cpPosition]                 // Dialog position: 'right', 'left', 'top', 'bottom' ('right').
 [cpPositionOffset]           // Dialog offset percentage relative to the directive element (0%).
 [cpPositionRelativeToArrow]  // Dialog position is calculated relative to dialog arrow (false).
 
-[cpSaveClickOutside]         // Save currently selected color when user clicks outside (true).
+[cpPresetLabel]              // Label text for the preset colors if any provided ('Preset colors').
+[cpPresetColors]             // Array of preset colors to show in the color picker dialog ([]).
 
 [cpOKButton]                 // Show an OK / Apply button which saves the color (false).
 [cpOKButtonText]             // Button label text shown inside the OK / Apply button ('OK').
@@ -79,15 +79,16 @@ import { ColorPickerModule } from 'ngx-color-picker';
 [cpCancelButtonText]         // Button label text shown inside the Cancel / Reset button ('Cancel').
 [cpCancelButtonClass]        // Additional class for customizing the Cancel / Reset button ('').
 
-[cpPresetLabel]              // Label text for the preset colors if any provided ('Preset colors').
-[cpPresetColors]             // Array of preset colors to show in the color picker dialog ([]).
+[cpDialogDisplay]            // Dialog positioning mode: 'popup', 'inline' ('popup').
+                             //   popup: dialog is shown as popup (fixed positioning).
+                             //   inline: dialog is shown permanently (static positioning).
 
 [cpIgnoredElements]          // Array of HTML elements that will be ignored when clicked ([]).
 
-[cpDialogDisplay]            // Dialog positioning mode: 'popup', 'inline', 'popover' ('popup').
-                             //   popup: dialog is shown as popup (fixed positioning).
-                             //   inline: dialog is shown permanently (static positioning).
-                             //   popover: dialog is shown as popover (absolute positioning).
+[cpSaveClickOutside]         // Save currently selected color when user clicks outside (true).
+
+[cpUseRootViewContainer]     // Create dialog component in the root view container (false).
+                             // Note: The root component needs to have public viewContainerRef.
 
 (colorPickerChange)          // Changed color value, send when color is changed (value: string).
 (colorPickerSelect)          // Selected color value, send when OK button is pressed (value: string).

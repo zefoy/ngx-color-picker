@@ -58,6 +58,8 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     private dialogArrowSize: number = 10;
     private dialogArrowOffset: number = 15;
 
+    private useRootViewContainer: boolean = false;
+
     @ViewChild('hueSlider') hueSlider: any;
     @ViewChild('alphaSlider') alphaSlider: any;
     @ViewChild('dialogPopup') dialogElement: any;
@@ -69,7 +71,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         cpCancelButton: boolean, cpCancelButtonClass: string, cpCancelButtonText: string,
         cpOKButton: boolean, cpOKButtonClass: string, cpOKButtonText: string,
         cpHeight: string, cpWidth: string,
-        cpIgnoredElements: any, cpDialogDisplay: string, cpSaveClickOutside: boolean, cpAlphaChannel: string) {
+        cpIgnoredElements: any, cpDialogDisplay: string, cpSaveClickOutside: boolean, cpAlphaChannel: string, cpUseRootViewContainer: boolean) {
         this.directiveInstance = instance;
         this.initialColor = color;
         this.directiveElementRef = elementRef;
@@ -100,6 +102,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         }
         this.cpSaveClickOutside = cpSaveClickOutside;
         this.cpAlphaChannel = cpAlphaChannel;
+        this.useRootViewContainer = cpUseRootViewContainer;
     }
 
     ngOnInit() {
@@ -225,30 +228,35 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
 
     setDialogPosition() {
         let dialogHeight = this.dialogElement.nativeElement.offsetHeight;
-        let node = this.directiveElementRef.nativeElement, position = 'static';
-        let parentNode: any = null;
+        let node = this.directiveElementRef.nativeElement, position = 'static', transform = '';
+        let parentNode: any = null, transformNode: any = null, style: any = null;
         while (node !== null && node.tagName !== 'HTML') {
-            position = window.getComputedStyle(node).getPropertyValue("position");
+            style = window.getComputedStyle(node);
+            position = style.getPropertyValue("position");
+            transform = style.getPropertyValue("transform");
             if (position !== 'static' && parentNode === null) {
                 parentNode = node;
             }
+            if (transform && transformNode === null) {
+              transformNode = node;
+            }
             if (position === 'fixed') {
+              parentNode = transformNode;
                 break;
             }
             node = node.parentNode;
         }
-        if (position !== 'fixed') {
-            var boxDirective = this.createBox(this.directiveElementRef.nativeElement, true);
+        let boxDirective = this.createBox(this.directiveElementRef.nativeElement, (position !== 'fixed'));
+        if ((position !== 'fixed' || parentNode) && !this.useRootViewContainer) {
             if (parentNode === null) { parentNode = node }
-            var boxParent = this.createBox(parentNode, true);
+            let boxParent = this.createBox(parentNode, true);
             this.top = boxDirective.top - boxParent.top;
             this.left = boxDirective.left - boxParent.left;
         } else {
-            var boxDirective = this.createBox(this.directiveElementRef.nativeElement, false);
             this.top = boxDirective.top;
             this.left = boxDirective.left;
-            this.position = 'fixed';
         }
+        if (position === 'fixed') { this.position = 'fixed'; }
         if (this.cpPosition === 'left') {
             this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
             this.left -= this.cpWidth + this.dialogArrowSize - 2;

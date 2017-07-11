@@ -1,10 +1,12 @@
-4.1.0 Upcoming release
+4.1.0 Feature release
+
+  - Added cpUseRootViewContainer input
 
   - Removed the initial colorPickerChange event
 
-  - Added popover option for the cpDialogDisplay
-
   - Fixed input change event to use correct naming
+
+  - Fixed dialog positioning when used inside modals
 
 4.0.3 Bug fix release
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
 import { ColorPickerService, Rgba } from 'ngx-color-picker';
 
 export class Cmyk {
@@ -13,7 +13,7 @@ export class Cmyk {
 })
 export class AppComponent {
 
-    constructor(private cpService: ColorPickerService) {
+    constructor(public vcRef: ViewContainerRef, private cpService: ColorPickerService) {
         this.arrayColors['color'] = '#2883e9';
         this.arrayColors['color2'] = '#e920e9';
         this.arrayColors['color3'] = 'rgb(255,245,0)';

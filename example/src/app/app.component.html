@@ -492,10 +492,9 @@
                     <tr>
                         <td>cpDialogDisplay</td>
                         <td>
-                            <b>'popup'</b>, 'inline', 'popover'<br>
+                            <b>'popup'</b>, 'inline'<br>
                             popup: dialog is showed when user clicks in the directive.<br>
                             inline: dialog is showed permanently. You can show/hide the dialog with cpToggle.<br>
-                            popover: same as popup, but dialog is positioned relative to the element and not the viewport (usually needed when used in modal dialogs)
                         </td>
                     </tr>
                     <tr>
@@ -505,6 +504,13 @@
                             hex6: alpha channel is not allowed in hexadecimal values.<br>
                             hex8: alpha channel is allowed in hexadecimal values.<br>
                             disabled: alpha channel disabled.<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>cpUseRootViewContainer</td>
+                        <td>
+                            <b>false</b>, true<br>
+                            Create dialog component in the root view container instead the elements view container.<br>
                         </td>
                     </tr>
                 </tbody>

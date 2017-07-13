@@ -101,6 +101,10 @@ export class ColorPickerDirective implements OnInit, OnChanges {
               let classOfRootComponent = this.appRef.componentTypes[0];
               let appInstance = this.injector.get(classOfRootComponent);
               vcRef = appInstance.vcRef || appInstance.viewContainerRef || this.vcRef;
+              if (vcRef === this.vcRef) {
+                console.warn("You are using cpUseRootViewContainer, but the root component is not exposing viewContainerRef!" +
+                  "Please expose it by adding 'public vcRef: ViewContainerRef' to the constructor.");
+              }
             }
             const compFactory = this.cfr.resolveComponentFactory(ColorPickerComponent);
             const injector = ReflectiveInjector.fromResolvedProviders([], vcRef.parentInjector);

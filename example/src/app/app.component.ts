@@ -22,6 +22,7 @@ export class AppComponent {
     }
 
     public rgbaText: string = '';
+    public rgbaText2: string = 'rgba(255, 245, 0, 1)';
 
     public color: string = '#2889e9';
     public color2: string = "hsla(300,82%,52%)";
@@ -38,6 +39,9 @@ export class AppComponent {
     public color13: string = "#1973c0";
     public color14: string = "#a8ff00";
     public color15: string = "#a51ad6a3";
+    public color16: string = "rgba(236,64,64,1)";
+    public color17: string = "hsla(120,64%,50%,1)";
+    public color18: string = "#fff500ff";
 
     public arrayColors: any = {};
     public selectedColor: string = 'color';

@@ -15,6 +15,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     public cpPosition: string;
     public cpPositionOffset: number;
     public cpOutputFormat: string;
+    public cpForceAlpha: boolean;
     public cpPresetLabel: string;
     public cpPresetColors: Array<string>;
     public cpCancelButton: boolean;
@@ -67,7 +68,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     constructor(private el: ElementRef, private cdr: ChangeDetectorRef, private service: ColorPickerService) { }
 
     setDialog(instance: any, elementRef: ElementRef, color: any, cpPosition: string, cpPositionOffset: string,
-        cpPositionRelativeToArrow: boolean, cpOutputFormat: string, cpPresetLabel: string, cpPresetColors: Array<string>,
+        cpPositionRelativeToArrow: boolean, cpOutputFormat: string, cpForceAlpha: boolean, cpPresetLabel: string, cpPresetColors: Array<string>,
         cpCancelButton: boolean, cpCancelButtonClass: string, cpCancelButtonText: string,
         cpOKButton: boolean, cpOKButtonClass: string, cpOKButtonText: string,
         cpHeight: string, cpWidth: string,
@@ -81,6 +82,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             this.dialogArrowOffset = 0;
         }
         this.cpOutputFormat = cpOutputFormat;
+        this.cpForceAlpha = cpForceAlpha;
         this.cpPresetLabel = cpPresetLabel;
         this.cpPresetColors = cpPresetColors;
         this.cpCancelButton = cpCancelButton;
@@ -375,8 +377,8 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             }
 
             let lastOutput = this.outputColor;
-            this.outputColor = this.service.outputFormat(this.hsva, this.cpOutputFormat, this.cpAlphaChannel === 'hex8');
-            this.selectedColor = this.service.outputFormat(this.hsva, 'rgba', false);
+            this.outputColor = this.service.outputFormat(this.hsva, this.cpOutputFormat, this.cpAlphaChannel === 'hex8', this.cpForceAlpha);
+            this.selectedColor = this.service.outputFormat(this.hsva, 'rgba', false, false);
 
             this.slider = new SliderPosition((this.hsva.h) * this.sliderDimMax.h - 8, this.hsva.s * this.sliderDimMax.s - 8,
                 (1 - this.hsva.v) * this.sliderDimMax.v - 8, this.hsva.a * this.sliderDimMax.a - 8)

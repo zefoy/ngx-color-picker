@@ -162,8 +162,8 @@ export class ColorPickerService {
         return hsva;
     }
 
-    outputFormat(hsva: Hsva, outputFormat: string, allowHex8: boolean): string {
-        if (hsva.a < 1) {
+    outputFormat(hsva: Hsva, outputFormat: string, allowHex8: boolean, forceAlpha: boolean): string {
+        if (hsva.a < 1 || forceAlpha) {
             switch (outputFormat) {
                 case 'hsla':
                     let hsla = this.hsva2hsla(hsva);

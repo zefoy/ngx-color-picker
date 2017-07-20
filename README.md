@@ -18,7 +18,7 @@ See a live example application <a href="https://zefoy.github.io/ngx-color-picker
 
     npm link
     cd example
-    npm link ngx-perfect-scrollbar
+    npm link ngx-color-picker
 
 ### Running the example
 

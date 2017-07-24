@@ -208,7 +208,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
               this.cdr.detectChanges();
             }, 0);
             this.directiveInstance.toggle(true);
-            document.addEventListener('mousedown', this.listenerMouseDown);
+            document.addEventListener('mousedown', this.listenerMouseDown, true);
             window.addEventListener('resize', this.listenerResize);
         }
     }
@@ -217,7 +217,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         if (this.show) {
             this.show = false;
             this.directiveInstance.toggle(false);
-            document.removeEventListener('mousedown', this.listenerMouseDown);
+            document.removeEventListener('mousedown', this.listenerMouseDown, true);
             window.removeEventListener('resize', this.listenerResize);
             this.cdr.detectChanges();
         }

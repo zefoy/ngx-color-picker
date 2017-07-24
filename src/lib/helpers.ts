@@ -65,17 +65,17 @@ export class SliderDirective {
 
     start(event: any) {
         this.setCursor(event);
-        document.addEventListener('mousemove', this.listenerMove);
-        document.addEventListener('touchmove', this.listenerMove);
-        document.addEventListener('mouseup', this.listenerStop);
-        document.addEventListener('touchend', this.listenerStop);
+        document.addEventListener('mousemove', this.listenerMove, true);
+        document.addEventListener('touchmove', this.listenerMove, true);
+        document.addEventListener('mouseup', this.listenerStop, true);
+        document.addEventListener('touchend', this.listenerStop, true);
     }
 
     stop() {
-        document.removeEventListener('mousemove', this.listenerMove);
-        document.removeEventListener('touchmove', this.listenerMove);
-        document.removeEventListener('mouseup', this.listenerStop);
-        document.removeEventListener('touchend', this.listenerStop);
+        document.removeEventListener('mousemove', this.listenerMove, true);
+        document.removeEventListener('touchmove', this.listenerMove, true);
+        document.removeEventListener('mouseup', this.listenerStop, true);
+        document.removeEventListener('touchend', this.listenerStop, true);
     }
 
     getX(event: any): number {

@@ -22,7 +22,6 @@ export class AppComponent {
     }
 
     public rgbaText: string = '';
-    public rgbaText2: string = 'rgba(255, 245, 0, 1)';
 
     public color: string = '#2889e9';
     public color2: string = "hsla(300,82%,52%)";
@@ -36,9 +35,9 @@ export class AppComponent {
     public color10: string = "#0a6211";
     public color11: string = "#f2ff00";
     public color12: string = "#f200bd";
-    public color13: string = "#1973c0";
-    public color14: string = "#a8ff00";
-    public color15: string = "#a51ad6a3";
+    public color13: string = "rgba(0, 255, 0, 0.5)";
+    public color14: string = "rgb(0, 255, 255)";
+    public color15: string = "#a51ad633";
     public color16: string = "rgba(236,64,64,1)";
     public color17: string = "hsla(120,64%,50%,1)";
     public color18: string = "#fff500ff";
@@ -67,6 +66,6 @@ export class AppComponent {
     }
 
     onChangeColorHex8(color: string): string {
-        return this.cpService.outputFormat(this.cpService.stringToHsva(color, true), 'rgba', true);
+        return this.cpService.outputFormat(this.cpService.stringToHsva(color, true), 'rgba', null);
     }
 }

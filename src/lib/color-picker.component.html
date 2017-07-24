@@ -10,7 +10,7 @@
             <div [style.background-color]="selectedColor" class="selected-color"></div>
         </div>
         <div class="right">
-            <div *ngIf="cpAlphaChannel==='disabled'" style="height: 18px;"></div>
+            <div *ngIf="cpAlphaChannel==='disabled'" style="height: 16px;"></div>
 
             <div [slider] [rgX]="1" (newValue)="setHue($event)" class="hue" #hueSlider>
                 <div [style.left.px]="slider.h" class="cursor"></div>

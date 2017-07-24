@@ -372,7 +372,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
 
             let lastOutput = this.outputColor;
             this.outputColor = this.service.outputFormat(this.hsva, this.cpOutputFormat, this.cpAlphaChannel);
-            this.selectedColor = this.service.outputFormat(this.hsva, 'rgba', false, false);
+            this.selectedColor = this.service.outputFormat(this.hsva, 'rgba', null);
 
             this.slider = new SliderPosition((this.hsva.h) * this.sliderDimMax.h - 8, this.hsva.s * this.sliderDimMax.s - 8,
                 (1 - this.hsva.v) * this.sliderDimMax.v - 8, this.hsva.a * this.sliderDimMax.a - 8)

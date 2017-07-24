@@ -73,12 +73,12 @@ export class ColorPickerDirective implements OnInit, OnChanges {
 
     ngOnInit() {
         this.colorPicker = this.colorPicker || this.cpFallbackColor || 'rgba(0, 0, 0, 1)';
-        let hsva = this.service.stringToHsva(this.colorPicker);
+        /*let hsva = this.service.stringToHsva(this.colorPicker);
         if (hsva === null) hsva = this.service.stringToHsva(this.colorPicker, true);
         if (hsva == null) {
             hsva = this.service.stringToHsva(this.cpFallbackColor);
         }
-        /*let color = this.service.outputFormat(hsva, this.cpOutputFormat, this.cpAlphaChannel);
+        let color = this.service.outputFormat(hsva, this.cpOutputFormat, this.cpAlphaChannel);
         if (color !== this.colorPicker) {
             //setTimeout(() => {
               this.colorPickerChange.emit(color);

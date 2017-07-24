@@ -65,6 +65,53 @@
     </div>
 
     <hr>
+    <div class="row">
+        <div class="col-md-5">
+            <input [(colorPicker)]="color16"
+                [style.background]="color16"
+                [value]="color16"
+                [cpOutputFormat]="'rgba'"
+                [cpForceAlpha]="true"/><br><br>
+            <input [(colorPicker)]="color17"
+                [style.background]="color17"
+                [value]="color17"
+                [cpOutputFormat]="'hsla'"
+                [cpForceAlpha]="true"/><br><br>
+            <input [colorPicker]="color18"
+                (colorPickerChange)="rgbaText2=onChangeColorHex8($event);color18=$event"
+                [style.background]="rgbaText2"
+                [cpAlphaChannel]="'hex8'"
+                [cpOutputFormat]="'hex'"
+                [cpForceAlpha]="true"
+                [value]="color18"/>
+        </div>
+        <div class="col-md-7">
+            <p>Force alpha channel:</p>
+            <pre>
+&lt;input [(colorPicker)]="color"
+       [style.background]="color"
+       [value]="color"
+       [cpOutputFormat]="'rgba'"
+       [cpForceAlpha]="true"/&gt;
+
+&lt;input [(colorPicker)]="color"
+       [style.background]="color"
+       [value]="color"
+       [cpOutputFormat]="'hsla'"
+       [cpForceAlpha]="true"/&gt;
+
+&lt;input [(colorPicker)]="color"
+       (colorPickerChange)="rgbaText=onChangeColorHex8($event);color=$event"
+       [style.background]="rgbaText"
+       [value]="color"
+       [cpAlphaChannel]="'hex8'"
+       [cpOutputFormat]="'hex'"
+       [cpForceAlpha]="true"/&gt;
+            </pre>
+        </div>
+    </div>
+
+    <hr>
     <div class="row" >
         <div class="col-md-5" >
             <input [(colorPicker)]="color5"
@@ -373,6 +420,13 @@
                         <td>cpOutputFormat</td>
                         <td>
                             <b>'hex'</b>, 'rgba', 'hsla'
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>cpForceAlpha</td>
+                        <td>
+                            <b>false</b>, true<br>
+                            Always output Alpha channel.<br>
                         </td>
                     </tr>
                     <tr>

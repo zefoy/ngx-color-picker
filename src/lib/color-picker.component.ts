@@ -15,7 +15,6 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     public cpPosition: string;
     public cpPositionOffset: number;
     public cpOutputFormat: string;
-    public cpForceAlpha: boolean;
     public cpPresetLabel: string;
     public cpPresetColors: Array<string>;
     public cpCancelButton: boolean;
@@ -68,7 +67,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     constructor(private el: ElementRef, private cdr: ChangeDetectorRef, private service: ColorPickerService) { }
 
     setDialog(instance: any, elementRef: ElementRef, color: any, cpPosition: string, cpPositionOffset: string,
-        cpPositionRelativeToArrow: boolean, cpOutputFormat: string, cpForceAlpha: boolean, cpPresetLabel: string, cpPresetColors: Array<string>,
+        cpPositionRelativeToArrow: boolean, cpOutputFormat: string, cpPresetLabel: string, cpPresetColors: Array<string>,
         cpCancelButton: boolean, cpCancelButtonClass: string, cpCancelButtonText: string,
         cpOKButton: boolean, cpOKButtonClass: string, cpOKButtonText: string,
         cpHeight: string, cpWidth: string,
@@ -82,7 +81,6 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             this.dialogArrowOffset = 0;
         }
         this.cpOutputFormat = cpOutputFormat;
-        this.cpForceAlpha = cpForceAlpha;
         this.cpPresetLabel = cpPresetLabel;
         this.cpPresetColors = cpPresetColors;
         this.cpCancelButton = cpCancelButton;
@@ -105,6 +103,9 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.cpSaveClickOutside = cpSaveClickOutside;
         this.cpAlphaChannel = cpAlphaChannel;
         this.useRootViewContainer = cpUseRootViewContainer;
+        if (cpOutputFormat === 'hex' && cpAlphaChannel !== 'always' && cpAlphaChannel !== 'hex8') {
+          this.cpAlphaChannel = 'disabled';
+        }
     }
 
     ngOnInit() {
@@ -171,7 +172,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
 
     setColorFromString(value: string, emit: boolean = true) {
         let hsva: Hsva;
-        if (this.cpAlphaChannel === 'hex8') {
+        if (this.cpAlphaChannel === 'always' || this.cpAlphaChannel === 'hex8') {
             hsva = this.service.stringToHsva(value, true);
             if (!hsva && !this.hsva) {
                 hsva = this.service.stringToHsva(value, false);
@@ -353,9 +354,6 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
 
     formatPolicy(): number {
         this.format = (this.format + 1) % 3;
-        if (this.format === 0 && this.hsva.a < 1 && this.cpAlphaChannel === 'hex6') {
-            this.format++;
-        }
         return this.format;
     }
 
@@ -367,17 +365,13 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
 
             this.hslaText = new Hsla(Math.round((hsla.h) * 360), Math.round(hsla.s * 100), Math.round(hsla.l * 100), Math.round(hsla.a * 100) / 100);
             this.rgbaText = new Rgba(rgba.r, rgba.g, rgba.b, Math.round(rgba.a * 100) / 100);
-            this.hexText = this.service.hexText(rgba, this.cpAlphaChannel === 'hex8');
+            this.hexText = this.service.hexText(rgba, this.cpAlphaChannel === 'always' || this.cpAlphaChannel === 'hex8');
 
             this.alphaSliderColor = 'rgb(' + rgba.r + ',' + rgba.g + ',' + rgba.b + ')';
             this.hueSliderColor = 'rgb(' + hueRgba.r + ',' + hueRgba.g + ',' + hueRgba.b + ')';
 
-            if (this.format === 0 && this.hsva.a < 1 && this.cpAlphaChannel === 'hex6') {
-                this.format++;
-            }
-
             let lastOutput = this.outputColor;
-            this.outputColor = this.service.outputFormat(this.hsva, this.cpOutputFormat, this.cpAlphaChannel === 'hex8', this.cpForceAlpha);
+            this.outputColor = this.service.outputFormat(this.hsva, this.cpOutputFormat, this.cpAlphaChannel);
             this.selectedColor = this.service.outputFormat(this.hsva, 'rgba', false, false);
 
             this.slider = new SliderPosition((this.hsva.h) * this.sliderDimMax.h - 8, this.hsva.s * this.sliderDimMax.s - 8,

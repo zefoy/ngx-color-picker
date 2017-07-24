@@ -61,8 +61,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
 [cpToggle]                   // Sets the default open / close state of the color picker (false).
 
 [cpOutputFormat]             // Output color format: 'hex', 'rgba', 'hsla' ('hex').
-[cpFallbackColor]            // Is used when the color is not well-formed or undefined ('#000').
-[cpAlphaChannel]             // Allow alpha for HEX values: 'hex6', 'hex8', 'disabled' ('hex6').
+[cpAlphaChannel]             // Alpha in output value: 'enabled', 'disabled', 'always' ('enabled').
+[cpFallbackColor]            // Is used when the color is not well-formed or is undefined ('#000').
 
 [cpPosition]                 // Dialog position: 'right', 'left', 'top', 'bottom' ('right').
 [cpPositionOffset]           // Dialog offset percentage relative to the directive element (0%).

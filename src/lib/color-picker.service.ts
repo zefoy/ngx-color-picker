@@ -90,7 +90,7 @@ export class ColorPickerService {
         return new Rgba(r, g, b, a)
     }
 
-    stringToHsva(colorString: string = '', hex8: boolean = false): Hsva {
+    stringToHsva(colorString: string = '', allowHex8: boolean = false): Hsva {
         let stringParsers = [
             {
                 re: /(rgb)a?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*%?,\s*(\d{1,3})\s*%?(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
@@ -111,7 +111,7 @@ export class ColorPickerService {
                 }
             }
         ];
-        if (hex8) {
+        if (allowHex8) {
             stringParsers.push({
                 re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})$/,
                 parse: function(execResult: any) {
@@ -162,37 +162,32 @@ export class ColorPickerService {
         return hsva;
     }
 
-    outputFormat(hsva: Hsva, outputFormat: string, allowHex8: boolean, forceAlpha: boolean): string {
-        if (hsva.a < 1 || forceAlpha) {
-            switch (outputFormat) {
-                case 'hsla':
-                    let hsla = this.hsva2hsla(hsva);
-                    let hslaText = new Hsla(Math.round((hsla.h) * 360), Math.round(hsla.s * 100), Math.round(hsla.l * 100), Math.round(hsla.a * 100) / 100);
+    outputFormat(hsva: Hsva, outputFormat: string, alphaChannel: string): string {
+        switch (outputFormat) {
+            case 'hsla':
+                let hsla = this.hsva2hsla(hsva);
+                let hslaText = new Hsla(Math.round((hsla.h) * 360), Math.round(hsla.s * 100), Math.round(hsla.l * 100), Math.round(hsla.a * 100) / 100);
+                if (hsva.a < 1 || alphaChannel === 'always') {
                     return 'hsla(' + hslaText.h + ',' + hslaText.s + '%,' + hslaText.l + '%,' + hslaText.a + ')';
-                default:
-                    if (allowHex8 && outputFormat === 'hex')
-                        return this.hexText(this.denormalizeRGBA(this.hsvaToRgba(hsva)), allowHex8);
-                    let rgba = this.denormalizeRGBA(this.hsvaToRgba(hsva));
-                    return 'rgba(' + rgba.r + ',' + rgba.g + ',' + rgba.b + ',' + Math.round(rgba.a * 100) / 100 + ')';
-            }
-        } else {
-            switch (outputFormat) {
-                case 'hsla':
-                    let hsla = this.hsva2hsla(hsva);
-                    let hslaText = new Hsla(Math.round((hsla.h) * 360), Math.round(hsla.s * 100), Math.round(hsla.l * 100), Math.round(hsla.a * 100) / 100);
+                } else {
                     return 'hsl(' + hslaText.h + ',' + hslaText.s + '%,' + hslaText.l + '%)';
-                case 'rgba':
-                    let rgba = this.denormalizeRGBA(this.hsvaToRgba(hsva));
+                }
+            case 'rgba':
+                let rgba = this.denormalizeRGBA(this.hsvaToRgba(hsva));
+                if (hsva.a < 1 || alphaChannel === 'always') {
+                    return 'rgba(' + rgba.r + ',' + rgba.g + ',' + rgba.b + ',' + Math.round(rgba.a * 100) / 100 + ')';
+                } else {
                     return 'rgb(' + rgba.r + ',' + rgba.g + ',' + rgba.b + ')';
-                default:
-                    return this.hexText(this.denormalizeRGBA(this.hsvaToRgba(hsva)), allowHex8);
-            }
+                }
+            default:
+                return this.hexText(this.denormalizeRGBA(this.hsvaToRgba(hsva)), alphaChannel === 'always' || alphaChannel === 'hex8');
+
         }
     }
 
     hexText(rgba: Rgba, allowHex8: boolean): string {
         let hexText = '#' + ((1 << 24) | (rgba.r << 16) | (rgba.g << 8) | rgba.b).toString(16).substr(1);
-        if (hexText[1] === hexText[2] && hexText[3] === hexText[4] && hexText[5] === hexText[6] && rgba.a === 1 && !allowHex8) {
+        if (hexText[1] === hexText[2] && hexText[3] === hexText[4] && hexText[5] === hexText[6] && !allowHex8) {
             hexText = '#' + hexText[1] + hexText[3] + hexText[5];
         }
         if (allowHex8) {

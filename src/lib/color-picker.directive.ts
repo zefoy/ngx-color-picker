@@ -24,7 +24,6 @@ export class ColorPickerDirective implements OnInit, OnChanges {
     @Input('cpPositionOffset') cpPositionOffset: string = '0%';
     @Input('cpPositionRelativeToArrow') cpPositionRelativeToArrow: boolean = false;
     @Input('cpOutputFormat') cpOutputFormat: string = 'hex';
-    @Input('cpForceAlpha') cpForceAlpha: boolean = false;
     @Input('cpPresetLabel') cpPresetLabel: string = 'Preset colors';
     @Input('cpPresetColors') cpPresetColors: Array<string>;
     @Input('cpCancelButton') cpCancelButton: boolean = false;
@@ -39,7 +38,7 @@ export class ColorPickerDirective implements OnInit, OnChanges {
     @Input('cpIgnoredElements') cpIgnoredElements: any = [];
     @Input('cpDialogDisplay') cpDialogDisplay: string = 'popup';
     @Input('cpSaveClickOutside') cpSaveClickOutside: boolean = true;
-    @Input('cpAlphaChannel') cpAlphaChannel: string = 'hex6';
+    @Input('cpAlphaChannel') cpAlphaChannel: string = 'enabled';
     @Input('cpUseRootViewContainer') cpUseRootViewContainer: boolean = false;
 
     private dialog: any;
@@ -79,8 +78,8 @@ export class ColorPickerDirective implements OnInit, OnChanges {
         if (hsva == null) {
             hsva = this.service.stringToHsva(this.cpFallbackColor);
         }
-        let color = this.service.outputFormat(hsva, this.cpOutputFormat, this.cpAlphaChannel === 'hex8', this.cpForceAlpha);
-        /*if (color !== this.colorPicker) {
+        /*let color = this.service.outputFormat(hsva, this.cpOutputFormat, this.cpAlphaChannel);
+        if (color !== this.colorPicker) {
             //setTimeout(() => {
               this.colorPickerChange.emit(color);
               this.cdr.detectChanges();
@@ -111,7 +110,7 @@ export class ColorPickerDirective implements OnInit, OnChanges {
             const injector = ReflectiveInjector.fromResolvedProviders([], vcRef.parentInjector);
             const cmpRef = vcRef.createComponent(compFactory, 0, injector, []);
             cmpRef.instance.setDialog(this, this.el, this.colorPicker, this.cpPosition, this.cpPositionOffset,
-                this.cpPositionRelativeToArrow, this.cpOutputFormat, this.cpForceAlpha, this.cpPresetLabel, this.cpPresetColors,
+                this.cpPositionRelativeToArrow, this.cpOutputFormat, this.cpPresetLabel, this.cpPresetColors,
                 this.cpCancelButton, this.cpCancelButtonClass, this.cpCancelButtonText, this.cpOKButton,
                 this.cpOKButtonClass, this.cpOKButtonText, this.cpHeight, this.cpWidth, this.cpIgnoredElements,
                 this.cpDialogDisplay, this.cpSaveClickOutside, this.cpAlphaChannel, this.cpUseRootViewContainer);

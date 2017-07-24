@@ -1,4 +1,4 @@
-import { Directive, Input, Output, EventEmitter, ElementRef } from '@angular/core';
+import { Directive, Input, Output, EventEmitter, ElementRef, Renderer2 } from '@angular/core';
 
 @Directive({
     selector: '[text]',
@@ -35,10 +35,11 @@ export class SliderDirective {
     @Input('slider') slider: string;
     @Input('rgX') rgX: number;
     @Input('rgY') rgY: number;
+    @Input('useCapture') useCapture: boolean = false;
     private listenerMove: any;
     private listenerStop: any;
 
-    constructor(private el: ElementRef) {
+    constructor(private el: ElementRef, private renderer: Renderer2) {
         this.listenerMove = (event: any) => { this.move(event) };
         this.listenerStop = () => { this.stop() };
     }
@@ -65,17 +66,17 @@ export class SliderDirective {
 
     start(event: any) {
         this.setCursor(event);
-        document.addEventListener('mousemove', this.listenerMove, true);
-        document.addEventListener('touchmove', this.listenerMove, true);
-        document.addEventListener('mouseup', this.listenerStop, true);
-        document.addEventListener('touchend', this.listenerStop, true);
+        document.addEventListener('mousemove', this.listenerMove, this.useCapture);
+        document.addEventListener('touchmove', this.listenerMove, this.useCapture);
+        document.addEventListener('mouseup', this.listenerStop, this.useCapture);
+        document.addEventListener('touchend', this.listenerStop, this.useCapture);
     }
 
     stop() {
-        document.removeEventListener('mousemove', this.listenerMove, true);
-        document.removeEventListener('touchmove', this.listenerMove, true);
-        document.removeEventListener('mouseup', this.listenerStop, true);
-        document.removeEventListener('touchend', this.listenerStop, true);
+        document.removeEventListener('mousemove', this.listenerMove, this.useCapture);
+        document.removeEventListener('touchmove', this.listenerMove, this.useCapture);
+        document.removeEventListener('mouseup', this.listenerStop, this.useCapture);
+        document.removeEventListener('touchend', this.listenerStop, this.useCapture);
     }
 
     getX(event: any): number {

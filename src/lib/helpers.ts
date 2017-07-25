@@ -1,4 +1,4 @@
-import { Directive, Input, Output, EventEmitter, ElementRef, Renderer2 } from '@angular/core';
+import { Directive, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 
 @Directive({
     selector: '[text]',
@@ -39,7 +39,7 @@ export class SliderDirective {
     private listenerMove: any;
     private listenerStop: any;
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {
+    constructor(private el: ElementRef) {
         this.listenerMove = (event: any) => { this.move(event) };
         this.listenerStop = () => { this.stop() };
     }

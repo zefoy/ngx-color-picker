@@ -35,6 +35,7 @@ export class SliderDirective {
     @Input('slider') slider: string;
     @Input('rgX') rgX: number;
     @Input('rgY') rgY: number;
+    @Input('useCapture') useCapture: boolean = false;
     private listenerMove: any;
     private listenerStop: any;
 
@@ -65,17 +66,17 @@ export class SliderDirective {
 
     start(event: any) {
         this.setCursor(event);
-        document.addEventListener('mousemove', this.listenerMove);
-        document.addEventListener('touchmove', this.listenerMove);
-        document.addEventListener('mouseup', this.listenerStop);
-        document.addEventListener('touchend', this.listenerStop);
+        document.addEventListener('mousemove', this.listenerMove, this.useCapture);
+        document.addEventListener('touchmove', this.listenerMove, this.useCapture);
+        document.addEventListener('mouseup', this.listenerStop, this.useCapture);
+        document.addEventListener('touchend', this.listenerStop, this.useCapture);
     }
 
     stop() {
-        document.removeEventListener('mousemove', this.listenerMove);
-        document.removeEventListener('touchmove', this.listenerMove);
-        document.removeEventListener('mouseup', this.listenerStop);
-        document.removeEventListener('touchend', this.listenerStop);
+        document.removeEventListener('mousemove', this.listenerMove, this.useCapture);
+        document.removeEventListener('touchmove', this.listenerMove, this.useCapture);
+        document.removeEventListener('mouseup', this.listenerStop, this.useCapture);
+        document.removeEventListener('touchend', this.listenerStop, this.useCapture);
     }
 
     getX(event: any): number {

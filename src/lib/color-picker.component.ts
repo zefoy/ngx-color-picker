@@ -29,6 +29,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     public cpDialogDisplay: string;
     public cpSaveClickOutside: boolean;
     public cpAlphaChannel: string;
+    public cpUseCapture: boolean = false;
 
     public rgbaText: Rgba;
     public hslaText: Hsla;
@@ -71,7 +72,8 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         cpCancelButton: boolean, cpCancelButtonClass: string, cpCancelButtonText: string,
         cpOKButton: boolean, cpOKButtonClass: string, cpOKButtonText: string,
         cpHeight: string, cpWidth: string,
-        cpIgnoredElements: any, cpDialogDisplay: string, cpSaveClickOutside: boolean, cpAlphaChannel: string, cpUseRootViewContainer: boolean) {
+        cpIgnoredElements: any, cpDialogDisplay: string, cpSaveClickOutside: boolean,
+        cpAlphaChannel: string, cpUseRootViewContainer: boolean, cpUseCapture: boolean) {
         this.directiveInstance = instance;
         this.initialColor = color;
         this.directiveElementRef = elementRef;
@@ -106,6 +108,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         if (cpOutputFormat === 'hex' && cpAlphaChannel !== 'always' && cpAlphaChannel !== 'hex8') {
           this.cpAlphaChannel = 'disabled';
         }
+        this.cpUseCapture = cpUseCapture;
     }
 
     ngOnInit() {
@@ -208,7 +211,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
               this.cdr.detectChanges();
             }, 0);
             this.directiveInstance.toggle(true);
-            document.addEventListener('mousedown', this.listenerMouseDown);
+            document.addEventListener('mousedown', this.listenerMouseDown, this.cpUseCapture);
             window.addEventListener('resize', this.listenerResize);
         }
     }
@@ -217,7 +220,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         if (this.show) {
             this.show = false;
             this.directiveInstance.toggle(false);
-            document.removeEventListener('mousedown', this.listenerMouseDown);
+            document.removeEventListener('mousedown', this.listenerMouseDown, this.cpUseCapture);
             window.removeEventListener('resize', this.listenerResize);
             this.cdr.detectChanges();
         }

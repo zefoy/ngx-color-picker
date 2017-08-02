@@ -40,6 +40,7 @@ export class ColorPickerDirective implements OnInit, OnChanges {
     @Input('cpSaveClickOutside') cpSaveClickOutside: boolean = true;
     @Input('cpAlphaChannel') cpAlphaChannel: string = 'enabled';
     @Input('cpUseRootViewContainer') cpUseRootViewContainer: boolean = false;
+    @Input('cpUseCapture') cpUseCapture: boolean = false;
 
     private dialog: any;
     private created: boolean;
@@ -113,7 +114,8 @@ export class ColorPickerDirective implements OnInit, OnChanges {
                 this.cpPositionRelativeToArrow, this.cpOutputFormat, this.cpPresetLabel, this.cpPresetColors,
                 this.cpCancelButton, this.cpCancelButtonClass, this.cpCancelButtonText, this.cpOKButton,
                 this.cpOKButtonClass, this.cpOKButtonText, this.cpHeight, this.cpWidth, this.cpIgnoredElements,
-                this.cpDialogDisplay, this.cpSaveClickOutside, this.cpAlphaChannel, this.cpUseRootViewContainer);
+                this.cpDialogDisplay, this.cpSaveClickOutside, this.cpAlphaChannel, this.cpUseRootViewContainer,
+                this.cpUseCapture);
             this.dialog = cmpRef.instance;
 
             if (this.vcRef !== vcRef) {

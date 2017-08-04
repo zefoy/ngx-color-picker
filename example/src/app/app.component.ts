@@ -38,6 +38,7 @@ export class AppComponent {
     public color13: string = "rgba(0, 255, 0, 0.5)";
     public color14: string = "rgb(0, 255, 255)";
     public color15: string = "#a51ad633";
+    public color16: string = "#07d683";
 
     public arrayColors: any = {};
     public selectedColor: string = 'color';

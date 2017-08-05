@@ -113,12 +113,12 @@ export class ColorPickerService {
         ];
         if (allowHex8) {
             stringParsers.push({
-                re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})$/,
+                re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})?$/,
                 parse: function(execResult: any) {
                     return new Rgba(parseInt(execResult[1], 16) / 255,
                         parseInt(execResult[2], 16) / 255,
                         parseInt(execResult[3], 16) / 255,
-                        parseInt(execResult[4], 16) / 255);
+                        parseInt(execResult[4] || 'FF', 16) / 255);
                 }
             });
         } else {

@@ -32,6 +32,8 @@ export class TextDirective {
 })
 export class SliderDirective {
     @Output('newValue') newValue = new EventEmitter<any>();
+    @Output('dragStart') dragStart = new EventEmitter();
+    @Output('dragEnd') dragEnd = new EventEmitter();
     @Input('slider') slider: string;
     @Input('rgX') rgX: number;
     @Input('rgY') rgY: number;
@@ -69,6 +71,7 @@ export class SliderDirective {
         document.addEventListener('touchmove', this.listenerMove);
         document.addEventListener('mouseup', this.listenerStop);
         document.addEventListener('touchend', this.listenerStop);
+        this.dragStart.emit();
     }
 
     stop() {
@@ -76,6 +79,7 @@ export class SliderDirective {
         document.removeEventListener('touchmove', this.listenerMove);
         document.removeEventListener('mouseup', this.listenerStop);
         document.removeEventListener('touchend', this.listenerStop);
+        this.dragEnd.emit();
     }
 
     getX(event: any): number {
@@ -93,4 +97,3 @@ export class SliderPosition {
 export class SliderDimension {
   constructor(public h: number, public s: number, public v: number, public a: number) { }
 }
-

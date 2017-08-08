@@ -1,4 +1,4 @@
-import { OnInit, OnChanges, Directive, Input, Output, EventEmitter, Injector, ApplicationRef, ElementRef, ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ChangeDetectorRef } from '@angular/core';
+import { OnInit, OnChanges, Directive, Input, Output, EventEmitter, Injector, ApplicationRef, ElementRef, ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver } from '@angular/core';
 
 import { ColorPickerService } from './color-picker.service';
 import { ColorPickerComponent } from './color-picker.component';
@@ -8,18 +8,13 @@ import { SliderPosition, SliderDimension} from './helpers';
 @Directive({
     selector: '[colorPicker]',
     host: {
-        '(input)': 'changeInput($event.target.value)',
+        '(input)': 'inputChange($event.target.value)',
         '(click)': 'onClick()'
     }
 })
 export class ColorPickerDirective implements OnInit, OnChanges {
     @Input('colorPicker') colorPicker: string;
-    @Output('colorPickerSelect') colorPickerSelect = new EventEmitter<string>(true);
-    @Output('colorPickerChange') colorPickerChange = new EventEmitter<string>(false);
     @Input('cpToggle') cpToggle: boolean;
-    @Output('cpInputChange') cpInputChange = new EventEmitter<any>(true);
-    @Output('cpSliderChange') cpSliderChange = new EventEmitter<any>(true);
-    @Output('cpToggleChange') cpToggleChange = new EventEmitter<boolean>(true);
     @Input('cpPosition') cpPosition: string = 'right';
     @Input('cpPositionOffset') cpPositionOffset: string = '0%';
     @Input('cpPositionRelativeToArrow') cpPositionRelativeToArrow: boolean = false;
@@ -41,11 +36,26 @@ export class ColorPickerDirective implements OnInit, OnChanges {
     @Input('cpAlphaChannel') cpAlphaChannel: string = 'enabled';
     @Input('cpUseRootViewContainer') cpUseRootViewContainer: boolean = false;
 
+    @Output('cpInputChange') cpInputChange = new EventEmitter<any>(true);
+
+    @Output('cpToggleChange') cpToggleChange = new EventEmitter<boolean>(true);
+
+    @Output('cpSliderChange') cpSliderChange = new EventEmitter<any>(true);
+    @Output('cpSliderDragEnd') cpSliderDragEnd = new EventEmitter<string>(true);
+    @Output('cpSliderDragStart') cpSliderDragStart = new EventEmitter<string>(true);
+
+    @Output('colorPickerCancel') colorPickerCancel = new EventEmitter<string>(true);
+    @Output('colorPickerSelect') colorPickerSelect = new EventEmitter<string>(true);
+    @Output('colorPickerChange') colorPickerChange = new EventEmitter<string>(false);
+
     private dialog: any;
     private created: boolean;
     private ignoreChanges: boolean = false;
 
-    constructor(private appRef: ApplicationRef, private vcRef: ViewContainerRef, private el: ElementRef, private injector: Injector, private service: ColorPickerService, private cfr: ComponentFactoryResolver, private cdr: ChangeDetectorRef) {
+    constructor(private injector: Injector, private cfr: ComponentFactoryResolver,
+      private appRef: ApplicationRef, private vcRef: ViewContainerRef, private elRef: ElementRef,
+      private service: ColorPickerService)
+    {
         this.created = false;
     }
 
@@ -64,7 +74,7 @@ export class ColorPickerDirective implements OnInit, OnChanges {
             }
             this.ignoreChanges = false;
         }
-        if (changes.cpPresetLabel || changes.cpPresetColors) {
+        if (changes.cpPresetLabel || changes.cpPresetColors) {
             if (this.dialog) {
                 this.dialog.setPresetConfig(this.cpPresetLabel, this.cpPresetColors);
             }
@@ -88,7 +98,7 @@ export class ColorPickerDirective implements OnInit, OnChanges {
     }
 
     onClick() {
-        if (this.cpIgnoredElements.filter((item: any) => item === this.el.nativeElement).length === 0) {
+        if (this.cpIgnoredElements.filter((item: any) => item === this.elRef.nativeElement).length === 0) {
             this.openDialog();
         }
     }
@@ -109,7 +119,7 @@ export class ColorPickerDirective implements OnInit, OnChanges {
             const compFactory = this.cfr.resolveComponentFactory(ColorPickerComponent);
             const injector = ReflectiveInjector.fromResolvedProviders([], vcRef.parentInjector);
             const cmpRef = vcRef.createComponent(compFactory, 0, injector, []);
-            cmpRef.instance.setDialog(this, this.el, this.colorPicker, this.cpPosition, this.cpPositionOffset,
+            cmpRef.instance.setDialog(this, this.elRef, this.colorPicker, this.cpPosition, this.cpPositionOffset,
                 this.cpPositionRelativeToArrow, this.cpOutputFormat, this.cpPresetLabel, this.cpPresetColors,
                 this.cpCancelButton, this.cpCancelButtonClass, this.cpCancelButtonText, this.cpOKButton,
                 this.cpOKButtonClass, this.cpOKButtonText, this.cpHeight, this.cpWidth, this.cpIgnoredElements,
@@ -124,13 +134,25 @@ export class ColorPickerDirective implements OnInit, OnChanges {
         }
     }
 
+    toggle(value: boolean) {
+        this.cpToggleChange.emit(value);
+    }
+
     colorChanged(value: string, ignore: boolean = true) {
         this.ignoreChanges = ignore;
         this.colorPickerChange.emit(value);
     }
 
+    colorCanceled() {
+      this.colorPickerCancel.emit();
+    }
+
     colorSelected(value: string) {
         this.colorPickerSelect.emit(value);
+    }
+
+    inputChange(value: string) {
+        this.dialog.setColorFromString(value, true);
     }
 
     inputChanged(event: any) {
@@ -141,11 +163,11 @@ export class ColorPickerDirective implements OnInit, OnChanges {
         this.cpSliderChange.emit(event);
     }
 
-    changeInput(value: string) {
-        this.dialog.setColorFromString(value, true);
+    sliderDragEnd(event: any) {
+        this.cpSliderDragEnd.emit(event);
     }
 
-    toggle(value: boolean) {
-        this.cpToggleChange.emit(value);
+    sliderDragStart(event: any) {
+        this.cpSliderDragStart.emit(event);
     }
 }

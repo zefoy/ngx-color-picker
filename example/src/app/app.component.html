@@ -7,7 +7,7 @@
     <hr>
     <div class="row">
         <div class="col-md-5">
-            <input [(colorPicker)]="color" [style.background]="color"/>
+            <input [(colorPicker)]="color" [style.background]="color" (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"/>
         </div>
         <div class="col-md-7">
             <p>Usage:</p>

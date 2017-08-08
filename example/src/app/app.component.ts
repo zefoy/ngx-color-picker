@@ -47,6 +47,10 @@ export class AppComponent {
     private lastColor = '#ff0';
     public cmyk: Cmyk = new Cmyk(0, 0, 0, 0);
 
+    onEventLog(event: string, data: any) {
+      console.log(event, data);
+    }
+
     onChangeColor(color: string): Cmyk {
         return this.rgbaToCmyk(this.cpService.hsvaToRgba(this.cpService.stringToHsva(color)));
     }

@@ -158,6 +158,8 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             this.directiveInstance.colorChanged(this.initialColor, true);
             this.closeColorPicker();
         }
+
+        this.directiveInstance.colorCanceled();
     }
 
     oKColor() {
@@ -184,6 +186,14 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             this.hsva = hsva;
             this.update(emit);
         }
+    }
+
+    onDragEnd(slider: string) {
+      this.directiveInstance.sliderDragEnd({slider: slider, color: this.outputColor});
+    }
+
+    onDragStart(slider: string) {
+      this.directiveInstance.sliderDragStart({slider: slider, color: this.outputColor});
     }
 
     onMouseDown(event: any) {
@@ -282,7 +292,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.hsva = this.service.hsla2hsva(hsla);
         this.update();
 
-        this.directiveInstance.inputChanged({input: 'saturation', value: val});
+        this.directiveInstance.inputChanged({input: 'saturation', value: hsla.s, color: this.outputColor});
     }
 
     setLightness(val: { v: number, rg: number }) {
@@ -291,21 +301,21 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.hsva = this.service.hsla2hsva(hsla);
         this.update();
 
-        this.directiveInstance.inputChanged({input: 'lightness', value: val});
+        this.directiveInstance.inputChanged({input: 'lightness', value: hsla.l, color: this.outputColor});
     }
 
     setHue(val: { v: number, rg: number }) {
         this.hsva.h = val.v / val.rg;
         this.update();
 
-        this.directiveInstance.sliderChanged({slider: 'hue', value: val});
+        this.directiveInstance.sliderChanged({slider: 'hue', value: this.hsva.h, color: this.outputColor});
     }
 
     setAlpha(val: { v: number, rg: number }) {
         this.hsva.a = val.v / val.rg;
         this.update();
 
-        this.directiveInstance.sliderChanged({slider: 'alpha', value: val});
+        this.directiveInstance.sliderChanged({slider: 'alpha', value: this.hsva.a, color: this.outputColor});
     }
 
     setR(val: { v: number, rg: number }) {
@@ -314,7 +324,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.hsva = this.service.rgbaToHsva(rgba);
         this.update();
 
-        this.directiveInstance.inputChanged({input: 'red', value: val});
+        this.directiveInstance.inputChanged({input: 'red', value: rgba.r, color: this.outputColor});
     }
     setG(val: { v: number, rg: number }) {
         let rgba = this.service.hsvaToRgba(this.hsva);
@@ -322,7 +332,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.hsva = this.service.rgbaToHsva(rgba);
         this.update();
 
-        this.directiveInstance.inputChanged({input: 'green', value: val});
+        this.directiveInstance.inputChanged({input: 'green', value: rgba.g, color: this.outputColor});
     }
     setB(val: { v: number, rg: number }) {
         let rgba = this.service.hsvaToRgba(this.hsva);
@@ -330,26 +340,27 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.hsva = this.service.rgbaToHsva(rgba);
         this.update();
 
-        this.directiveInstance.inputChanged({input: 'blue', value: val});
+        this.directiveInstance.inputChanged({input: 'blue', value: rgba.b, color: this.outputColor});
     }
     setA(val: { v: number, rg: number }) {
         this.hsva.a = val.v / val.rg;
         this.update();
 
-        this.directiveInstance.inputChanged({input: 'alpha', value: val});
+        this.directiveInstance.inputChanged({input: 'alpha', value: this.hsva.a, color: this.outputColor});
     }
 
     setHex(val: string) {
       this.setColorFromString(val);
 
-      this.directiveInstance.inputChanged({input: 'hex', value: val});
+      this.directiveInstance.inputChanged({input: 'hex', value: val, color: this.outputColor});
     }
 
     setSaturationAndBrightness(val: { s: number, v: number, rgX: number, rgY: number }) {
         this.hsva.s = val.s / val.rgX;
         this.hsva.v = val.v / val.rgY;
         this.update();
-        this.directiveInstance.sliderChanged({slider: 'saturation-lightness', value: val});
+        this.directiveInstance.sliderChanged({slider: 'lightness', value: this.hsva.v, color: this.outputColor});
+        this.directiveInstance.sliderChanged({slider: 'saturation', value: this.hsva.s, color: this.outputColor});
     }
 
     formatPolicy(): number {

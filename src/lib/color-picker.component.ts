@@ -158,6 +158,8 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             this.directiveInstance.colorChanged(this.initialColor, true);
             this.closeColorPicker();
         }
+
+        this.directiveInstance.cancelled();
     }
 
     oKColor() {

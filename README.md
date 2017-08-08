@@ -107,4 +107,5 @@ import { ColorPickerModule } from 'ngx-color-picker';
                              //   ({input: string, value: string})
 (cpSliderChange)             // Slider name and its value, send when user changes color through slider
                              //   ({slider: string, value: Object})
+(cpCancel)                   // User cancelled, sent when the cancel button is pressed (void).
 ```

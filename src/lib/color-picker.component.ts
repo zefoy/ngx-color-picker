@@ -3,7 +3,7 @@ import {Component, ElementRef, OnInit, AfterViewInit, ViewChild, ChangeDetectorR
 import { ColorPickerService } from './color-picker.service';
 
 import { Rgba, Hsla, Hsva } from './formats';
-import { SliderPosition, SliderDimension } from './helpers';
+import { SliderPosition, SliderDimension, detectIE } from './helpers';
 
 @Component({
     selector: 'color-picker',
@@ -120,8 +120,8 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         } else {
             this.format = 0;
         }
-        this.listenerMouseDown = (event: any) => { this.onMouseDown(event) };
-        this.listenerResize = () => { this.onResize() };
+        this.listenerMouseDown = (event: any) => { this.onMouseDown(event); };
+        this.listenerResize = () => { this.onResize(); };
         this.openDialog(this.initialColor, false);
     }
 
@@ -203,12 +203,14 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     }
 
     onMouseDown(event: any) {
+        // Workaround for IE10: We need to manually click on OK/Cancel button to close the color-picker [detectIE() !== 10]
         if ((!this.isDescendant(this.el.nativeElement, event.target)
             && event.target != this.directiveElementRef.nativeElement &&
-            this.cpIgnoredElements.filter((item: any) => item === event.target).length === 0) && this.cpDialogDisplay === 'popup') {
+            this.cpIgnoredElements.filter((item: any) => item === event.target).length === 0) &&
+            this.cpDialogDisplay === 'popup' && detectIE() !== 10) {
             if (!this.cpSaveClickOutside) {
                 this.setColorFromString(this.initialColor, false);
-                this.directiveInstance.colorChanged(this.initialColor)
+                this.directiveInstance.colorChanged(this.initialColor);
             }
             this.closeColorPicker();
         }
@@ -224,7 +226,16 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
               this.cdr.detectChanges();
             }, 0);
             this.directiveInstance.toggle(true);
-            document.addEventListener('mousedown', this.listenerMouseDown);
+            /**
+             * Required for IE10
+             * This event listener is conditional to avoid memory leaks
+             * If the directive was applied at the root level then this won't affect anything
+             * but if we implement this color picker in child components then it closes on clicking anywhere (including this component)
+             * and stopPropagation() does not work
+             */
+            if (detectIE() !== 10) {
+              document.addEventListener('mousedown', this.listenerMouseDown);
+            }
             window.addEventListener('resize', this.listenerResize);
         }
     }
@@ -233,7 +244,13 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         if (this.show) {
             this.show = false;
             this.directiveInstance.toggle(false);
-            document.removeEventListener('mousedown', this.listenerMouseDown);
+            /**
+             * Required for IE10
+             * If this is not attached then no need to remove the listener
+             */
+            if (detectIE() !== 10) {
+              document.removeEventListener('mousedown', this.listenerMouseDown);
+            }
             window.removeEventListener('resize', this.listenerResize);
             this.cdr.detectChanges();
         }

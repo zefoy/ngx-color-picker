@@ -152,7 +152,10 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.openColorPicker();
     }
 
-    cancelColor() {
+    cancelColor(event: Event) {
+          if (event && event.stopPropagation) {
+            event.stopPropagation();
+          }
         this.setColorFromString(this.initialColor, true);
         if (this.cpDialogDisplay === 'popup') {
             this.directiveInstance.colorChanged(this.initialColor, true);
@@ -162,7 +165,10 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.directiveInstance.colorCanceled();
     }
 
-    oKColor() {
+    oKColor(event: Event) {
+          if (event && event.stopPropagation) {
+            event.stopPropagation();
+          }
         if (this.cpDialogDisplay === 'popup') {
             this.closeColorPicker();
         }

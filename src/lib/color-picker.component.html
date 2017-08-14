@@ -1,4 +1,4 @@
-<div class="color-picker" [hidden]="!show" [style.visibility]="this.hidden ? 'hidden' : 'visible'" [style.height.px]="cpHeight" [style.width.px]="cpWidth" [style.top.px]="top" [style.left.px]="left" [style.position]="position" #dialogPopup>
+<div class="color-picker" [style.visibility]="this.hidden || !show ? 'hidden' : 'visible'" [style.height.px]="cpHeight" [style.width.px]="cpWidth" [style.top.px]="top" [style.left.px]="left" [style.position]="position" #dialogPopup>
     <div *ngIf="cpDialogDisplay=='popup'" class="arrow arrow-{{cpPosition}}" [style.top.px]="arrowTop"></div>
 
     <div [slider] [style.background-color]="hueSliderColor" [rgX]="1" [rgY]="1" (newValue)="setSaturationAndBrightness($event)" (dragStart)="onDragStart('saturation-lightness')" (dragEnd)="onDragEnd('saturation-lightness')" class="saturation-lightness">
@@ -16,13 +16,13 @@
                 <div [style.left.px]="slider.h" class="cursor"></div>
             </div>
 
-            <div [hidden]="cpAlphaChannel==='disabled'" [slider] [style.background-color]="alphaSliderColor" [rgX]="1" (newValue)="setAlpha($event)" (dragStart)="onDragStart('alpha')" (dragEnd)="onDragEnd('alpha')" class="alpha" #alphaSlider>
+            <div [style.display]="cpAlphaChannel === 'disabled' ? 'none' : 'block'" [slider] [style.background-color]="alphaSliderColor" [rgX]="1" (newValue)="setAlpha($event)" (dragStart)="onDragStart('alpha')" (dragEnd)="onDragEnd('alpha')" class="alpha" #alphaSlider>
                 <div [style.left.px]="slider.a" class="cursor"></div>
             </div>
         </div>
     </div>
 
-    <div [hidden]="format!=2" class="hsla-text">
+    <div [style.display]="format !== 2 ? 'none' : 'block'" class="hsla-text">
         <div class="box">
             <input [text] type="number" pattern="[0-9]*" min="0" max="360" [rg]="360" (newValue)="setHue($event)" [value]="hslaText.h"/>
             <input [text] type="number" pattern="[0-9]*" min="0" max="100" [rg]="100" (newValue)="setSaturation($event)" [value]="hslaText.s"/>
@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    <div [hidden]="format!=1" class="rgba-text">
+    <div [style.display]="format !== 1 ? 'none' : 'block'" class="rgba-text">
         <div class="box">
             <input [text] type="number" pattern="[0-9]*" min="0" max="255" [rg]="255" (newValue)="setR($event)" [value]="rgbaText.r"/>
             <input [text] type="number" pattern="[0-9]*" min="0" max="255" [rg]="255" (newValue)="setG($event)" [value]="rgbaText.g"/>
@@ -46,7 +46,7 @@
         </div>
     </div>
 
-    <div [hidden]="format!=0" class="hex-text">
+    <div [style.display]="format !== 0 ? 'none' : 'block'" class="hex-text">
         <div class="box">
             <input [text] (newValue)="setHex($event)" [value]="hexText"/>
         </div>
@@ -66,8 +66,8 @@
     </div>
 
     <div *ngIf="cpOKButton || cpCancelButton" class="button-area">
-        <button *ngIf="cpOKButton" type="button" class="{{cpOKButtonClass}}" (click)="oKColor()">{{cpOKButtonText}}</button>
-        <button *ngIf="cpCancelButton" type="button" class="{{cpCancelButtonClass}}" (click)="cancelColor()">{{cpCancelButtonText}}</button>
+        <button *ngIf="cpOKButton" type="button" class="{{cpOKButtonClass}}" (click)="oKColor($event)">{{cpOKButtonText}}</button>
+        <button *ngIf="cpCancelButton" type="button" class="{{cpCancelButtonClass}}" (click)="cancelColor($event)">{{cpCancelButtonText}}</button>
     </div>
 
 </div>

@@ -13,11 +13,30 @@
     font-size:11px;
 }
 
-@mixin boder-radius($radius){
+@mixin border-radius($radius) {
     -moz-border-radius: $radius;
     -webkit-border-radius: $radius;
     border-radius: $radius;
     -khtml-border-radius: $radius;
+}
+
+// Flexbox display
+// flex or inline-flex
+@mixin flex-box {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+// The 'flex' shorthand
+// - applies to: flex items
+// <positive-number>, initial, auto, or none
+@mixin flex($columns: initial) {
+    -webkit-flex: $columns;
+    -ms-flex: $columns;
+    flex: $columns;
 }
 
 .color-picker{
@@ -92,7 +111,7 @@
             width: 18px;
             height: 18px;
             margin: 4px 6px 8px 6px;
-            @include boder-radius(25%);
+            @include border-radius(25%);
             border: #a9a9a9 solid 1px;
         }
     }
@@ -136,7 +155,7 @@
     div.cursor-sv{
         cursor:default;
         position:relative;
-        @include boder-radius(50%);
+        @include border-radius(50%);
         width: 15px;
         height: 15px;
         border: #ddd solid 1px;
@@ -145,7 +164,7 @@
     div.cursor{
         cursor:default;
         position:relative;
-        @include boder-radius(50%);
+        @include border-radius(50%);
         width: 16px;
         height: 16px;
         border: #222 solid 2px;
@@ -161,7 +180,7 @@
     }
 
     .box{
-        display: flex;
+        @include flex-box();
         padding: 4px 8px;
 
         .left{
@@ -169,7 +188,7 @@
             padding: 16px 8px;
         }
         .right{
-            flex: 1 1 auto;
+            @include flex(1 1 auto);
             padding: 12px 8px;
         }
     }
@@ -198,13 +217,13 @@
         top: 16px;
         left: 8px;
         position:absolute;
-        @include boder-radius(50%);
+        @include border-radius(50%);
     }
 
     .selected-color-background{
         width: 40px;
         height: 40px;
-        @include boder-radius(50%);
+        @include border-radius(50%);
         background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAh0lEQVRYR+2W0QlAMQgD60zdfwOdqa8TmI/wQMr5K0I5bZLIzLOa2nt37VVVbd+dDx5obgCC3KBLwJ2ff4PnVidkf+ucIhw80HQaCLo3DMH3CRK3iFsmAWVl6hPNDwt8EvNE5q+YuEXcMgkonVM6SdyCoEvAnZ8v1Hjx817MilmxSUB5rdLJDycZgUAZUch/AAAAAElFTkSuQmCC');
     }
 
@@ -232,7 +251,7 @@
             padding: 0 24px 8px 8px;
             input{
                 min-width: 0;
-                flex: 1;
+                @include flex(1);
                 margin: 0;
                 float:left;
                 margin-right:8px;
@@ -244,7 +263,7 @@
                 }
             }
             div{
-                flex: 1 1 auto;
+                @include flex(1 1 auto);
                 text-align: center;
                 color: #555;
                 margin-right:8px;
@@ -264,12 +283,12 @@
         .box{
             padding: 0 24px 8px 8px;
             input{
-                flex: 1 1 auto;
+                @include flex(1 1 auto);
                 border: #a9a9a9 solid 1px;
                 padding: 1px;
             }
             div{
-                flex: 1 1 auto;
+                @include flex(1 1 auto);
                 text-align: center;
                 color: #555;
                 float:left;

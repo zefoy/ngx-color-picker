@@ -60,6 +60,8 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
 
     private useRootViewContainer: boolean = false;
 
+    private isIE10: boolean = false;
+
     @ViewChild('hueSlider') hueSlider: any;
     @ViewChild('alphaSlider') alphaSlider: any;
     @ViewChild('dialogPopup') dialogElement: any;
@@ -106,6 +108,8 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         if (cpOutputFormat === 'hex' && cpAlphaChannel !== 'always' && cpAlphaChannel !== 'hex8') {
           this.cpAlphaChannel = 'disabled';
         }
+
+        this.isIE10 = detectIE() === 10;
     }
 
     ngOnInit() {
@@ -207,7 +211,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         if ((!this.isDescendant(this.el.nativeElement, event.target)
             && event.target != this.directiveElementRef.nativeElement &&
             this.cpIgnoredElements.filter((item: any) => item === event.target).length === 0) &&
-            this.cpDialogDisplay === 'popup' && detectIE() !== 10) {
+            this.cpDialogDisplay === 'popup' && !this.isIE10) {
             if (!this.cpSaveClickOutside) {
                 this.setColorFromString(this.initialColor, false);
                 this.directiveInstance.colorChanged(this.initialColor);
@@ -233,7 +237,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
              * but if we implement this color picker in child components then it closes on clicking anywhere (including this component)
              * and stopPropagation() does not work
              */
-            if (detectIE() !== 10) {
+            if (!this.isIE10) {
               document.addEventListener('mousedown', this.listenerMouseDown);
             }
             window.addEventListener('resize', this.listenerResize);
@@ -248,7 +252,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
              * Required for IE10
              * If this is not attached then no need to remove the listener
              */
-            if (detectIE() !== 10) {
+            if (!this.isIE10) {
               document.removeEventListener('mousedown', this.listenerMouseDown);
             }
             window.removeEventListener('resize', this.listenerResize);

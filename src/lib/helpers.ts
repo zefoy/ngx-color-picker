@@ -97,3 +97,16 @@ export class SliderPosition {
 export class SliderDimension {
   constructor(public h: number, public s: number, public v: number, public a: number) { }
 }
+
+const ua = navigator.userAgent.toLowerCase();
+
+export function detectIE() {
+  const msie = ua.indexOf('msie ');
+  if (msie > 0) {
+    // IE 10 or older => return version number
+    return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+  }
+
+  // other browser
+  return false;
+}

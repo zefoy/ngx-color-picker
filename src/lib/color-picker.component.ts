@@ -129,6 +129,10 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.openDialog(this.initialColor, false);
     }
 
+    ngOnDestroy() {
+        this.cdr.detach();
+    }
+
     ngAfterViewInit() {
         if (this.cpWidth != 230) {
             let alphaWidth = this.alphaSlider.nativeElement.offsetWidth;

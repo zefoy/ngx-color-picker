@@ -272,7 +272,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
 
     setDialogPosition() {
         let dialogHeight = this.dialogElement.nativeElement.offsetHeight;
-        let node = this.directiveElementRef.nativeElement, position = 'static', transform = '';
+        let node = this.directiveElementRef.nativeElement.parentNode, position = 'static', transform = '';
         let parentNode: any = null, transformNode: any = null, style: any = null;
         while (node !== null && node.tagName !== 'HTML') {
             style = window.getComputedStyle(node);
@@ -300,6 +300,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             this.top = boxDirective.top;
             this.left = boxDirective.left;
         }
+
         if (position === 'fixed') { this.position = 'fixed'; }
         if (this.cpPosition === 'left') {
             this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;

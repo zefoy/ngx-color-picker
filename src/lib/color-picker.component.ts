@@ -46,6 +46,8 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     public arrowTop: number;
 
     private hsva: Hsva;
+    private width: number;
+    private height: number;
     private outputColor: string;
     private sliderDimMax: SliderDimension;
     private directiveInstance: any;
@@ -91,11 +93,8 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         this.cpOKButton = cpOKButton;
         this.cpOKButtonClass = cpOKButtonClass;
         this.cpOKButtonText = cpOKButtonText;
-        this.cpHeight = parseInt(cpHeight);
-        this.cpWidth = parseInt(cpWidth);
-        if (!this.cpWidth) {
-            this.cpWidth = elementRef.nativeElement.offsetWidth;
-        }
+        this.width = this.cpWidth = parseInt(cpWidth);
+        this.height = this.cpHeight = parseInt(cpHeight);
         this.cpIgnoredElements = cpIgnoredElements;
         this.cpDialogDisplay = cpDialogDisplay;
         if (this.cpDialogDisplay === 'inline') {
@@ -151,6 +150,9 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     }
 
     openDialog(color: any, emit: boolean = true) {
+        if (!this.width) {
+            this.cpWidth = this.directiveElementRef.nativeElement.offsetWidth;
+        }
         this.setInitialColor(color);
         this.setColorFromString(color, emit);
         this.openColorPicker();
@@ -263,6 +265,8 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     onResize() {
         if (this.position === 'fixed') {
             this.setDialogPosition();
+        } else {
+          this.closeColorPicker();
         }
     }
 

@@ -1,8 +1,8 @@
 /*
  * Styles for Color Picker
- * 
+ *
  * Alberto Pujante
- * 
+ *
  * @licence: http://opensource.org/licenses/MIT
  */
 .color-picker *{
@@ -66,6 +66,7 @@
         text-align: center;
         font-size: 13px;
         height: 26px;
+        min-width: 0;
         &:invalid{
             box-shadow: none;
         }

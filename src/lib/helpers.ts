@@ -98,10 +98,15 @@ export class SliderDimension {
   constructor(public h: number, public s: number, public v: number, public a: number) { }
 }
 
-const ua = navigator.userAgent.toLowerCase();
-
 export function detectIE() {
+  let ua = '';
+
+  if (typeof navigator !== "undefined") {
+    ua = navigator.userAgent.toLowerCase();
+  }
+
   const msie = ua.indexOf('msie ');
+
   if (msie > 0) {
     // IE 10 or older => return version number
     return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);

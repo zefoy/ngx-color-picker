@@ -293,7 +293,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         let boxDirective = this.createBox(this.directiveElementRef.nativeElement, (position !== 'fixed'));
         if ((position !== 'fixed' || parentNode) && !this.useRootViewContainer) {
             if (parentNode === null) { parentNode = node }
-            let boxParent = this.createBox(parentNode, true);
+            let boxParent = this.createBox(parentNode, (position !== 'fixed'));
             this.top = boxDirective.top - boxParent.top;
             this.left = boxDirective.left - boxParent.left;
         } else {

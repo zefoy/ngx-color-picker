@@ -44,8 +44,6 @@
     width: 230px;
     height: auto;
     border:#777 solid 1px;
-    left:30px;
-    top:250px;
     position:absolute;
     z-index:100000;
     background-color: #fff;
@@ -219,6 +217,7 @@
         left: 8px;
         position:absolute;
         @include border-radius(50%);
+        border: 1px solid #a9a9a9;
     }
 
     .selected-color-background{

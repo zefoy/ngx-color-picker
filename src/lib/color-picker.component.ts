@@ -264,12 +264,16 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     onResize() {
         if (this.position === 'fixed') {
             this.setDialogPosition();
-        } else {
-          this.closeColorPicker();
+        } else if (this.cpDialogDisplay !== 'inline') {
+            this.closeColorPicker();
         }
     }
 
     setDialogPosition() {
+        if (this.cpDialogDisplay === 'inline') {
+          this.position = 'relative';
+          return;
+        }           
         let dialogHeight = this.dialogElement.nativeElement.offsetHeight;
         let node = this.directiveElementRef.nativeElement.parentNode, position = 'static', transform = '';
         let parentNode: any = null, transformNode: any = null, style: any = null;

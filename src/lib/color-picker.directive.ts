@@ -27,7 +27,7 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
     @Input('cpOKButton') cpOKButton: boolean = false;
     @Input('cpOKButtonClass') cpOKButtonClass: string = 'cp-ok-button-class';
     @Input('cpOKButtonText') cpOKButtonText: string = 'OK';
-    @Input('cpFallbackColor') cpFallbackColor: string = '#000';
+    @Input('cpFallbackColor') cpFallbackColor: string = '#fff';
     @Input('cpHeight') cpHeight: string = 'auto';
     @Input('cpWidth') cpWidth: string = '230px';
     @Input('cpIgnoredElements') cpIgnoredElements: any = [];
@@ -133,8 +133,6 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
                 this.cpDialogDisplay, this.cpSaveClickOutside, this.cpAlphaChannel, this.cpUseRootViewContainer);
             this.dialog = this.cmpRef.instance;
 
-            // this.cmpRef.destroy();
-
             if (this.vcRef !== vcRef) {
                 this.cmpRef.changeDetectorRef.detectChanges();
             }
@@ -161,7 +159,13 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
     }
 
     inputChange(value: string) {
+      if (this.dialog) {
         this.dialog.setColorFromString(value, true);
+      } else {
+        this.colorPicker = value || this.cpFallbackColor || 'rgba(0, 0, 0, 1)';
+
+        this.colorPickerChange.emit(this.colorPicker);
+      }
     }
 
     inputChanged(event: any) {

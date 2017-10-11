@@ -187,9 +187,9 @@ export class ColorPickerService {
 
     hexText(rgba: Rgba, allowHex8: boolean): string {
         let hexText = '#' + ((1 << 24) | (rgba.r << 16) | (rgba.g << 8) | rgba.b).toString(16).substr(1);
-        if (hexText[1] === hexText[2] && hexText[3] === hexText[4] && hexText[5] === hexText[6] && !allowHex8) {
+        /*if (hexText[1] === hexText[2] && hexText[3] === hexText[4] && hexText[5] === hexText[6] && !allowHex8) {
             hexText = '#' + hexText[1] + hexText[3] + hexText[5];
-        }
+        }*/
         if (allowHex8) {
             hexText += ((1 << 8) | Math.round(rgba.a * 255)).toString(16).substr(1);
         }

@@ -1,4 +1,4 @@
-import { OnInit, OnChanges, Directive, Input, Output, EventEmitter, Injector, ApplicationRef, ElementRef, ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver } from '@angular/core';
+import { OnInit, OnChanges, Directive, Input, Output, EventEmitter, Injector, ApplicationRef, ElementRef, ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentRef, OnDestroy } from '@angular/core';
 
 import { ColorPickerService } from './color-picker.service';
 import { ColorPickerComponent } from './color-picker.component';
@@ -12,7 +12,7 @@ import { SliderPosition, SliderDimension} from './helpers';
         '(click)': 'onClick()'
     }
 })
-export class ColorPickerDirective implements OnInit, OnChanges {
+export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
     @Input('colorPicker') colorPicker: string;
     @Input('cpToggle') cpToggle: boolean;
     @Input('cpPosition') cpPosition: string = 'right';
@@ -51,6 +51,7 @@ export class ColorPickerDirective implements OnInit, OnChanges {
     private dialog: any;
     private created: boolean;
     private ignoreChanges: boolean = false;
+    private cmpRef: ComponentRef<ColorPickerComponent>;
 
     constructor(private injector: Injector, private cfr: ComponentFactoryResolver,
       private appRef: ApplicationRef, private vcRef: ViewContainerRef, private elRef: ElementRef,
@@ -97,6 +98,12 @@ export class ColorPickerDirective implements OnInit, OnChanges {
         }*/
     }
 
+    ngOnDestroy() {
+        if (this.cmpRef !== undefined) {
+            this.cmpRef.destroy();
+        }
+    }
+
     onClick() {
         if (this.cpIgnoredElements.filter((item: any) => item === this.elRef.nativeElement).length === 0) {
             this.openDialog();
@@ -108,26 +115,28 @@ export class ColorPickerDirective implements OnInit, OnChanges {
             this.created = true;
             let vcRef = this.vcRef;
             if (this.cpUseRootViewContainer && this.cpDialogDisplay !== 'inline') {
-              let classOfRootComponent = this.appRef.componentTypes[0];
-              let appInstance = this.injector.get(classOfRootComponent);
+              const classOfRootComponent = this.appRef.componentTypes[0];
+              const appInstance = this.injector.get(classOfRootComponent);
               vcRef = appInstance.vcRef || appInstance.viewContainerRef || this.vcRef;
               if (vcRef === this.vcRef) {
-                console.warn("You are using cpUseRootViewContainer, but the root component is not exposing viewContainerRef!" +
-                  "Please expose it by adding 'public vcRef: ViewContainerRef' to the constructor.");
+                console.warn('You are using cpUseRootViewContainer, but the root component is not exposing viewContainerRef!' +
+                  'Please expose it by adding \'public vcRef: ViewContainerRef\' to the constructor.');
               }
             }
             const compFactory = this.cfr.resolveComponentFactory(ColorPickerComponent);
             const injector = ReflectiveInjector.fromResolvedProviders([], vcRef.parentInjector);
-            const cmpRef = vcRef.createComponent(compFactory, 0, injector, []);
-            cmpRef.instance.setDialog(this, this.elRef, this.colorPicker, this.cpPosition, this.cpPositionOffset,
+            this.cmpRef = vcRef.createComponent(compFactory, 0, injector, []);
+            this.cmpRef.instance.setDialog(this, this.elRef, this.colorPicker, this.cpPosition, this.cpPositionOffset,
                 this.cpPositionRelativeToArrow, this.cpOutputFormat, this.cpPresetLabel, this.cpPresetColors,
                 this.cpCancelButton, this.cpCancelButtonClass, this.cpCancelButtonText, this.cpOKButton,
                 this.cpOKButtonClass, this.cpOKButtonText, this.cpHeight, this.cpWidth, this.cpIgnoredElements,
                 this.cpDialogDisplay, this.cpSaveClickOutside, this.cpAlphaChannel, this.cpUseRootViewContainer);
-            this.dialog = cmpRef.instance;
+            this.dialog = this.cmpRef.instance;
+
+            // this.cmpRef.destroy();
 
             if (this.vcRef !== vcRef) {
-              cmpRef.changeDetectorRef.detectChanges();
+                this.cmpRef.changeDetectorRef.detectChanges();
             }
         } else if (this.dialog) {
             this.dialog.openDialog(this.colorPicker);

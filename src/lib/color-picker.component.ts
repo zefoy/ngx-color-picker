@@ -150,6 +150,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     }
 
     openDialog(color: any, emit: boolean = true) {
+        this.service.setActive(this);
         if (!this.width) {
             this.cpWidth = this.directiveElementRef.nativeElement.offsetWidth;
         }
@@ -258,6 +259,8 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
               document.removeEventListener('mousedown', this.listenerMouseDown);
             }
             window.removeEventListener('resize', this.listenerResize);
+
+            this.cdr.detectChanges();
         }
     }
 
@@ -273,7 +276,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         if (this.cpDialogDisplay === 'inline') {
           this.position = 'relative';
           return;
-        }           
+        }
         let dialogHeight = this.dialogElement.nativeElement.offsetHeight;
         let node = this.directiveElementRef.nativeElement.parentNode, position = 'static', transform = '';
         let parentNode: any = null, transformNode: any = null, style: any = null;

@@ -4,7 +4,16 @@ import { Rgba, Hsla, Hsva } from './formats';
 
 @Injectable()
 export class ColorPickerService {
+    private active = null;
+
     constructor() { }
+
+    setActive(active: any) {
+      if (this.active && this.active.cpDialogDisplay !== 'inline') {
+        this.active.closeColorPicker();
+      }
+      this.active = active;
+    }
 
     hsla2hsva(hsla: Hsla): Hsva {
         let h = Math.min(hsla.h, 1), s = Math.min(hsla.s, 1), l = Math.min(hsla.l, 1), a = Math.min(hsla.a, 1);

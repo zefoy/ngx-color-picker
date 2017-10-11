@@ -8,8 +8,9 @@ import { SliderPosition, SliderDimension} from './helpers';
 @Directive({
     selector: '[colorPicker]',
     host: {
-        '(input)': 'inputChange($event.target.value)',
-        '(click)': 'onClick()'
+      '(click)': 'inputFocus()',
+      '(focus)': 'inputFocus()',
+      '(input)': 'inputChange($event.target.value)'
     }
 })
 export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
@@ -104,13 +105,9 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    onClick() {
-        if (this.cpIgnoredElements.filter((item: any) => item === this.elRef.nativeElement).length === 0) {
-            this.openDialog();
-        }
-    }
-
     openDialog() {
+        this.colorPicker = this.colorPicker || this.cpFallbackColor || 'rgba(0, 0, 0, 1)';
+
         if (!this.created) {
             this.created = true;
             let vcRef = this.vcRef;
@@ -156,6 +153,12 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
 
     colorSelected(value: string) {
         this.colorPickerSelect.emit(value);
+    }
+
+    inputFocus() {
+        if (this.cpIgnoredElements.filter((item: any) => item === this.elRef.nativeElement).length === 0) {
+            this.openDialog();
+        }
     }
 
     inputChange(value: string) {

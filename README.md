@@ -111,5 +111,14 @@ import { ColorPickerModule } from 'ngx-color-picker';
 (cpSliderDragEnd)            // Slider name and current color, send when slider dragging ends (mouseup,touchend)
 (cpSliderDragStart)          // Slider name and current color, send when slider dragging starts (mousedown,touchstart)
                              //   ({slider: string, value: number|string, color: string})
+[cpAddColorButton]           // Show an Add Color button which add the color into preset (false).
+[cpAddColorButtonText]       // Button label text shown inside the Add Color button ('Add color').
+[cpAddColorButtonClass]      // Additional class for customizing the Add Color button ('').
+
+[cpRemoveColorButtonClass]   // Additional class for customizing the Remove Color button ('').
+[cpMaxPresetColorsLength]    // Use this option to set the max colors allowed into preset panel (6: number).
+
+[cpPresetEmptyMessage]       // Message for empty colors if any provided used ('No colors added').
+[cpPresetEmptyMessageClass]  // Additional class for customizing the empty colors message ('').
 
 ```

@@ -21,13 +21,20 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
     @Input('cpPositionRelativeToArrow') cpPositionRelativeToArrow: boolean = false;
     @Input('cpOutputFormat') cpOutputFormat: string = 'hex';
     @Input('cpPresetLabel') cpPresetLabel: string = 'Preset colors';
+    @Input('cpPresetEmptyMessage') cpPresetEmptyMessage: string = 'No colors added';
+    @Input('cpPresetEmptyMessageClass') cpPresetEmptyMessageClass: string = 'preset-empty-message';
     @Input('cpPresetColors') cpPresetColors: Array<string>;
+    @Input('cpMaxPresetColorsLength') cpMaxPresetColorsLength: number = 6;
     @Input('cpCancelButton') cpCancelButton: boolean = false;
     @Input('cpCancelButtonClass') cpCancelButtonClass: string = 'cp-cancel-button-class';
     @Input('cpCancelButtonText') cpCancelButtonText: string = 'Cancel';
     @Input('cpOKButton') cpOKButton: boolean = false;
     @Input('cpOKButtonClass') cpOKButtonClass: string = 'cp-ok-button-class';
     @Input('cpOKButtonText') cpOKButtonText: string = 'OK';
+    @Input('cpAddColorButton') cpAddColorButton: boolean = false;
+    @Input('cpAddColorButtonClass') cpAddColorButtonClass: string = 'cp-add-color-button-class';
+    @Input('cpAddColorButtonText') cpAddColorButtonText: string = 'Add color';
+    @Input('cpRemoveColorButtonClass') cpRemoveColorButtonClass: string = 'cp-remove-color-button-class';
     @Input('cpFallbackColor') cpFallbackColor: string = '#fff';
     @Input('cpHeight') cpHeight: string = 'auto';
     @Input('cpWidth') cpWidth: string = '230px';
@@ -124,9 +131,13 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
             const injector = ReflectiveInjector.fromResolvedProviders([], vcRef.parentInjector);
             this.cmpRef = vcRef.createComponent(compFactory, 0, injector, []);
             this.cmpRef.instance.setDialog(this, this.elRef, this.colorPicker, this.cpPosition, this.cpPositionOffset,
-                this.cpPositionRelativeToArrow, this.cpOutputFormat, this.cpPresetLabel, this.cpPresetColors,
-                this.cpCancelButton, this.cpCancelButtonClass, this.cpCancelButtonText, this.cpOKButton,
-                this.cpOKButtonClass, this.cpOKButtonText, this.cpHeight, this.cpWidth, this.cpIgnoredElements,
+                this.cpPositionRelativeToArrow, this.cpOutputFormat, this.cpPresetLabel, this.cpPresetEmptyMessage,
+                this.cpPresetEmptyMessageClass, this.cpPresetColors, this.cpMaxPresetColorsLength,
+                this.cpCancelButton, this.cpCancelButtonClass, this.cpCancelButtonText,
+                this.cpOKButton, this.cpOKButtonClass, this.cpOKButtonText,
+                this.cpAddColorButton, this.cpAddColorButtonClass, this.cpAddColorButtonText,
+                this.cpRemoveColorButtonClass,
+                this.cpHeight, this.cpWidth, this.cpIgnoredElements,
                 this.cpDialogDisplay, this.cpSaveClickOutside, this.cpAlphaChannel, this.cpUseRootViewContainer);
             this.dialog = this.cmpRef.instance;
 

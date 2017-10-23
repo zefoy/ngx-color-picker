@@ -79,6 +79,14 @@ import { ColorPickerModule } from 'ngx-color-picker';
 [cpPresetLabel]              // Label text for the preset colors if any provided ('Preset colors').
 [cpPresetColors]             // Array of preset colors to show in the color picker dialog ([]).
 
+[cpDialogDisplay]            // Dialog positioning mode: 'popup', 'inline' ('popup').
+                             //   popup: dialog is shown as popup (fixed positioning).
+                             //   inline: dialog is shown permanently (static positioning).
+
+[cpIgnoredElements]          // Array of HTML elements that will be ignored when clicked ([]).
+
+[cpSaveClickOutside]         // Save currently selected color when user clicks outside (true).
+
 [cpOKButton]                 // Show an OK / Apply button which saves the color (false).
 [cpOKButtonText]             // Button label text shown inside the OK / Apply button ('OK').
 [cpOKButtonClass]            // Additional class for customizing the OK / Apply button ('').
@@ -87,13 +95,15 @@ import { ColorPickerModule } from 'ngx-color-picker';
 [cpCancelButtonText]         // Button label text shown inside the Cancel / Reset button ('Cancel').
 [cpCancelButtonClass]        // Additional class for customizing the Cancel / Reset button ('').
 
-[cpDialogDisplay]            // Dialog positioning mode: 'popup', 'inline' ('popup').
-                             //   popup: dialog is shown as popup (fixed positioning).
-                             //   inline: dialog is shown permanently (static positioning).
+[cpAddColorButton]           // Show an Add Color button which add the color into preset (false).
+[cpAddColorButtonText]       // Button label text shown inside the Add Color button ('Add color').
+[cpAddColorButtonClass]      // Additional class for customizing the Add Color button ('').
 
-[cpIgnoredElements]          // Array of HTML elements that will be ignored when clicked ([]).
+[cpRemoveColorButtonClass]   // Additional class for customizing the Remove Color button ('').
+[cpMaxPresetColorsLength]    // Use this option to set the max colors allowed into preset panel (6: number).
 
-[cpSaveClickOutside]         // Save currently selected color when user clicks outside (true).
+[cpPresetEmptyMessage]       // Message for empty colors if any provided used ('No colors added').
+[cpPresetEmptyMessageClass]  // Additional class for customizing the empty colors message ('').
 
 [cpUseRootViewContainer]     // Create dialog component in the root view container (false).
                              // Note: The root component needs to have public viewContainerRef.
@@ -111,5 +121,4 @@ import { ColorPickerModule } from 'ngx-color-picker';
 (cpSliderDragEnd)            // Slider name and current color, send when slider dragging ends (mouseup,touchend)
 (cpSliderDragStart)          // Slider name and current color, send when slider dragging starts (mousedown,touchstart)
                              //   ({slider: string, value: number|string, color: string})
-
 ```

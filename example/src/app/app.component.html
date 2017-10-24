@@ -366,8 +366,9 @@
         <div class="col-md-5">
             <input [(colorPicker)]="color16"
                 [style.background]="color16"
+                [cpPresetColors]="['#fff', '#2889e9']"
+                [cpOutputFormat]="'rgba'"
                 [cpAlphaChannel]="'always'"
-                [cpPresetColors]="['#000', '#2889e9']"
                 [cpAddColorButton]="true"/>
         </div>
         <div class="col-md-7">
@@ -375,8 +376,9 @@
             <pre>
 &lt;input [(colorPicker)]="color"
        [style.background]="color"
-       [cpAlphaChannel]="'always'"
        [cpPresetColors]="['#fff', '#2889e9']"
+       [cpOutputFormat]="'rgba'"
+       [cpAlphaChannel]="'always'"
        [cpAddColorButton]="true"/&gt;
             </pre>
         </div>

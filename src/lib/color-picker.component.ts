@@ -16,7 +16,10 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     public cpPositionOffset: number;
     public cpOutputFormat: string;
     public cpPresetLabel: string;
+    public cpPresetEmptyMessage: string;
+    public cpPresetEmptyMessageClass: string;
     public cpPresetColors: Array<string>;
+    public cpMaxPresetColorsLength: number;
     public cpCancelButton: boolean;
     public cpCancelButtonClass: string;
     public cpCancelButtonText: string;
@@ -29,6 +32,10 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     public cpDialogDisplay: string;
     public cpSaveClickOutside: boolean;
     public cpAlphaChannel: string;
+    public cpAddColorButton: boolean;
+    public cpAddColorButtonClass: string;
+    public cpAddColorButtonText: string;
+    public cpRemoveColorButtonClass: string;
 
     public rgbaText: Rgba;
     public hslaText: Hsla;
@@ -71,10 +78,12 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     constructor(private el: ElementRef, private cdr: ChangeDetectorRef, private service: ColorPickerService) { }
 
     setDialog(instance: any, elementRef: ElementRef, color: any, cpPosition: string, cpPositionOffset: string,
-        cpPositionRelativeToArrow: boolean, cpOutputFormat: string, cpPresetLabel: string, cpPresetColors: Array<string>,
+        cpPositionRelativeToArrow: boolean, cpOutputFormat: string, cpPresetLabel: string,
+        cpPresetEmptyMessage: string, cpPresetEmptyMessageClass: string, cpPresetColors: Array<string>, cpMaxPresetColorsLength: number,
         cpCancelButton: boolean, cpCancelButtonClass: string, cpCancelButtonText: string,
         cpOKButton: boolean, cpOKButtonClass: string, cpOKButtonText: string,
-        cpHeight: string, cpWidth: string,
+        cpAddColorButton: boolean, cpAddColorButtonClass: string, cpAddColorButtonText: string,
+        cpRemoveColorButtonClass: string, cpHeight: string, cpWidth: string,
         cpIgnoredElements: any, cpDialogDisplay: string, cpSaveClickOutside: boolean, cpAlphaChannel: string, cpUseRootViewContainer: boolean) {
         this.directiveInstance = instance;
         this.initialColor = color;
@@ -86,13 +95,20 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         }
         this.cpOutputFormat = cpOutputFormat;
         this.cpPresetLabel = cpPresetLabel;
+        this.cpPresetEmptyMessage = cpPresetEmptyMessage;
+        this.cpPresetEmptyMessageClass = cpPresetEmptyMessageClass;
         this.cpPresetColors = cpPresetColors;
+        this.cpMaxPresetColorsLength = cpMaxPresetColorsLength;
         this.cpCancelButton = cpCancelButton;
         this.cpCancelButtonClass = cpCancelButtonClass;
         this.cpCancelButtonText = cpCancelButtonText;
         this.cpOKButton = cpOKButton;
         this.cpOKButtonClass = cpOKButtonClass;
         this.cpOKButtonText = cpOKButtonText;
+        this.cpAddColorButton = cpAddColorButton;
+        this.cpAddColorButtonClass = cpAddColorButtonClass;
+        this.cpAddColorButtonText = cpAddColorButtonText;
+        this.cpRemoveColorButtonClass = cpRemoveColorButtonClass;
         this.width = this.cpWidth = parseInt(cpWidth);
         this.height = this.cpHeight = parseInt(cpHeight);
         this.cpIgnoredElements = cpIgnoredElements;
@@ -199,6 +215,16 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             this.hsva = hsva;
             this.update(emit);
         }
+    }
+
+    addPresetColor(value: string) {
+        if (!this.cpPresetColors.filter((color) => color === value).length) {
+            this.cpPresetColors = this.cpPresetColors.concat(value);
+        }
+    }
+
+    removePresetColor(value: string) {
+        this.cpPresetColors = this.cpPresetColors.filter((color) => color !== value);
     }
 
     onDragEnd(slider: string) {

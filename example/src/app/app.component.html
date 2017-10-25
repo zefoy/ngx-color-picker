@@ -362,6 +362,29 @@
     </div>
 
     <hr>
+    <div class="row">
+        <div class="col-md-5">
+            <input [(colorPicker)]="color16"
+                [style.background]="color16"
+                [cpPresetColors]="['#fff', '#2889e9']"
+                [cpOutputFormat]="'rgba'"
+                [cpAlphaChannel]="'always'"
+                [cpAddColorButton]="true"/>
+        </div>
+        <div class="col-md-7">
+            <p>Add and remove preset colors:</p>
+            <pre>
+&lt;input [(colorPicker)]="color"
+       [style.background]="color"
+       [cpPresetColors]="['#fff', '#2889e9']"
+       [cpOutputFormat]="'rgba'"
+       [cpAlphaChannel]="'always'"
+       [cpAddColorButton]="true"/&gt;
+            </pre>
+        </div>
+    </div>
+
+    <hr>
     <br>
     <div class="row">
         <div class="col-md-12">
@@ -515,6 +538,51 @@
                         <td>
                             <b>false</b>, true<br>
                             Create dialog component in the root view container instead the elements view container.<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>cpAddColorButton</td>
+                        <td>
+                            <b>false</b>, true<br>
+                            Add or remove colors into your preset panel. The [cpPresetColors] is needed<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>cpAddColorButtonText</td>
+                        <td>
+                            <b>'Add color'</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>cpAddColorButtonClass</td>
+                        <td>
+                            Class to customize the add color button.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>cpRemoveColorButtonClass</td>
+                        <td>
+                            Class to customize the remove color button.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>cpMaxPresetColorsLength</td>
+                        <td>
+                            <b>8</b> (number)<br>
+                            Use this option to set the max colors allowed into preset panel.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>cpPresetEmptyMessage</td>
+                        <td>
+                            <b>'No colors added'</b><br>
+                            Message for empty colors if any provided used.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>cpPresetEmptyMessageClass</td>
+                        <td>
+                            Class to customize the empty colors message.
                         </td>
                     </tr>
                 </tbody>

@@ -105,13 +105,22 @@
         }
 
         .preset-color {
-            cursor: pointer;
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            margin: 4px 6px 8px 6px;
             @include border-radius(25%);
             border: #a9a9a9 solid 1px;
+            cursor: pointer;
+            display: inline-block;
+            height: 18px;
+            margin: 4px 6px 8px 6px;
+            position: relative;
+            width: 18px;
+        }
+
+        .preset-empty-message {
+            font-style: italic;
+            margin-bottom: 8px;
+            margin-top: 4px;
+            min-height: 18px;
+            text-align: center;
         }
     }
 
@@ -294,6 +303,52 @@
                 float:left;
                 clear: left;
             }
+        }
+    }
+    
+    .cp-add-color-button-class {
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        display: inline;
+        margin-left: -3px;
+        margin-top: 3px;
+        padding: 0;
+        position: absolute;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &:disabled {
+            color: #999;
+            cursor: not-allowed;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+
+    .cp-remove-color-button-class {
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: 1px 1px 5px #333;
+        cursor: pointer;
+        display: block;
+        height: 10px;
+        position: absolute;
+        right: -5px;
+        text-align: center;
+        top: -5px;
+        width: 10px;
+
+        &:before {
+            bottom: 3.5px;
+            content: 'x';
+            display: inline-block;
+            font-size: 10px;
+            position: relative;
         }
     }
 }

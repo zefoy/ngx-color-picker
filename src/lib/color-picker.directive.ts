@@ -55,6 +55,7 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
     @Output('colorPickerCancel') colorPickerCancel = new EventEmitter<string>(true);
     @Output('colorPickerSelect') colorPickerSelect = new EventEmitter<string>(true);
     @Output('colorPickerChange') colorPickerChange = new EventEmitter<string>(false);
+    @Output('cpPresetColorsChange') presetColorsChange = new EventEmitter<any>(true);
 
     private dialog: any;
     private created: boolean;
@@ -165,6 +166,10 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
     colorSelected(value: string) {
         this.colorPickerSelect.emit(value);
     }
+
+    presetColorsChanged(value: Array<any>) {
+        this.presetColorsChange.emit(value);
+    } 
 
     inputFocus() {
         if (this.cpIgnoredElements.filter((item: any) => item === this.elRef.nativeElement).length === 0) {

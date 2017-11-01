@@ -220,11 +220,13 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     addPresetColor(value: string) {
         if (!this.cpPresetColors.filter((color) => color === value).length) {
             this.cpPresetColors = this.cpPresetColors.concat(value);
+            this.directiveInstance.presetColorsChanged(this.cpPresetColors);
         }
     }
 
     removePresetColor(value: string) {
         this.cpPresetColors = this.cpPresetColors.filter((color) => color !== value);
+        this.directiveInstance.presetColorsChanged(this.cpPresetColors);
     }
 
     onDragEnd(slider: string) {

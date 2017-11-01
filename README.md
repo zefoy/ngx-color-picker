@@ -114,6 +114,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
 
 (cpToggleChange)             // Status of the dialog, send when dialog is opened / closed (open: boolean).
 
+(cpPresetColorsChange)       // Preset colors value, send when Add Color button is pressed (value: array).
+
 (cpInputChange)              // Input name and its value, send when user changes color through inputs
                              //   ({input: string, value: number|string, color: string})
 

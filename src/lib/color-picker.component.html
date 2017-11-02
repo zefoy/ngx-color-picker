@@ -8,7 +8,13 @@
         <div class="left">
             <div class="selected-color-background"></div>
             <div [style.background-color]="selectedColor" class="selected-color"></div>
-            <button *ngIf="cpAddColorButton" class="{{cpAddColorButtonClass}}" (click)="addPresetColor(selectedColor)" [disabled]="cpPresetColors && cpPresetColors.length >= cpMaxPresetColorsLength">{{cpAddColorButtonText}}</button>
+            <button 
+                *ngIf="cpAddColorButton" 
+                class="{{cpAddColorButtonClass}}" 
+                (click)="addPresetColor(selectedColor)" 
+                [disabled]="cpPresetColors && cpPresetColors.length >= cpMaxPresetColorsLength">
+                {{cpAddColorButtonText}}
+            </button>
         </div>
         <div class="right">
             <div *ngIf="cpAlphaChannel==='disabled'" style="height: 16px;"></div>

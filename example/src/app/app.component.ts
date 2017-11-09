@@ -6,10 +6,10 @@ export class Cmyk {
 }
 
 @Component({
-    moduleId: module.id + '',
     selector: 'my-app',
+    moduleId: 'src/app/app.component',
     templateUrl: 'app.component.html',
-    styleUrls: ['app.component.css']
+    styleUrls: [ 'app.component.css' ]
 })
 export class AppComponent {
 

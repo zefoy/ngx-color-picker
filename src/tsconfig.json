@@ -1,14 +1,21 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "inlineSources": true,
-    "lib": ["dom", "es2015"],
-    "module": "commonjs",
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "module": "es2015",
     "moduleResolution": "node",
     "outDir": "../dist",
+    "rootDir": ".",
+    "skipLibCheck": true,
     "sourceMap": true,
+    "strict": false,
     "target": "es5",
     "typeRoots": [
       "../node_modules/@types"
@@ -18,19 +25,13 @@
     ]
   },
   "files": [
-    "index.ts",
-    "lib/formats.ts",
-    "lib/helpers.ts",
-    "lib/color-picker.module.ts",
-    "lib/color-picker.service.ts",
-    "lib/color-picker.component.ts",
-    "lib/color-picker.directive.ts"
+    "index.ts"
   ],
   "angularCompilerOptions": {
-    "skipMetadataEmit" : false,
-    "skipTemplateCodegen": true
-  },
-  "awesomeTypescriptLoaderOptions": {
-    "useWebpackText": true
+    "annotateForClosureCompiler": true,
+    "flatModuleId": "ngx-color-picker",
+    "flatModuleOutFile": "ngx-color-picker.js",
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true
   }
 }

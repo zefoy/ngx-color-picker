@@ -2,26 +2,18 @@
 
 <a href="https://badge.fury.io/js/ngx-color-picker"><img src="https://badge.fury.io/js/ngx-color-picker.svg" align="right" alt="npm version" height="18"></a>
 
-This is an AOT compatible version with some additional features of the cool angular2-color-picker by Alberplz.
+This is a simple color picker based on the cool angular2-color-picker by Alberplz.
 
-In future this library might merge with the angular2-color-picker or continue live as a separate library.
+This documentation is for the latest 5.x.x version which requires Angular 5. For Angular 4 you need to use the latest 4.x.x version. Documentation for the 4.x.x can be found from <a href="https://github.com/zefoy/ngx-color-picker/tree/4.x.x/">here</a>.
 
 See a live example application <a href="https://zefoy.github.io/ngx-color-picker/">here</a>.
 
-### Library building
+### Building the library
 
 ```bash
 npm install
 npm run build
-npm run inline
-```
-
-### Library development
-
-```bash
-npm link
-cd example
-npm link ngx-color-picker
+npm run bundle
 ```
 
 ### Running the example
@@ -30,8 +22,14 @@ npm link ngx-color-picker
 cd example
 npm install
 npm start
+```
 
-(or 'npm run start:sjs' for using SystemJS)
+### Library development
+
+```bash
+npm link
+cd example
+npm link ngx-color-picker
 ```
 
 ### Installing and usage
@@ -100,7 +98,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 [cpAddColorButtonClass]      // Additional class for customizing the Add Color button ('').
 
 [cpRemoveColorButtonClass]   // Additional class for customizing the Remove Color button ('').
-[cpMaxPresetColorsLength]    // Use this option to set the max colors allowed into preset panel (6: number).
+[cpMaxPresetColorsLength]    // Use this option to set the max colors allowed in presets (null).
 
 [cpPresetEmptyMessage]       // Message for empty colors if any provided used ('No colors added').
 [cpPresetEmptyMessageClass]  // Additional class for customizing the empty colors message ('').

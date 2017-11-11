@@ -12,8 +12,7 @@ See a live example application <a href="https://zefoy.github.io/ngx-color-picker
 
 ```bash
 npm install
-npm run build
-npm run bundle
+npm start
 ```
 
 ### Running the example

@@ -9,7 +9,7 @@ export class ColorPickerService {
     constructor() { }
 
     setActive(active: any) {
-      if (this.active && this.active.cpDialogDisplay !== 'inline') {
+      if (this.active && this.active !== active && this.active.cpDialogDisplay !== 'inline') {
         this.active.closeColorPicker();
       }
       this.active = active;

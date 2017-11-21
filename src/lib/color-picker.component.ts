@@ -288,7 +288,9 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
             }
             window.removeEventListener('resize', this.listenerResize);
 
-            this.cdr.detectChanges();
+            if (!this.cdr['destroyed']) {
+              this.cdr.detectChanges();
+            }
         }
     }
 

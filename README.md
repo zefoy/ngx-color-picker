@@ -37,7 +37,7 @@ npm start
 ### Installing and usage
 
 ```bash
-npm install ngx-color-picker --save
+npm install ngx-color-picker@4.5.0 --save
 ```
 
 ##### Load the module for your app:

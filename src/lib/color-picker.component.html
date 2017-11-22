@@ -64,17 +64,18 @@
 
     <div (click)="formatPolicy()" class="type-policy"></div>
 
-    <div *ngIf="cpPresetColors" class="preset-area">
+    <div *ngIf="cpPresetColors?.length || cpAddColorButton" class="preset-area">
        <hr>
 
        <div class="preset-label">{{cpPresetLabel}}</div>
-       <div *ngIf="cpPresetColors.length">
+
+       <div *ngIf="cpPresetColors?.length">
             <div *ngFor="let color of cpPresetColors" class="preset-color" [style.backgroundColor]="color" (click)="setColorFromString(color)">
                     <span *ngIf="cpAddColorButton" class="{{cpRemoveColorButtonClass}}" (click)="removePresetColor(color)"></span>
             </div>
        </div>
 
-       <div *ngIf="!cpPresetColors.length && cpAddColorButton" class="{{cpPresetEmptyMessageClass}}">{{cpPresetEmptyMessage}}</div>
+       <div *ngIf="!cpPresetColors?.length && cpAddColorButton" class="{{cpPresetEmptyMessageClass}}">{{cpPresetEmptyMessage}}</div>
     </div>
 
     <div *ngIf="cpOKButton || cpCancelButton" class="button-area">

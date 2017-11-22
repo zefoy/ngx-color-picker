@@ -201,7 +201,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         }
     }
 
-    setColorFromString(value: string, emit: boolean = true) {
+    setColorFromString(value: string, emit: boolean = true, update: boolean = true) {
         let hsva: Hsva;
         if (this.cpAlphaChannel === 'always' || this.cpAlphaChannel === 'hex8') {
             hsva = this.service.stringToHsva(value, true);
@@ -213,7 +213,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         }
         if (hsva) {
             this.hsva = hsva;
-            this.update(emit);
+            this.update(emit, update);
         }
     }
 
@@ -418,9 +418,13 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     }
 
     setHex(val: string) {
-      this.setColorFromString(val);
+      if (val === null) {
+        this.update();
+      } else {
+        this.setColorFromString(val, true, false);
 
-      this.directiveInstance.inputChanged({input: 'hex', value: val, color: this.outputColor});
+        this.directiveInstance.inputChanged({input: 'hex', value: val, color: this.outputColor});
+      }
     }
 
     setSaturationAndBrightness(val: { s: number, v: number, rgX: number, rgY: number }) {
@@ -436,15 +440,17 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         return this.format;
     }
 
-    update(emit: boolean = true) {
+    update(emit: boolean = true, update: boolean = true) {
         if (this.sliderDimMax) {
             let hsla = this.service.hsva2hsla(this.hsva);
             let rgba = this.service.denormalizeRGBA(this.service.hsvaToRgba(this.hsva));
             let hueRgba = this.service.denormalizeRGBA(this.service.hsvaToRgba(new Hsva(this.hsva.h, 1, 1, 1)));
 
-            this.hslaText = new Hsla(Math.round((hsla.h) * 360), Math.round(hsla.s * 100), Math.round(hsla.l * 100), Math.round(hsla.a * 100) / 100);
-            this.rgbaText = new Rgba(rgba.r, rgba.g, rgba.b, Math.round(rgba.a * 100) / 100);
-            this.hexText = this.service.hexText(rgba, this.cpAlphaChannel === 'always' || this.cpAlphaChannel === 'hex8');
+            if (update) {
+              this.hslaText = new Hsla(Math.round((hsla.h) * 360), Math.round(hsla.s * 100), Math.round(hsla.l * 100), Math.round(hsla.a * 100) / 100);
+              this.rgbaText = new Rgba(rgba.r, rgba.g, rgba.b, Math.round(rgba.a * 100) / 100);
+              this.hexText = this.service.hexText(rgba, this.cpAlphaChannel === 'always' || this.cpAlphaChannel === 'hex8');
+            }
 
             this.alphaSliderColor = 'rgb(' + rgba.r + ',' + rgba.g + ',' + rgba.b + ')';
             this.hueSliderColor = 'rgb(' + hueRgba.r + ',' + hueRgba.g + ',' + hueRgba.b + ')';

@@ -8,10 +8,10 @@
         <div class="left">
             <div class="selected-color-background"></div>
             <div [style.background-color]="selectedColor" class="selected-color"></div>
-            <button 
-                *ngIf="cpAddColorButton" 
-                class="{{cpAddColorButtonClass}}" 
-                (click)="addPresetColor(selectedColor)" 
+            <button
+                *ngIf="cpAddColorButton"
+                class="{{cpAddColorButtonClass}}"
+                (click)="addPresetColor(selectedColor)"
                 [disabled]="cpPresetColors && cpPresetColors.length >= cpMaxPresetColorsLength">
                 {{cpAddColorButtonText}}
             </button>
@@ -55,7 +55,7 @@
 
     <div [style.display]="format !== 0 ? 'none' : 'block'" class="hex-text">
         <div class="box">
-            <input [text] (newValue)="setHex($event)" [value]="hexText"/>
+            <input [text] (blur)="setHex(null)" (newValue)="setHex($event)" [value]="hexText"/>
         </div>
         <div class="box">
             <div>Hex</div>

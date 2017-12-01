@@ -4,7 +4,7 @@
     <div [slider] [style.background-color]="hueSliderColor" [rgX]="1" [rgY]="1" (newValue)="setSaturationAndBrightness($event)" (dragStart)="onDragStart('saturation-lightness')" (dragEnd)="onDragEnd('saturation-lightness')" class="saturation-lightness">
         <div [style.left.px]="slider.s" [style.top.px]="slider.v" class="cursor"></div>
     </div>
-    <div class="box">
+    <div class="hue-alpha box">
         <div class="left">
             <div class="selected-color-background"></div>
             <div [style.background-color]="selectedColor" class="selected-color"></div>

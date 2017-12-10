@@ -1,6 +1,7 @@
 {
   "name": "ngx-color-picker-example",
   "description": "Example app for the ngx-color-picker",
+  "private": true,
   "license": "MIT",
   "version": "5.0.0",
   "tslint": {

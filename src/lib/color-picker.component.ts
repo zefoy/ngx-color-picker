@@ -1,4 +1,5 @@
-import {Component, ElementRef, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef} from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, AfterViewInit,
+  ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 
 import { ColorPickerService } from './color-picker.service';
 
@@ -8,7 +9,8 @@ import { SliderPosition, SliderDimension, detectIE } from './helpers';
 @Component({
     selector: 'color-picker',
     templateUrl: './lib/color-picker.component.html',
-    styleUrls: [ './lib/color-picker.component.css' ]
+    styleUrls: [ './lib/color-picker.component.css' ],
+    encapsulation: ViewEncapsulation.None
 })
 
 export class ColorPickerComponent implements OnInit, AfterViewInit {

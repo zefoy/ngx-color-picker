@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <div [style.display]="format !== 2 ? 'none' : 'block'" class="hsla-text">
+    <div *ngIf="!cpDisableInput" [style.display]="format !== 2 ? 'none' : 'block'" class="hsla-text">
         <div class="box">
             <input [text] type="number" pattern="[0-9]*" min="0" max="360" [rg]="360" (newValue)="setHue($event)" [value]="hslaText.h"/>
             <input [text] type="number" pattern="[0-9]*" min="0" max="100" [rg]="100" (newValue)="setSaturation($event)" [value]="hslaText.s"/>
@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <div [style.display]="format !== 1 ? 'none' : 'block'" class="rgba-text">
+    <div *ngIf="!cpDisableInput" [style.display]="format !== 1 ? 'none' : 'block'" class="rgba-text">
         <div class="box">
             <input [text] type="number" pattern="[0-9]*" min="0" max="255" [rg]="255" (newValue)="setR($event)" [value]="rgbaText.r"/>
             <input [text] type="number" pattern="[0-9]*" min="0" max="255" [rg]="255" (newValue)="setG($event)" [value]="rgbaText.g"/>
@@ -53,7 +53,7 @@
         </div>
     </div>
 
-    <div [style.display]="format !== 0 ? 'none' : 'block'" class="hex-text">
+    <div *ngIf="!cpDisableInput" [style.display]="format !== 0 ? 'none' : 'block'" class="hex-text">
         <div class="box">
             <input [text] (blur)="setHex(null)" (newValue)="setHex($event)" [value]="hexText"/>
         </div>

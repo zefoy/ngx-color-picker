@@ -31,6 +31,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
     public cpHeight: number;
     public cpWidth: number;
     public cpIgnoredElements: any;
+    public cpDisableInput: boolean;
     public cpDialogDisplay: string;
     public cpSaveClickOutside: boolean;
     public cpAlphaChannel: string;
@@ -86,7 +87,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         cpOKButton: boolean, cpOKButtonClass: string, cpOKButtonText: string,
         cpAddColorButton: boolean, cpAddColorButtonClass: string, cpAddColorButtonText: string,
         cpRemoveColorButtonClass: string, cpHeight: string, cpWidth: string,
-        cpIgnoredElements: any, cpDialogDisplay: string, cpSaveClickOutside: boolean, cpAlphaChannel: string, cpUseRootViewContainer: boolean) {
+        cpIgnoredElements: any, cpDialogDisplay: string, cpSaveClickOutside: boolean, cpAlphaChannel: string, cpDisableInput: boolean, cpUseRootViewContainer: boolean) {
         this.directiveInstance = instance;
         this.initialColor = color;
         this.directiveElementRef = elementRef;
@@ -121,6 +122,7 @@ export class ColorPickerComponent implements OnInit, AfterViewInit {
         }
         this.cpSaveClickOutside = cpSaveClickOutside;
         this.cpAlphaChannel = cpAlphaChannel;
+        this.cpDisableInput = cpDisableInput;
         this.useRootViewContainer = cpUseRootViewContainer;
         if (cpOutputFormat === 'hex' && cpAlphaChannel !== 'always' && cpAlphaChannel !== 'hex8') {
           this.cpAlphaChannel = 'disabled';

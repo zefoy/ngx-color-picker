@@ -39,6 +39,7 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
     @Input('cpHeight') cpHeight: string = 'auto';
     @Input('cpWidth') cpWidth: string = '230px';
     @Input('cpIgnoredElements') cpIgnoredElements: any = [];
+    @Input('cpDisableInput') cpDisableInput: boolean = false;
     @Input('cpDialogDisplay') cpDialogDisplay: string = 'popup';
     @Input('cpSaveClickOutside') cpSaveClickOutside: boolean = true;
     @Input('cpAlphaChannel') cpAlphaChannel: string = 'enabled';
@@ -139,7 +140,7 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
                 this.cpAddColorButton, this.cpAddColorButtonClass, this.cpAddColorButtonText,
                 this.cpRemoveColorButtonClass,
                 this.cpHeight, this.cpWidth, this.cpIgnoredElements,
-                this.cpDialogDisplay, this.cpSaveClickOutside, this.cpAlphaChannel, this.cpUseRootViewContainer);
+                this.cpDialogDisplay, this.cpSaveClickOutside, this.cpAlphaChannel, this.cpDisableInput, this.cpUseRootViewContainer);
             this.dialog = this.cmpRef.instance;
 
             if (this.vcRef !== vcRef) {
@@ -169,7 +170,7 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
 
     presetColorsChanged(value: Array<any>) {
         this.presetColorsChange.emit(value);
-    } 
+    }
 
     inputFocus() {
         if (this.cpIgnoredElements.filter((item: any) => item === this.elRef.nativeElement).length === 0) {

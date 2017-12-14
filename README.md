@@ -48,6 +48,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     ...
     ColorPickerModule
   ]
+  ...
 })
 ```
 
@@ -76,6 +77,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
 [cpPresetLabel]              // Label text for the preset colors if any provided ('Preset colors').
 [cpPresetColors]             // Array of preset colors to show in the color picker dialog ([]).
 
+[cpDisableInput]             // Disables / hides the color input field from the dialog (false).
+
 [cpDialogDisplay]            // Dialog positioning mode: 'popup', 'inline' ('popup').
                              //   popup: dialog is shown as popup (fixed positioning).
                              //   inline: dialog is shown permanently (static positioning).
@@ -97,6 +100,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 [cpAddColorButtonClass]      // Additional class for customizing the Add Color button ('').
 
 [cpRemoveColorButtonClass]   // Additional class for customizing the Remove Color button ('').
+
 [cpMaxPresetColorsLength]    // Use this option to set the max colors allowed in presets (null).
 
 [cpPresetEmptyMessage]       // Message for empty colors if any provided used ('No colors added').

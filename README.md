@@ -52,7 +52,6 @@ import { ColorPickerModule } from 'ngx-color-picker';
     ...
     ColorPickerModule
   ]
-  ...
 })
 ```
 

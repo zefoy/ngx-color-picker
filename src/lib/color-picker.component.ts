@@ -9,7 +9,7 @@ import { SliderPosition, SliderDimension, detectIE } from './helpers';
 @Component({
     selector: 'color-picker',
     templateUrl: './lib/color-picker.component.html',
-    styleUrls: [ './lib/color-picker.component.css' ],
+    styleUrls: [ './lib/color-picker.component.scss' ],
     encapsulation: ViewEncapsulation.None
 })
 

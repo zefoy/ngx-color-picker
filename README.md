@@ -6,7 +6,11 @@ This is a simple color picker based on the cool angular2-color-picker by Alberpl
 
 This documentation is for the latest 5.x.x version which requires Angular 5. For Angular 4 you need to use the latest 4.x.x version. Documentation for the 4.x.x can be found from <a href="https://github.com/zefoy/ngx-color-picker/tree/4.x.x/">here</a>.
 
-See a live example application <a href="https://zefoy.github.io/ngx-color-picker/">here</a>.
+### Quick links
+
+[Example application](https://zefoy.github.io/ngx-color-picker/)
+ | 
+[Plunker template](http://plnkr.co/edit/UGPjQ1u4WRNWQ8xDGTL8?p=preview)
 
 ### Building the library
 

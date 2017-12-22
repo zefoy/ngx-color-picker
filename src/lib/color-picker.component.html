@@ -62,7 +62,7 @@
         </div>
     </div>
 
-    <div (click)="formatPolicy()" class="type-policy"></div>
+    <div *ngIf="!cpDisableInput" (click)="formatPolicy()" class="type-policy"></div>
 
     <div *ngIf="cpPresetColors?.length || cpAddColorButton" class="preset-area">
        <hr>

@@ -1,107 +1,9 @@
-import { Directive, Input, Output, EventEmitter, ElementRef } from '@angular/core';
-
-@Directive({
-    selector: '[text]',
-    host: {
-        '(input)': 'changeInput($event.target.value)'
-    }
-})
-export class TextDirective {
-    @Output('newValue') newValue = new EventEmitter<any>();
-    @Input('text') text: any;
-    @Input('rg') rg: number;
-
-    changeInput(value: string) {
-        if (this.rg === undefined) {
-            this.newValue.emit(value);
-        } else {
-            let numeric = parseFloat(value)
-            if (!isNaN(numeric) && numeric >= 0 && numeric <= this.rg) {
-                this.newValue.emit({ v: numeric, rg: this.rg });
-            }
-        }
-    }
-}
-
-@Directive({
-    selector: '[slider]',
-    host: {
-        '(mousedown)': 'start($event)',
-        '(touchstart)': 'start($event)'
-    }
-})
-export class SliderDirective {
-    @Output('newValue') newValue = new EventEmitter<any>();
-    @Output('dragStart') dragStart = new EventEmitter();
-    @Output('dragEnd') dragEnd = new EventEmitter();
-    @Input('slider') slider: string;
-    @Input('rgX') rgX: number;
-    @Input('rgY') rgY: number;
-    private listenerMove: any;
-    private listenerStop: any;
-
-    constructor(private el: ElementRef) {
-        this.listenerMove = (event: any) => { this.move(event) };
-        this.listenerStop = () => { this.stop() };
-    }
-
-    setCursor(event: any) {
-        let height = this.el.nativeElement.offsetHeight;
-        let width = this.el.nativeElement.offsetWidth;
-        let x = Math.max(0, Math.min(this.getX(event), width));
-        let y = Math.max(0, Math.min(this.getY(event), height));
-
-        if (this.rgX !== undefined && this.rgY !== undefined) {
-            this.newValue.emit({ s: x / width, v: (1 - y / height), rgX: this.rgX, rgY: this.rgY });
-        } else if (this.rgX === undefined && this.rgY !== undefined) {//ready to use vertical sliders
-            this.newValue.emit({ v: y / height, rg: this.rgY });
-        } else {
-            this.newValue.emit({ v: x / width, rg: this.rgX });
-        }
-    }
-
-    move(event: any) {
-        event.preventDefault();
-        this.setCursor(event);
-    }
-
-    start(event: any) {
-        this.setCursor(event);
-        document.addEventListener('mousemove', this.listenerMove);
-        document.addEventListener('touchmove', this.listenerMove);
-        document.addEventListener('mouseup', this.listenerStop);
-        document.addEventListener('touchend', this.listenerStop);
-        this.dragStart.emit();
-    }
-
-    stop() {
-        document.removeEventListener('mousemove', this.listenerMove);
-        document.removeEventListener('touchmove', this.listenerMove);
-        document.removeEventListener('mouseup', this.listenerStop);
-        document.removeEventListener('touchend', this.listenerStop);
-        this.dragEnd.emit();
-    }
-
-    getX(event: any): number {
-        return (event.pageX !== undefined ? event.pageX : event.touches[0].pageX) - this.el.nativeElement.getBoundingClientRect().left - window.pageXOffset;
-    }
-    getY(event: any): number {
-        return (event.pageY !== undefined ? event.pageY : event.touches[0].pageY) - this.el.nativeElement.getBoundingClientRect().top - window.pageYOffset;
-    }
-}
-
-export class SliderPosition {
-  constructor(public h: number, public s: number, public v: number, public a: number) { }
-}
-
-export class SliderDimension {
-  constructor(public h: number, public s: number, public v: number, public a: number) { }
-}
+import { Directive, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
 
 export function detectIE() {
   let ua = '';
 
-  if (typeof navigator !== "undefined") {
+  if (typeof navigator !== 'undefined') {
     ua = navigator.userAgent.toLowerCase();
   }
 
@@ -112,6 +14,128 @@ export function detectIE() {
     return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
   }
 
-  // other browser
+  // Other browser
   return false;
+}
+
+@Directive({
+  selector: '[text]'
+})
+export class TextDirective {
+  @Input() rg: number;
+  @Input() text: any;
+
+  @Output() newValue = new EventEmitter<any>();
+
+  @HostListener('input', ['$event']) inputChange(event: any) {
+    const value = event.target.value;
+
+    if (this.rg === undefined) {
+      this.newValue.emit(value);
+    } else {
+      const numeric = parseFloat(value);
+
+      if (!isNaN(numeric) && numeric >= 0 && numeric <= this.rg) {
+        this.newValue.emit({ v: numeric, rg: this.rg });
+      }
+    }
+  }
+}
+
+@Directive({
+  selector: '[slider]'
+})
+export class SliderDirective {
+  private listenerMove: any;
+  private listenerStop: any;
+
+  @Input() rgX: number;
+  @Input() rgY: number;
+
+  @Input() slider: string;
+
+  @Output() dragEnd = new EventEmitter();
+  @Output() dragStart = new EventEmitter();
+
+  @Output() newValue = new EventEmitter<any>();
+
+  @HostListener('mousedown', ['$event']) mouseDown(event: any) {
+    this.start(event);
+  }
+
+  @HostListener('touchstart', ['$event']) touchStart(event: any) {
+    this.start(event);
+  }
+
+  constructor(private elRef: ElementRef) {
+    this.listenerMove = (event: any) => this.move(event);
+
+    this.listenerStop = () => this.stop();
+  }
+
+  private move(event: any) {
+    event.preventDefault();
+
+    this.setCursor(event);
+  }
+
+  private start(event: any) {
+    this.setCursor(event);
+
+    document.addEventListener('mouseup', this.listenerStop);
+    document.addEventListener('touchend', this.listenerStop);
+    document.addEventListener('mousemove', this.listenerMove);
+    document.addEventListener('touchmove', this.listenerMove);
+
+    this.dragStart.emit();
+  }
+
+  private stop() {
+    document.removeEventListener('mouseup', this.listenerStop);
+    document.removeEventListener('touchend', this.listenerStop);
+    document.removeEventListener('mousemove', this.listenerMove);
+    document.removeEventListener('touchmove', this.listenerMove);
+
+    this.dragEnd.emit();
+  }
+
+  private getX(event: any): number {
+    const position = this.elRef.nativeElement.getBoundingClientRect();
+
+    const pageX = (event.pageX !== undefined) ? event.pageX : event.touches[0].pageX;
+
+    return pageX - position.left - window.pageXOffset;
+  }
+
+  private getY(event: any): number {
+    const position = this.elRef.nativeElement.getBoundingClientRect();
+
+    const pageY = (event.pageY !== undefined) ? event.pageY : event.touches[0].pageY;
+
+    return pageY - position.top - window.pageYOffset;
+  }
+
+  private setCursor(event: any) {
+    const width = this.elRef.nativeElement.offsetWidth;
+    const height = this.elRef.nativeElement.offsetHeight;
+
+    const x = Math.max(0, Math.min(this.getX(event), width));
+    const y = Math.max(0, Math.min(this.getY(event), height));
+
+    if (this.rgX !== undefined && this.rgY !== undefined) {
+      this.newValue.emit({ s: x / width, v: (1 - y / height), rgX: this.rgX, rgY: this.rgY });
+    } else if (this.rgX === undefined && this.rgY !== undefined) {
+      this.newValue.emit({ v: y / height, rgY: this.rgY });
+    } else if (this.rgX !== undefined && this.rgY === undefined) {
+      this.newValue.emit({ v: x / width, rgX: this.rgX });
+    }
+  }
+}
+
+export class SliderPosition {
+  constructor(public h: number, public s: number, public v: number, public a: number) {}
+}
+
+export class SliderDimension {
+  constructor(public h: number, public s: number, public v: number, public a: number) {}
 }

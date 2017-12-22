@@ -1,3 +1,7 @@
+export class Cmyk {
+  constructor(public c: number, public m: number, public y: number, public k: number) {}
+}
+
 export class Hsla {
   constructor(public h: number, public s: number, public l: number, public a: number) {}
 }

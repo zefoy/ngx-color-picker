@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Rgba, Hsla, Hsva } from './formats';
+import { Cmyk, Rgba, Hsla, Hsva } from './formats';
 
 @Injectable()
 export class ColorPickerService {
@@ -76,6 +76,20 @@ export class ColorPickerService {
     }
 
     return new Rgba(r, g, b, a);
+  }
+
+  public rgbaToCmyk(rgba: Rgba): Cmyk {
+    const k: number = 1 - Math.max(rgba.r, rgba.g, rgba.b);
+
+    if (k === 1) {
+      return new Cmyk(0, 0, 0, 1);
+    } else {
+      const c = (1 - rgba.r - k) / (1 - k);
+      const m = (1 - rgba.g - k) / (1 - k);
+      const y = (1 - rgba.b - k) / (1 - k);
+
+      return new Cmyk(c, m, y, k);
+    }
   }
 
   public rgbaToHsva(rgba: Rgba): Hsva {

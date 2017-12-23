@@ -86,7 +86,7 @@
 
   <div class="row" >
     <div class="col-md-5" >
-      <span id="changeme" [style.color]="color6" [cpPosition]="'bottom'" [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [(colorPicker)]="color6">Change me!</span>
+      <span class="change-me" [style.color]="color6" [cpPosition]="'bottom'" [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [(colorPicker)]="color6">Change me!</span>
     </div>
 
     <div class="col-md-7">
@@ -166,26 +166,18 @@
 
       <div class="clearfix"></div>
 
-      <div class="cmyk">
-        <div>
-          <span style="color: rgb(0,255,255);" [style.font-size.px]="100 * cmykColor.c">C</span>
-        </div>
+      <div>
+        <span class="cmyk-text" style="color: rgb(0,255,255);" [style.font-size.px]="100 * cmykColor.c">C</span>
 
-        <div>
-          <span style="color: rgb(255,0,255)" [style.font-size.px]="100 * cmykColor.m">M</span>
-        </div>
+        <span class="cmyk-text" style="color: rgb(255,0,255)" [style.font-size.px]="100 * cmykColor.m">M</span>
       </div>
 
       <div class="clearfix"></div>
 
-      <div class="cmyk">
-        <div>
-          <span style="color: rgb(255,255,0)" [style.font-size.px]="100 * cmykColor.y">Y</span>
-        </div>
+      <div>
+        <span class="cmyk-text" style="color: rgb(255,255,0)" [style.font-size.px]="100 * cmykColor.y">Y</span>
 
-        <div>
-          <span [style.font-size.px]="100 * cmykColor.k">K</span>
-        </div>
+        <span class="cmyk-text" [style.font-size.px]="100 * cmykColor.k">K</span>
       </div>
 
       <div class="clearfix"></div>
@@ -300,15 +292,15 @@
     </div>
 
     <div class="col-md-2">
-      <div class="array-colors-element" [style.background]="arrayColors['color1']" (click)="selectedColor='color1'"></div>
+      <div class="color-box" [style.background]="arrayColors['color1']" (click)="selectedColor='color1'"></div>
 
-      <div class="array-colors-element" [style.background]="arrayColors['color2']" (click)="selectedColor='color2'"></div>
+      <div class="color-box" [style.background]="arrayColors['color2']" (click)="selectedColor='color2'"></div>
 
-      <div class="array-colors-element" [style.background]="arrayColors['color3']" (click)="selectedColor='color3'"></div>
+      <div class="color-box" [style.background]="arrayColors['color3']" (click)="selectedColor='color3'"></div>
 
-      <div class="array-colors-element" [style.background]="arrayColors['color4']" (click)="selectedColor='color4'"></div>
+      <div class="color-box" [style.background]="arrayColors['color4']" (click)="selectedColor='color4'"></div>
 
-      <div class="array-colors-element" [style.background]="arrayColors['color5']" (click)="selectedColor='color5'"></div>
+      <div class="color-box" [style.background]="arrayColors['color5']" (click)="selectedColor='color5'"></div>
     </div>
 
     <div class="col-md-7">
@@ -349,8 +341,7 @@
     </div>
   </div>
 
-  <hr>
-  <br>
+  <hr><br>
 
   <div class="row">
     <div class="col-md-12">
@@ -584,8 +575,7 @@
     </div>
   </div>
 
-  <hr>
-  <br>
+  <hr><br>
 
   <div class="row">
     <div class="col-md-12">

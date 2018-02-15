@@ -30,6 +30,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private directiveInstance: any;
 
+  private sliderH: number;
   private sliderDimMax: SliderDimension;
   private directiveElementRef: ElementRef;
 
@@ -336,6 +337,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public onHueChange(value: {v: number, rgX: number}) {
     this.hsva.h = value.v / value.rgX;
+    this.sliderH = this.hsva.h;
 
     this.updateColorPicker();
 
@@ -556,7 +558,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.selectedColor = this.service.outputFormat(this.hsva, 'rgba', null);
 
       this.slider = new SliderPosition(
-        (this.hsva.h) * this.sliderDimMax.h - 8,
+        (this.sliderH || this.hsva.h) * this.sliderDimMax.h - 8,
         this.hsva.s * this.sliderDimMax.s - 8,
         (1 - this.hsva.v) * this.sliderDimMax.v - 8,
         this.hsva.a * this.sliderDimMax.a - 8

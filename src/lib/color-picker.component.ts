@@ -538,7 +538,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       const hsla = this.service.hsva2hsla(this.hsva);
       const rgba = this.service.denormalizeRGBA(this.service.hsvaToRgba(this.hsva));
 
-      const hue = this.service.denormalizeRGBA(this.service.hsvaToRgba(new Hsva(this.hsva.h, 1, 1, 1)));
+      const hue = this.service.denormalizeRGBA(this.service.hsvaToRgba(new Hsva(this.sliderH || this.hsva.h, 1, 1, 1)));
 
       if (update) {
         this.hslaText = new Hsla(Math.round((hsla.h) * 360), Math.round(hsla.s * 100), Math.round(hsla.l * 100),

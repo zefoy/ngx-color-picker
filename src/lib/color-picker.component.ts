@@ -83,7 +83,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public cpCancelButtonClass: string;
 
   public cpPresetLabel: string;
-  public cpPresetColors: Array<string>;
+  public cpPresetColors: string[];
   public cpMaxPresetColorsLength: number;
 
   public cpPresetEmptyMessage: string;
@@ -146,6 +146,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.cpWidth = this.directiveElementRef.nativeElement.offsetWidth;
     }
 
+    if (!this.height) {
+      this.height = 320;
+    }
+
     this.setInitialColor(color);
     this.setColorFromString(color, emit);
 
@@ -161,7 +165,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     cpAlphaChannel: string, cpOutputFormat: string, cpDisableInput: boolean,
     cpIgnoredElements: any, cpSaveClickOutside: boolean, cpUseRootViewContainer: boolean,
     cpPosition: string, cpPositionOffset: string, cpPositionRelativeToArrow: boolean,
-    cpPresetLabel: string, cpPresetColors: Array<string>, cpMaxPresetColorsLength: number,
+    cpPresetLabel: string, cpPresetColors: string[], cpMaxPresetColorsLength: number,
     cpPresetEmptyMessage: string, cpPresetEmptyMessageClass: string,
     cpOKButton: boolean, cpOKButtonClass: string, cpOKButtonText: string,
     cpCancelButton: boolean, cpCancelButtonClass: string, cpCancelButtonText: string,
@@ -229,7 +233,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.initialColor = color;
   }
 
-  public setPresetConfig(cpPresetLabel: string, cpPresetColors: Array<string>) {
+  public setPresetConfig(cpPresetLabel: string, cpPresetColors: string[]) {
     this.cpPresetLabel = cpPresetLabel;
     this.cpPresetColors = cpPresetColors;
   }

@@ -1,11 +1,9 @@
 import { Directive, OnInit, OnChanges, OnDestroy, Input, Output, EventEmitter,
   HostListener, ApplicationRef, ComponentRef, ElementRef, ViewContainerRef,
-  Injector, ReflectiveInjector, ComponentFactoryResolver} from '@angular/core';
+  Injector, ReflectiveInjector, ComponentFactoryResolver } from '@angular/core';
 
 import { ColorPickerService } from './color-picker.service';
 import { ColorPickerComponent } from './color-picker.component';
-
-import { SliderPosition, SliderDimension} from './helpers';
 
 @Directive({
   selector: '[colorPicker]'
@@ -53,7 +51,7 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
   @Input() cpCancelButtonClass: string = 'cp-cancel-button-class';
 
   @Input() cpPresetLabel: string = 'Preset colors';
-  @Input() cpPresetColors: Array<string>;
+  @Input() cpPresetColors: string[];
   @Input() cpMaxPresetColorsLength: number = 6;
 
   @Input() cpPresetEmptyMessage: string = 'No colors added';
@@ -93,7 +91,7 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
 
   constructor(private injector: Injector, private cfr: ComponentFactoryResolver,
     private appRef: ApplicationRef, private vcRef: ViewContainerRef, private elRef: ElementRef,
-    private service: ColorPickerService) {}
+    private _service: ColorPickerService) {}
 
   ngOnInit() {
     this.colorPicker = this.colorPicker || this.cpFallbackColor || 'rgba(0, 0, 0, 1)';
@@ -233,7 +231,7 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
     this.cpSliderDragStart.emit(event);
   }
 
-  public presetColorsChanged(value: Array<any>) {
+  public presetColorsChanged(value: any[]) {
     this.cpPresetColorsChange.emit(value);
   }
 }

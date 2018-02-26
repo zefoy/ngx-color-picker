@@ -1,6 +1,6 @@
 import { Component, ViewContainerRef } from '@angular/core';
 
-import { ColorPickerService, Cmyk, Rgba } from 'ngx-color-picker';
+import { ColorPickerService, Cmyk } from 'ngx-color-picker';
 
 @Component({
   selector: 'my-app',

@@ -11,7 +11,7 @@ import { ColorPickerService, Cmyk } from 'ngx-color-picker';
 export class AppComponent {
   public toggle: boolean = false;
 
-  public rgbaText: string = '';
+  public rgbaText: string = 'rgba(165, 26, 214, 0.2)';
 
   public arrayColors: any = {
     color1: '#2883e9',

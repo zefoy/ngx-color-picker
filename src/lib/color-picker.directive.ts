@@ -1,4 +1,4 @@
-import { Directive, OnInit, OnChanges, OnDestroy, Input, Output, EventEmitter,
+import { Directive, OnChanges, OnDestroy, Input, Output, EventEmitter,
   HostListener, ApplicationRef, ComponentRef, ElementRef, ViewContainerRef,
   Injector, ReflectiveInjector, ComponentFactoryResolver } from '@angular/core';
 
@@ -8,7 +8,7 @@ import { ColorPickerComponent } from './color-picker.component';
 @Directive({
   selector: '[colorPicker]'
 })
-export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
+export class ColorPickerDirective implements OnChanges, OnDestroy {
   private dialog: any;
 
   private dialogCreated: boolean = false;
@@ -93,10 +93,6 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
     private appRef: ApplicationRef, private vcRef: ViewContainerRef, private elRef: ElementRef,
     private _service: ColorPickerService) {}
 
-  ngOnInit() {
-    this.colorPicker = this.colorPicker || this.cpFallbackColor || 'rgba(0, 0, 0, 1)';
-  }
-
   ngOnDestroy() {
     if (this.cmpRef !== undefined) {
       this.cmpRef.destroy();
@@ -134,8 +130,6 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   public openDialog() {
-    this.colorPicker = this.colorPicker || this.cpFallbackColor || 'rgba(0, 0, 0, 1)';
-
     if (!this.dialogCreated) {
       let vcRef = this.vcRef;
 
@@ -160,7 +154,7 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
       this.cmpRef = vcRef.createComponent(compFactory, 0, injector, []);
 
       this.cmpRef.instance.setupDialog(this, this.elRef, this.colorPicker,
-        this.cpWidth, this.cpHeight, this.cpDialogDisplay,
+        this.cpWidth, this.cpHeight, this.cpDialogDisplay, this.cpFallbackColor,
         this.cpAlphaChannel, this.cpOutputFormat, this.cpDisableInput,
         this.cpIgnoredElements, this.cpSaveClickOutside, this.cpUseRootViewContainer,
         this.cpPosition, this.cpPositionOffset, this.cpPositionRelativeToArrow,
@@ -186,6 +180,7 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
 
   public colorChanged(value: string, ignore: boolean = true) {
     this.ignoreChanges = ignore;
+
     this.colorPickerChange.emit(value);
   }
 
@@ -209,7 +204,7 @@ export class ColorPickerDirective implements OnInit, OnChanges, OnDestroy {
     if (this.dialog) {
       this.dialog.setColorFromString(value, true);
     } else {
-      this.colorPicker = value || this.cpFallbackColor || 'rgba(0, 0, 0, 1)';
+      this.colorPicker = value;
 
       this.colorPickerChange.emit(this.colorPicker);
     }

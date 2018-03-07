@@ -24,6 +24,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private outputColor: string;
   private initialColor: string;
+  private fallbackColor: string;
 
   private listenerResize: any;
   private listenerMouseDown: any;
@@ -151,6 +152,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.setInitialColor(color);
+
     this.setColorFromString(color, emit);
 
     this.openColorPicker();
@@ -161,7 +163,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public setupDialog(instance: any, elementRef: ElementRef, color: any,
-    cpWidth: string, cpHeight: string, cpDialogDisplay: string,
+    cpWidth: string, cpHeight: string, cpDialogDisplay: string, cpFallbackColor: string,
     cpAlphaChannel: string, cpOutputFormat: string, cpDisableInput: boolean,
     cpIgnoredElements: any, cpSaveClickOutside: boolean, cpUseRootViewContainer: boolean,
     cpPosition: string, cpPositionOffset: string, cpPositionRelativeToArrow: boolean,
@@ -203,6 +205,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cpCancelButton = cpCancelButton;
     this.cpCancelButtonText = cpCancelButtonText;
     this.cpCancelButtonClass = cpCancelButtonClass;
+
+    this.fallbackColor = cpFallbackColor || '#fff';
 
     this.setPresetConfig(cpPresetLabel, cpPresetColors);
 
@@ -249,6 +253,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     } else {
       hsva = this.service.stringToHsva(value, false);
+    }
+
+    if (!hsva && !this.hsva) {
+      hsva = this.service.stringToHsva(this.fallbackColor, false);
     }
 
     if (hsva) {
@@ -368,6 +376,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     if (value === null) {
       this.updateColorPicker();
     } else {
+      if (value && value[0] !== '#') {
+        value = '#' + value;
+      }
+
       this.setColorFromString(value, true, false);
 
       this.directiveInstance.inputChanged({

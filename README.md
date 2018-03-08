@@ -9,7 +9,7 @@ This documentation is for the latest 5.x.x version which requires Angular 5. For
 ### Quick links
 
 [Example application](https://zefoy.github.io/ngx-color-picker/)
- | 
+ |
 [StackBlitz example](https://stackblitz.com/github/zefoy/ngx-color-picker/tree/master/example)
 
 ### Building the library
@@ -62,6 +62,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
 ```
 
 ```javascript
+[disabled]                   // Disables opening of the color picker dialog.
+
 [colorPicker]                // The color to show in the color picker dialog.
 
 [cpWidth]                    // Use this option to set color picker dialog width ('230px').

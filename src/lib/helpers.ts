@@ -1,6 +1,6 @@
 import { Directive, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
 
-export function detectIE() {
+export function detectIE(): boolean | number {
   let ua = '';
 
   if (typeof navigator !== 'undefined') {
@@ -27,7 +27,7 @@ export class TextDirective {
 
   @Output() newValue = new EventEmitter<any>();
 
-  @HostListener('input', ['$event']) inputChange(event: any) {
+  @HostListener('input', ['$event']) inputChange(event: any): void {
     const value = event.target.value;
 
     if (this.rg === undefined) {
@@ -59,11 +59,11 @@ export class SliderDirective {
 
   @Output() newValue = new EventEmitter<any>();
 
-  @HostListener('mousedown', ['$event']) mouseDown(event: any) {
+  @HostListener('mousedown', ['$event']) mouseDown(event: any): void {
     this.start(event);
   }
 
-  @HostListener('touchstart', ['$event']) touchStart(event: any) {
+  @HostListener('touchstart', ['$event']) touchStart(event: any): void {
     this.start(event);
   }
 
@@ -73,13 +73,13 @@ export class SliderDirective {
     this.listenerStop = () => this.stop();
   }
 
-  private move(event: any) {
+  private move(event: any): void {
     event.preventDefault();
 
     this.setCursor(event);
   }
 
-  private start(event: any) {
+  private start(event: any): void {
     this.setCursor(event);
 
     document.addEventListener('mouseup', this.listenerStop);
@@ -90,7 +90,7 @@ export class SliderDirective {
     this.dragStart.emit();
   }
 
-  private stop() {
+  private stop(): void {
     document.removeEventListener('mouseup', this.listenerStop);
     document.removeEventListener('touchend', this.listenerStop);
     document.removeEventListener('mousemove', this.listenerMove);
@@ -115,7 +115,7 @@ export class SliderDirective {
     return pageY - position.top - window.pageYOffset;
   }
 
-  private setCursor(event: any) {
+  private setCursor(event: any): void {
     const width = this.elRef.nativeElement.offsetWidth;
     const height = this.elRef.nativeElement.offsetHeight;
 

@@ -101,7 +101,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef, private service: ColorPickerService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.slider = new SliderPosition(0, 0, 0, 0);
 
     const hueWidth = this.hueSlider.nativeElement.offsetWidth;
@@ -123,11 +123,11 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.openDialog(this.initialColor, false);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.closeDialog();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     if (this.cpWidth !== 230) {
       const hueWidth = this.hueSlider.nativeElement.offsetWidth;
       const alphaWidth = this.alphaSlider.nativeElement.offsetWidth;
@@ -140,7 +140,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public openDialog(color: any, emit: boolean = true) {
+  public openDialog(color: any, emit: boolean = true): void {
     this.service.setActive(this);
 
     if (!this.width) {
@@ -158,7 +158,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.openColorPicker();
   }
 
-  public closeDialog() {
+  public closeDialog(): void {
     this.closeColorPicker();
   }
 
@@ -172,7 +172,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     cpOKButton: boolean, cpOKButtonClass: string, cpOKButtonText: string,
     cpCancelButton: boolean, cpCancelButtonClass: string, cpCancelButtonText: string,
     cpAddColorButton: boolean, cpAddColorButtonClass: string, cpAddColorButtonText: string,
-    cpRemoveColorButtonClass: string)
+    cpRemoveColorButtonClass: string): void
   {
     this.setInitialColor(color);
 
@@ -233,16 +233,16 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public setInitialColor(color: any) {
+  public setInitialColor(color: any): void {
     this.initialColor = color;
   }
 
-  public setPresetConfig(cpPresetLabel: string, cpPresetColors: string[]) {
+  public setPresetConfig(cpPresetLabel: string, cpPresetColors: string[]): void {
     this.cpPresetLabel = cpPresetLabel;
     this.cpPresetColors = cpPresetColors;
   }
 
-  public setColorFromString(value: string, emit: boolean = true, update: boolean = true) {
+  public setColorFromString(value: string, emit: boolean = true, update: boolean = true): void {
     let hsva: Hsva;
 
     if (this.cpAlphaChannel === 'always' || this.cpAlphaChannel === 'hex8') {
@@ -266,7 +266,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public onResize() {
+  public onResize(): void {
     if (this.position === 'fixed') {
       this.setDialogPosition();
     } else if (this.cpDialogDisplay !== 'inline') {
@@ -274,15 +274,15 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public onDragEnd(slider: string) {
+  public onDragEnd(slider: string): void {
     this.directiveInstance.sliderDragEnd({ slider: slider, color: this.outputColor });
   }
 
-  public onDragStart(slider: string) {
+  public onDragStart(slider: string): void {
     this.directiveInstance.sliderDragStart({ slider: slider, color: this.outputColor });
   }
 
-  public onMouseDown(event: MouseEvent) {
+  public onMouseDown(event: MouseEvent): void {
     if (!this.isIE10 && this.cpDialogDisplay === 'popup' &&
         event.target !== this.directiveElementRef.nativeElement &&
         !this.isDescendant(this.elRef.nativeElement, event.target) &&
@@ -298,7 +298,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public onAcceptColor(event: Event) {
+  public onAcceptColor(event: Event): void {
     event.stopPropagation();
 
     if (this.cpDialogDisplay === 'popup') {
@@ -310,7 +310,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public onCancelColor(event: Event) {
+  public onCancelColor(event: Event): void {
     event.stopPropagation();
 
     this.setColorFromString(this.initialColor, true);
@@ -324,11 +324,11 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.directiveInstance.colorCanceled();
   }
 
-  public onFormatToggle() {
+  public onFormatToggle(): void {
     this.format = (this.format + 1) % 3;
   }
 
-  public onColorChange(value: {s: number, v: number, rgX: number, rgY: number}) {
+  public onColorChange(value: {s: number, v: number, rgX: number, rgY: number}): void {
     this.hsva.s = value.s / value.rgX;
     this.hsva.v = value.v / value.rgY;
 
@@ -347,7 +347,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  public onHueChange(value: {v: number, rgX: number}) {
+  public onHueChange(value: {v: number, rgX: number}): void {
     this.hsva.h = value.v / value.rgX;
     this.sliderH = this.hsva.h;
 
@@ -360,7 +360,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  public onAlphaChange(value: {v: number, rgX: number}) {
+  public onAlphaChange(value: {v: number, rgX: number}): void {
     this.hsva.a = value.v / value.rgX;
 
     this.updateColorPicker();
@@ -372,7 +372,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  public onHexInput(value: string) {
+  public onHexInput(value: string): void {
     if (value === null) {
       this.updateColorPicker();
     } else {
@@ -390,7 +390,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public onRedInput(value: {v: number, rg: number}) {
+  public onRedInput(value: {v: number, rg: number}): void {
     const rgba = this.service.hsvaToRgba(this.hsva);
 
     rgba.r = value.v / value.rg;
@@ -402,7 +402,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.directiveInstance.inputChanged({input: 'red', value: rgba.r, color: this.outputColor});
   }
 
-  public onBlueInput(value: {v: number, rg: number}) {
+  public onBlueInput(value: {v: number, rg: number}): void {
     const rgba = this.service.hsvaToRgba(this.hsva);
 
     rgba.b = value.v / value.rg;
@@ -414,7 +414,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.directiveInstance.inputChanged({input: 'blue', value: rgba.b, color: this.outputColor});
   }
 
-  public onGreenInput(value: {v: number, rg: number}) {
+  public onGreenInput(value: {v: number, rg: number}): void {
     const rgba = this.service.hsvaToRgba(this.hsva);
 
     rgba.g = value.v / value.rg;
@@ -430,7 +430,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  public onAlphaInput(value: {v: number, rg: number}) {
+  public onAlphaInput(value: {v: number, rg: number}): void {
     this.hsva.a = value.v / value.rg;
 
     this.updateColorPicker();
@@ -454,7 +454,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  public onLightnessInput(value: {v: number, rg: number}) {
+  public onLightnessInput(value: {v: number, rg: number}): void {
     const hsla = this.service.hsva2hsla(this.hsva);
 
     hsla.l = value.v / value.rg;
@@ -470,7 +470,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  public onSaturationInput(value: {v: number, rg: number}) {
+  public onSaturationInput(value: {v: number, rg: number}): void {
     const hsla = this.service.hsva2hsla(this.hsva);
 
     hsla.s = value.v / value.rg;
@@ -486,7 +486,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  public onAddPresetColor(event: any, value: string) {
+  public onAddPresetColor(event: any, value: string): void {
     event.stopPropagation();
 
     if (!this.cpPresetColors.filter((color) => (color === value)).length) {
@@ -496,7 +496,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public onRemovePresetColor(event: any, value: string) {
+  public onRemovePresetColor(event: any, value: string): void {
     event.stopPropagation();
 
     this.cpPresetColors = this.cpPresetColors.filter((color) => (color !== value));
@@ -506,7 +506,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // Private helper functions for the color picker dialog status
 
-  private openColorPicker() {
+  private openColorPicker(): void {
     if (!this.show) {
       this.show = true;
       this.hidden = true;
@@ -529,7 +529,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  private closeColorPicker() {
+  private closeColorPicker(): void {
     if (this.show) {
       this.show = false;
 
@@ -547,7 +547,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  private updateColorPicker(emit: boolean = true, update: boolean = true) {
+  private updateColorPicker(emit: boolean = true, update: boolean = true): void {
     if (this.sliderDimMax) {
       const lastOutput = this.outputColor;
 
@@ -588,7 +588,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // Private helper functions for the color picker dialog positioning
 
-  private setDialogPosition() {
+  private setDialogPosition(): void {
     if (this.cpDialogDisplay === 'inline') {
       this.position = 'relative';
     } else {

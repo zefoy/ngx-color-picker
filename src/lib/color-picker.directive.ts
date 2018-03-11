@@ -79,15 +79,15 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   @Output() colorPickerSelect = new EventEmitter<string>(true);
   @Output() colorPickerChange = new EventEmitter<string>(false);
 
-  @HostListener('click', ['$event']) handleClick(event: any) {
+  @HostListener('click', ['$event']) handleClick(event: any): void {
     this.inputFocus();
   }
 
-  @HostListener('focus', ['$event']) handleFocus(event: any) {
+  @HostListener('focus', ['$event']) handleFocus(event: any): void {
     this.inputFocus();
   }
 
-  @HostListener('input', ['$event']) handleInput(event: any) {
+  @HostListener('input', ['$event']) handleInput(event: any): void {
     this.inputChange(event.target.value);
   }
 
@@ -95,13 +95,13 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     private appRef: ApplicationRef, private vcRef: ViewContainerRef, private elRef: ElementRef,
     private _service: ColorPickerService) {}
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.cmpRef !== undefined) {
       this.cmpRef.destroy();
     }
   }
 
-  ngOnChanges(changes: any) {
+  ngOnChanges(changes: any): void {
     if (changes.cpToggle) {
       if (!this.disabled && changes.cpToggle.currentValue) {
         this.openDialog();
@@ -129,7 +129,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     }
   }
 
-  public openDialog() {
+  public openDialog(): void {
     if (!this.dialogCreated) {
       let vcRef = this.vcRef;
 
@@ -174,25 +174,25 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     }
   }
 
-  public toggle(value: boolean) {
+  public toggle(value: boolean): void {
     this.cpToggleChange.emit(value);
   }
 
-  public colorChanged(value: string, ignore: boolean = true) {
+  public colorChanged(value: string, ignore: boolean = true): void {
     this.ignoreChanges = ignore;
 
     this.colorPickerChange.emit(value);
   }
 
-  public colorCanceled() {
+  public colorCanceled(): void {
     this.colorPickerCancel.emit();
   }
 
-  public colorSelected(value: string) {
+  public colorSelected(value: string): void {
     this.colorPickerSelect.emit(value);
   }
 
-  public inputFocus() {
+  public inputFocus(): void {
     const element = this.elRef.nativeElement;
 
     const ignored = this.cpIgnoredElements.filter((item: any) => item === element);
@@ -202,7 +202,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     }
   }
 
-  public inputChange(value: string) {
+  public inputChange(value: string): void {
     if (this.dialog) {
       this.dialog.setColorFromString(value, true);
     } else {
@@ -212,23 +212,23 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     }
   }
 
-  public inputChanged(event: any) {
+  public inputChanged(event: any): void {
     this.cpInputChange.emit(event);
   }
 
-  public sliderChanged(event: any) {
+  public sliderChanged(event: any): void {
     this.cpSliderChange.emit(event);
   }
 
-  public sliderDragEnd(event: any) {
+  public sliderDragEnd(event: any): void {
     this.cpSliderDragEnd.emit(event);
   }
 
-  public sliderDragStart(event: any) {
+  public sliderDragStart(event: any): void {
     this.cpSliderDragStart.emit(event);
   }
 
-  public presetColorsChanged(value: any[]) {
+  public presetColorsChanged(value: any[]): void {
     this.cpPresetColorsChange.emit(value);
   }
 }

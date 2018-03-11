@@ -44,7 +44,7 @@ export class AppComponent {
 
   constructor(public vcRef: ViewContainerRef, private cpService: ColorPickerService) {}
 
-  public onEventLog(event: string, data: any) {
+  public onEventLog(event: string, data: any): void {
     console.log(event, data);
   }
 

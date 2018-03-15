@@ -262,6 +262,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     if (hsva) {
       this.hsva = hsva;
 
+      this.sliderH = this.hsva.h;
+
       this.updateColorPicker(emit, update);
     }
   }

@@ -73,11 +73,14 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   @Output() cpSliderDragEnd = new EventEmitter<string>(true);
   @Output() cpSliderDragStart = new EventEmitter<string>(true);
 
-  @Output() cpPresetColorsChange = new EventEmitter<any>(true);
+  @Output() colorPickerOpen = new EventEmitter<string>(true);
+  @Output() colorPickerClose = new EventEmitter<string>(true);
 
   @Output() colorPickerCancel = new EventEmitter<string>(true);
   @Output() colorPickerSelect = new EventEmitter<string>(true);
   @Output() colorPickerChange = new EventEmitter<string>(false);
+
+  @Output() cpPresetColorsChange = new EventEmitter<any>(true);
 
   @HostListener('click', ['$event']) handleClick(event: any) {
     this.inputFocus();
@@ -176,6 +179,12 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   public toggle(value: boolean) {
     this.cpToggleChange.emit(value);
+
+    if (value) {
+      this.colorPickerOpen.emit(this.colorPicker);
+    } else {
+      this.colorPickerClose.emit(this.colorPicker);
+    }
   }
 
   public colorChanged(value: string, ignore: boolean = true) {

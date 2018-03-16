@@ -114,19 +114,22 @@ import { ColorPickerModule } from 'ngx-color-picker';
 [cpUseRootViewContainer]     // Create dialog component in the root view container (false).
                              // Note: The root component needs to have public viewContainerRef.
 
+(colorPickerOpen)            // Current color value, send when dialog is opened (value: string).
+(colorPickerClose)           // Current color value, send when dialog is closed (value: string).
+
 (colorPickerChange)          // Changed color value, send when color is changed (value: string).
 (colorPickerCancel)          // Color select canceled, send when Cancel button is pressed (void).
 (colorPickerSelect)          // Selected color value, send when OK button is pressed (value: string).
 
 (cpToggleChange)             // Status of the dialog, send when dialog is opened / closed (open: boolean).
 
-(cpPresetColorsChange)       // Preset colors value, send when Add Color button is pressed (value: array).
-
 (cpInputChange)              // Input name and its value, send when user changes color through inputs
-                             //   ({input: string, value: number|string, color: string})
+                             //   ({input: string, value: number | string, color: string})
 
 (cpSliderChange)             // Slider name and its value, send when user changes color through slider
 (cpSliderDragEnd)            // Slider name and current color, send when slider dragging ends (mouseup,touchend)
 (cpSliderDragStart)          // Slider name and current color, send when slider dragging starts (mousedown,touchstart)
-                             //   ({slider: string, value: number|string, color: string})
+                             //   ({slider: string, value: number | string, color: string})
+
+(cpPresetColorsChange)       // Preset colors, send when 'Add Color' button is pressed (value: array).
 ```

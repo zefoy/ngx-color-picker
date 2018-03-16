@@ -24,7 +24,7 @@ export class AppComponent {
   public selectedColor: string = 'color1';
 
   public color1: string = '#2889e9';
-  public color2: string = 'hsla(300,82%,52%)';
+  public color2: string = '#e920e9';
   public color3: string = '#fff500';
   public color4: string = 'rgb(236,64,64)';
   public color5: string = 'rgba(45,208,45,1)';

@@ -399,6 +399,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.hsva = this.service.rgbaToHsva(rgba);
 
+    this.sliderH = this.hsva.h;
+
     this.updateColorPicker();
 
     this.directiveInstance.inputChanged({input: 'red', value: rgba.r, color: this.outputColor});
@@ -411,6 +413,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.hsva = this.service.rgbaToHsva(rgba);
 
+    this.sliderH = this.hsva.h;
+
     this.updateColorPicker();
 
     this.directiveInstance.inputChanged({input: 'blue', value: rgba.b, color: this.outputColor});
@@ -422,6 +426,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     rgba.g = value.v / value.rg;
 
     this.hsva = this.service.rgbaToHsva(rgba);
+
+    this.sliderH = this.hsva.h;
 
     this.updateColorPicker();
 
@@ -447,6 +453,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onHueInput(value: {v: number, rg: number}) {
     this.hsva.h = value.v / value.rg;
 
+    this.sliderH = this.hsva.h;
+
     this.updateColorPicker();
 
     this.directiveInstance.inputChanged({
@@ -463,6 +471,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.hsva = this.service.hsla2hsva(hsla);
 
+    this.sliderH = this.hsva.h;
+
     this.updateColorPicker();
 
     this.directiveInstance.inputChanged({
@@ -478,6 +488,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     hsla.s = value.v / value.rg;
 
     this.hsva = this.service.hsla2hsva(hsla);
+
+    this.sliderH = this.hsva.h;
 
     this.updateColorPicker();
 

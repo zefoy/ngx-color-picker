@@ -177,6 +177,12 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     }
   }
 
+  public closeDialog(): void {
+    if (this.dialog) {
+      this.dialog.closeDialog();
+    }
+  }
+
   public toggle(value: boolean): void {
     this.cpToggleChange.emit(value);
 

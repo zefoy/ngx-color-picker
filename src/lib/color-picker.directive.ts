@@ -6,7 +6,8 @@ import { ColorPickerService } from './color-picker.service';
 import { ColorPickerComponent } from './color-picker.component';
 
 @Directive({
-  selector: '[colorPicker]'
+  selector: '[colorPicker]',
+  exportAs: 'ngxColorPicker'
 })
 export class ColorPickerDirective implements OnChanges, OnDestroy {
   private dialog: any;

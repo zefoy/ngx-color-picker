@@ -131,11 +131,14 @@
     padding: 4px 15px;
 
     .preset-label {
+      overflow: hidden;
       width: 100%;
       padding: 4px;
 
       font-size: 11px;
+      white-space: nowrap;
       text-align: left;
+      text-overflow: ellipsis;
       color: #555;
     }
 

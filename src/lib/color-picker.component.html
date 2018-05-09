@@ -31,10 +31,10 @@
 
   <div *ngIf="!cpDisableInput" class="hsla-text" [style.display]="format !== 2 ? 'none' : 'block'">
     <div class="box">
-      <input type="number" pattern="[0-9]*" min="0" max="360" [text] [rg]="360" [value]="hslaText?.h" (newValue)="onHueInput($event)"/>
-      <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="hslaText?.s" (newValue)="onSaturationInput($event)"/>
-      <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="hslaText?.l" (newValue)="onLightnessInput($event)"/>
-      <input *ngIf="cpAlphaChannel!=='disabled'" type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" [text] [rg]="1" [value]="hslaText?.a" (newValue)="onAlphaInput($event)"/>
+      <input type="number" pattern="[0-9]*" min="0" max="360" [text] [rg]="360" [value]="hslaText?.h" (keyup.enter)="onAcceptColor($event)" (newValue)="onHueInput($event)"/>
+      <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="hslaText?.s" (keyup.enter)="onAcceptColor($event)" (newValue)="onSaturationInput($event)"/>
+      <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="hslaText?.l" (keyup.enter)="onAcceptColor($event)" (newValue)="onLightnessInput($event)"/>
+      <input *ngIf="cpAlphaChannel!=='disabled'" type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" [text] [rg]="1" [value]="hslaText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)"/>
     </div>
 
     <div class="box">
@@ -44,10 +44,10 @@
 
   <div *ngIf="!cpDisableInput" [style.display]="format !== 1 ? 'none' : 'block'" class="rgba-text">
     <div class="box">
-      <input type="number" pattern="[0-9]*" min="0" max="255" [text] [rg]="255" [value]="rgbaText?.r" (newValue)="onRedInput($event)"/>
-      <input type="number" pattern="[0-9]*" min="0" max="255" [text] [rg]="255" [value]="rgbaText?.g" (newValue)="onGreenInput($event)"/>
-      <input type="number" pattern="[0-9]*" min="0" max="255" [text] [rg]="255" [value]="rgbaText?.b" (newValue)="onBlueInput($event)"/>
-      <input *ngIf="cpAlphaChannel!=='disabled'" type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" [text] [rg]="1" [value]="rgbaText?.a" (newValue)="onAlphaInput($event)"/>
+      <input type="number" pattern="[0-9]*" min="0" max="255" [text] [rg]="255" [value]="rgbaText?.r" (keyup.enter)="onAcceptColor($event)" (newValue)="onRedInput($event)"/>
+      <input type="number" pattern="[0-9]*" min="0" max="255" [text] [rg]="255" [value]="rgbaText?.g" (keyup.enter)="onAcceptColor($event)" (newValue)="onGreenInput($event)"/>
+      <input type="number" pattern="[0-9]*" min="0" max="255" [text] [rg]="255" [value]="rgbaText?.b" (keyup.enter)="onAcceptColor($event)" (newValue)="onBlueInput($event)"/>
+      <input *ngIf="cpAlphaChannel!=='disabled'" type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" [text] [rg]="1" [value]="rgbaText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)"/>
     </div>
 
     <div class="box">
@@ -57,7 +57,7 @@
 
   <div *ngIf="!cpDisableInput" class="hex-text" [style.display]="format !== 0 ? 'none' : 'block'">
     <div class="box">
-      <input [text] [value]="hexText" (blur)="onHexInput(null)" (newValue)="onHexInput($event)"/>
+      <input [text] [value]="hexText" (blur)="onHexInput(null)" (keyup.enter)="onAcceptColor($event)" (newValue)="onHexInput($event)"/>
     </div>
 
     <div class="box">

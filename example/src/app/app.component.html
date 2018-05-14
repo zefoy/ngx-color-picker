@@ -162,7 +162,7 @@
 
   <div class="row">
     <div class="col-md-5">
-      <input [style.background]="color10" [colorPicker]="color10" (colorPickerChange)="cmykColor=onChangeColor($event);color10=$event"/>
+      <input [style.background]="color10" [colorPicker]="color10" (colorPickerChange)="cmykColor=onChangeColorCmyk($event);color10=$event"/>
 
       <div class="clearfix"></div>
 
@@ -188,7 +188,7 @@
       <pre>
 &lt;input [style.background]="color"
        [colorPicker]="color"
-       (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"/&gt;
+       (colorPickerChange)="cmykColor=onChangeColorCmyk($event);color=$event"/&gt;
 
 &lt;span [style.font-size.px]="100 * cmykColor.c"/&gt;C&lt;/span/&gt;
 &lt;span [style.font-size.px]="100 * cmykColor.m"/&gt;M&lt;/span/&gt;

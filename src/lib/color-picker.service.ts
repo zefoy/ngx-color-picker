@@ -2,15 +2,17 @@ import { Injectable } from '@angular/core';
 
 import { Cmyk, Rgba, Hsla, Hsva } from './formats';
 
+import { ColorPickerComponent } from './color-picker.component';
+
 @Injectable()
 export class ColorPickerService {
-  private active = null;
+  private active: ColorPickerComponent | null = null;
 
   constructor() {}
 
-  public setActive(active: any): void {
+  public setActive(active: ColorPickerComponent | null): void {
     if (this.active && this.active !== active && this.active.cpDialogDisplay !== 'inline') {
-      this.active.closeColorPicker();
+      this.active.closeDialog();
     }
 
     this.active = active;
@@ -73,6 +75,8 @@ export class ColorPickerService {
       case 5:
         r = v, g = p, b = q;
         break;
+      default:
+        r = 0, g = 0, b = 0;
     }
 
     return new Rgba(r, g, b, a);
@@ -117,6 +121,8 @@ export class ColorPickerService {
         case b:
           h = (r - g) / d + 4;
           break;
+        default:
+          h = 0;
       }
 
       h /= 6;
@@ -141,8 +147,8 @@ export class ColorPickerService {
     return new Rgba(Math.round(rgba.r * 255), Math.round(rgba.g * 255), Math.round(rgba.b * 255), rgba.a);
   }
 
-  public stringToHsva(colorString: string = '', allowHex8: boolean = false): Hsva {
-    let hsva: Hsva = null;
+  public stringToHsva(colorString: string = '', allowHex8: boolean = false): Hsva | null {
+    let hsva: Hsva | null = null;
 
     colorString = (colorString || '').toLowerCase();
 
@@ -217,7 +223,7 @@ export class ColorPickerService {
     return hsva;
   }
 
-  public outputFormat(hsva: Hsva, outputFormat: string, alphaChannel: string): string {
+  public outputFormat(hsva: Hsva, outputFormat: string, alphaChannel: string | null): string {
     switch (outputFormat) {
       case 'hsla':
         const hsla = this.hsva2hsla(hsva);

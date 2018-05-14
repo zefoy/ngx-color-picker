@@ -16,6 +16,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": false,
+    "strictNullChecks": true,
     "target": "es5",
     "typeRoots": [
       "../node_modules/@types"

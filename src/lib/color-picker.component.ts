@@ -243,7 +243,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public setColorFromString(value: string, emit: boolean = true, update: boolean = true): void {
-    let hsva: Hsva;
+    let hsva: Hsva | null;
 
     if (this.cpAlphaChannel === 'always' || this.cpAlphaChannel === 'hex8') {
       hsva = this.service.stringToHsva(value, true);
@@ -374,7 +374,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  public onHexInput(value: string): void {
+  public onHexInput(value: string | null): void {
     if (value === null) {
       this.updateColorPicker();
     } else {
@@ -606,13 +606,13 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.cpDialogDisplay === 'inline') {
       this.position = 'relative';
     } else {
-      const dialogHeight = this.dialogElement.nativeElement.offsetHeight;
-
-      let position = 'static', transform = '', style = null;
+      let position = 'static', transform = '', style;
 
       let parentNode: any = null, transformNode: any = null;
 
       let node = this.directiveElementRef.nativeElement.parentNode;
+
+      const dialogHeight = this.dialogElement.nativeElement.offsetHeight;
 
       while (node !== null && node.tagName !== 'HTML') {
         style = window.getComputedStyle(node);

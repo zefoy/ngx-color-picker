@@ -48,17 +48,25 @@ export class AppComponent {
     console.log(event, data);
   }
 
-  public onChangeColor(color: string): Cmyk {
+  public onChangeColorCmyk(color: string): Cmyk {
     const hsva = this.cpService.stringToHsva(color);
 
-    const rgba = this.cpService.hsvaToRgba(hsva);
+    if (hsva) {
+      const rgba = this.cpService.hsvaToRgba(hsva);
 
-    return this.cpService.rgbaToCmyk(rgba);
+      return this.cpService.rgbaToCmyk(rgba);
+    }
+
+    return new Cmyk(0, 0, 0, 0);
   }
 
   public onChangeColorHex8(color: string): string {
     const hsva = this.cpService.stringToHsva(color, true);
 
-    return this.cpService.outputFormat(hsva, 'rgba', null);
+    if (hsva) {
+      return this.cpService.outputFormat(hsva, 'rgba', null);
+    }
+
+    return '';
   }
 }

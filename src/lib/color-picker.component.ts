@@ -223,7 +223,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dialogArrowOffset = 0;
     }
 
-    if (this.cpDialogDisplay === 'inline') {
+    if (cpDialogDisplay === 'inline') {
       this.dialogArrowSize = 0;
       this.dialogArrowOffset = 0;
     }
@@ -636,7 +636,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         node = node.parentNode;
       }
 
-      const boxDirective = this.createBox(this.directiveElementRef.nativeElement, (position !== 'fixed'));
+      const boxDirective = this.createDialogBox(this.directiveElementRef.nativeElement, (position !== 'fixed'));
 
       if (this.useRootViewContainer || (position === 'fixed' && !parentNode)) {
         this.top = boxDirective.top;
@@ -646,7 +646,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
           parentNode = node;
         }
 
-        const boxParent = this.createBox(parentNode, (position !== 'fixed'));
+        const boxParent = this.createDialogBox(parentNode, (position !== 'fixed'));
 
         this.top = boxDirective.top - boxParent.top;
         this.left = boxDirective.left - boxParent.left;
@@ -676,15 +676,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // Private helper functions for the color picker dialog positioning and opening
 
-  private createBox(element: any, offset: boolean): any {
-    return {
-      top: element.getBoundingClientRect().top + (offset ? window.pageYOffset : 0),
-      left: element.getBoundingClientRect().left + (offset ? window.pageXOffset : 0),
-      width: element.offsetWidth,
-      height: element.offsetHeight
-    };
-  }
-
   private isDescendant(parent: any, child: any): boolean {
     let node: any = child.parentNode;
 
@@ -697,5 +688,14 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     return false;
+  }
+
+  private createDialogBox(element: any, offset: boolean): any {
+    return {
+      top: element.getBoundingClientRect().top + (offset ? window.pageYOffset : 0),
+      left: element.getBoundingClientRect().left + (offset ? window.pageXOffset : 0),
+      width: element.offsetWidth,
+      height: element.offsetHeight
+    };
   }
 }

@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild,
-  ViewEncapsulation, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit,
+  ViewChild, HostListener, ViewEncapsulation,
+  ElementRef, ChangeDetectorRef } from '@angular/core';
 
 import { detectIE } from './helpers';
 
@@ -98,6 +99,14 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('hueSlider') hueSlider: ElementRef;
   @ViewChild('alphaSlider') alphaSlider: ElementRef;
   @ViewChild('dialogPopup') dialogElement: ElementRef;
+
+  @HostListener('document:keyup.esc', ['$event']) handleEsc(event: any): void {
+    this.onCancelColor(event);
+  }
+
+  @HostListener('document:keyup.enter', ['$event']) handleEnter(event: any): void {
+    this.onAcceptColor(event);
+  }
 
   constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef, private service: ColorPickerService) {}
 
@@ -533,7 +542,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.cdRef.detectChanges();
       }, 0);
 
-      this.directiveInstance.toggle(true);
+      this.directiveInstance.stateChanged(true);
 
       if (!this.isIE10) {
         document.addEventListener('mousedown', this.listenerMouseDown);
@@ -547,7 +556,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.show) {
       this.show = false;
 
-      this.directiveInstance.toggle(false);
+      this.directiveInstance.stateChanged(false);
 
       if (!this.isIE10) {
         document.removeEventListener('mousedown', this.listenerMouseDown);

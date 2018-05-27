@@ -101,11 +101,15 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('dialogPopup') dialogElement: ElementRef;
 
   @HostListener('document:keyup.esc', ['$event']) handleEsc(event: any): void {
-    this.onCancelColor(event);
+    if (this.show && this.cpDialogDisplay === 'popup') {
+      this.onCancelColor(event);
+    }
   }
 
   @HostListener('document:keyup.enter', ['$event']) handleEnter(event: any): void {
-    this.onAcceptColor(event);
+    if (this.show && this.cpDialogDisplay === 'popup') {
+      this.onAcceptColor(event);
+    }
   }
 
   constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef, private service: ColorPickerService) {}

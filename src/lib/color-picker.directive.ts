@@ -84,15 +84,15 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   @Output() cpPresetColorsChange = new EventEmitter<any>(true);
 
   @HostListener('click', ['$event']) handleClick(event: any): void {
-    this.inputFocus();
+    this.inputFocus(event);
   }
 
   @HostListener('focus', ['$event']) handleFocus(event: any): void {
-    this.inputFocus();
+    this.inputFocus(event);
   }
 
   @HostListener('input', ['$event']) handleInput(event: any): void {
-    this.inputChange(event.target.value);
+    this.inputChange(event);
   }
 
   constructor(private injector: Injector, private cfr: ComponentFactoryResolver,
@@ -168,11 +168,12 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
         this.cpCancelButton, this.cpCancelButtonClass, this.cpCancelButtonText,
         this.cpAddColorButton, this.cpAddColorButtonClass, this.cpAddColorButtonText,
         this.cpRemoveColorButtonClass);
-        this.dialog = this.cmpRef.instance;
 
-        if (this.vcRef !== vcRef) {
-          this.cmpRef.changeDetectorRef.detectChanges();
-        }
+      this.dialog = this.cmpRef.instance;
+
+      if (this.vcRef !== vcRef) {
+        this.cmpRef.changeDetectorRef.detectChanges();
+      }
     } else if (this.dialog) {
       this.dialog.openDialog(this.colorPicker);
     }
@@ -184,10 +185,10 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     }
   }
 
-  public toggle(value: boolean): void {
-    this.cpToggleChange.emit(value);
+  public stateChanged(state: boolean): void {
+    this.cpToggleChange.emit(state);
 
-    if (value) {
+    if (state) {
       this.colorPickerOpen.emit(this.colorPicker);
     } else {
       this.colorPickerClose.emit(this.colorPicker);
@@ -208,21 +209,27 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     this.colorPickerSelect.emit(value);
   }
 
-  public inputFocus(): void {
+  public inputFocus(event: any): void {
     const element = this.elRef.nativeElement;
 
     const ignored = this.cpIgnoredElements.filter((item: any) => item === element);
 
     if (!this.disabled && !ignored.length) {
-      this.openDialog();
+      if (typeof document !== 'undefined' && element === document.activeElement) {
+        this.openDialog();
+      } else if (!this.dialog || !this.dialog.show) {
+        this.openDialog();
+      } else {
+        this.closeDialog();
+      }
     }
   }
 
-  public inputChange(value: string): void {
+  public inputChange(event: any): void {
     if (this.dialog) {
-      this.dialog.setColorFromString(value, true);
+      this.dialog.setColorFromString(event.target.value, true);
     } else {
-      this.colorPicker = value;
+      this.colorPicker = event.target.value;
 
       this.colorPickerChange.emit(this.colorPicker);
     }

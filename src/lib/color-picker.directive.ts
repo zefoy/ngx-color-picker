@@ -106,11 +106,11 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: any): void {
-    if (changes.cpToggle) {
-      if (!this.disabled && changes.cpToggle.currentValue) {
+    if (changes.cpToggle && !this.disabled) {
+      if (changes.cpToggle.currentValue) {
         this.openDialog();
-      } else if (this.dialog && !changes.cpToggle.currentValue) {
-        this.dialog.closeDialog();
+      } else if (!changes.cpToggle.currentValue) {
+        this.closeDialog();
       }
     }
 
@@ -180,7 +180,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   }
 
   public closeDialog(): void {
-    if (this.dialog) {
+    if (this.dialog && this.cpDialogDisplay === 'popup') {
       this.dialog.closeDialog();
     }
   }

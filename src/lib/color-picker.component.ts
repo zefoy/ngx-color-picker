@@ -301,6 +301,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.isIE10 && this.cpDialogDisplay === 'popup' &&
         event.target !== this.directiveElementRef.nativeElement &&
         !this.isDescendant(this.elRef.nativeElement, event.target) &&
+        !this.isDescendant(this.directiveElementRef.nativeElement, event.target) &&
         this.cpIgnoredElements.filter((item: any) => item === event.target).length === 0)
     {
       if (!this.cpSaveClickOutside) {
@@ -549,6 +550,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.directiveInstance.stateChanged(true);
 
       if (!this.isIE10) {
+        document.addEventListener('click', this.listenerMouseDown);
         document.addEventListener('mousedown', this.listenerMouseDown);
       }
 
@@ -563,6 +565,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.directiveInstance.stateChanged(false);
 
       if (!this.isIE10) {
+        document.removeEventListener('click', this.listenerMouseDown);
         document.removeEventListener('mousedown', this.listenerMouseDown);
       }
 

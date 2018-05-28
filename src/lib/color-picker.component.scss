@@ -243,6 +243,8 @@
   }
 
   .hue {
+    direction: ltr;
+
     width: 100%;
     height: 16px;
     margin-bottom: 16px;
@@ -254,6 +256,8 @@
   }
 
   .alpha {
+    direction: ltr;
+
     width: 100%;
     height: 16px;
     border: none;
@@ -297,6 +301,8 @@
   }
 
   .saturation-lightness {
+    direction: ltr;
+
     width: 100%;
     height: 130px;
     border: none;

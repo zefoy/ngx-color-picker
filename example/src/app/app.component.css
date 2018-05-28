@@ -1,3 +1,9 @@
+html,
+body,
+div {
+  direction: rtl;
+}
+
 input {
   width: 150px;
   margin-bottom: 16px;

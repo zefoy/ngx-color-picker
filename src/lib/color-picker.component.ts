@@ -550,7 +550,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.directiveInstance.stateChanged(true);
 
       if (!this.isIE10) {
-        document.addEventListener('click', this.listenerMouseDown);
         document.addEventListener('mousedown', this.listenerMouseDown);
       }
 
@@ -565,7 +564,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.directiveInstance.stateChanged(false);
 
       if (!this.isIE10) {
-        document.removeEventListener('click', this.listenerMouseDown);
         document.removeEventListener('mousedown', this.listenerMouseDown);
       }
 

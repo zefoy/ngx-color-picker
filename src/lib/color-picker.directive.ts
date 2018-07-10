@@ -17,14 +17,13 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   private cmpRef: ComponentRef<ColorPickerComponent>;
 
-  @Input() disabled: boolean;
-
   @Input() colorPicker: string;
 
   @Input() cpWidth: string = '230px';
   @Input() cpHeight: string = 'auto';
 
   @Input() cpToggle: boolean = false;
+  @Input() cpDisabled: boolean = false;
 
   @Input() cpIgnoredElements: any = [];
 
@@ -106,7 +105,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: any): void {
-    if (changes.cpToggle && !this.disabled) {
+    if (changes.cpToggle && !this.cpDisabled) {
       if (changes.cpToggle.currentValue) {
         this.openDialog();
       } else if (!changes.cpToggle.currentValue) {
@@ -214,7 +213,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
     const ignored = this.cpIgnoredElements.filter((item: any) => item === element);
 
-    if (!this.disabled && !ignored.length) {
+    if (!this.cpDisabled && !ignored.length) {
       if (typeof document !== 'undefined' && element === document.activeElement) {
         this.openDialog();
       } else if (!this.dialog || !this.dialog.show) {

@@ -62,14 +62,13 @@ import { ColorPickerModule } from 'ngx-color-picker';
 ```
 
 ```javascript
-[disabled]                   // Disables opening of the color picker dialog.
-
 [colorPicker]                // The color to show in the color picker dialog.
 
 [cpWidth]                    // Use this option to set color picker dialog width ('230px').
 [cpHeight]                   // Use this option to force color picker dialog height ('auto').
 
 [cpToggle]                   // Sets the default open / close state of the color picker (false).
+[cpDisabled]                 // Disables opening of the color picker dialog via toggle / events.
 
 [cpOutputFormat]             // Output color format: 'hex', 'rgba', 'hsla' ('hex').
 [cpAlphaChannel]             // Alpha in output value: 'enabled', 'disabled', 'always' ('enabled').

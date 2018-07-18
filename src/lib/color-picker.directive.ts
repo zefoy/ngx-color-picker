@@ -120,6 +120,10 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
         }
 
         this.dialog.setColorFromString(changes.colorPicker.currentValue, false);
+        
+        if (this.cpUseRootViewContainer && this.cpDialogDisplay != 'inline') {
+          this.cmpRef.changeDetectorRef.detectChanges();
+        }
       }
 
       this.ignoreChanges = false;

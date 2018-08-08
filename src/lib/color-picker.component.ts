@@ -652,7 +652,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       const boxDirective = this.createDialogBox(this.directiveElementRef.nativeElement, (position !== 'fixed'));
 
-      if (this.useRootViewContainer || (position === 'fixed' && !parentNode)) {
+      if (this.useRootViewContainer || (position === 'fixed' && (!parentNode || parentNode instanceof HTMLUnknownElement))) {
         this.top = boxDirective.top;
         this.left = boxDirective.left;
       } else {

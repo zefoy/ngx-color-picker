@@ -117,8 +117,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.slider = new SliderPosition(0, 0, 0, 0);
 
-    const hueWidth = this.hueSlider.nativeElement.offsetWidth;
-    const alphaWidth = this.alphaSlider.nativeElement.offsetWidth;
+    const hueWidth = this.hueSlider.nativeElement.offsetWidth || 140;
+    const alphaWidth = this.alphaSlider.nativeElement.offsetWidth || 140;
 
     this.sliderDimMax = new SliderDimension(hueWidth, this.cpWidth, 130, alphaWidth);
 
@@ -142,8 +142,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.cpWidth !== 230) {
-      const hueWidth = this.hueSlider.nativeElement.offsetWidth;
-      const alphaWidth = this.alphaSlider.nativeElement.offsetWidth;
+      const hueWidth = this.hueSlider.nativeElement.offsetWidth || 140;
+      const alphaWidth = this.alphaSlider.nativeElement.offsetWidth || 140;
 
       this.sliderDimMax = new SliderDimension(hueWidth, this.cpWidth, 130, alphaWidth);
 

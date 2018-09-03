@@ -130,6 +130,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.format = 0;
     }
 
+    if (this.cpOutputFormat === 'auto') {
+      this.cpOutputFormat = (this.cpAlphaChannel !== 'disabled') ? 'rgba' : 'hex';
+    }
+
     this.listenerMouseDown = (event: any) => { this.onMouseDown(event); };
     this.listenerResize = () => { this.onResize(); };
 
@@ -241,7 +245,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dialogArrowOffset = 0;
     }
 
-    if (cpOutputFormat === 'hex' && cpAlphaChannel !== 'always' && cpAlphaChannel !== 'hex8') {
+    if (cpOutputFormat === 'hex' && cpAlphaChannel !== 'always') {
       this.cpAlphaChannel = 'disabled';
     }
   }
@@ -258,7 +262,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public setColorFromString(value: string, emit: boolean = true, update: boolean = true): void {
     let hsva: Hsva | null;
 
-    if (this.cpAlphaChannel === 'always' || this.cpAlphaChannel === 'hex8') {
+    if (this.cpAlphaChannel === 'always') {
       hsva = this.service.stringToHsva(value, true);
 
       if (!hsva && !this.hsva) {
@@ -590,7 +594,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.rgbaText = new Rgba(rgba.r, rgba.g, rgba.b, Math.round(rgba.a * 100) / 100);
 
-        const allowHex8 = this.cpAlphaChannel === 'always' || this.cpAlphaChannel === 'hex8';
+        const allowHex8 = this.cpAlphaChannel === 'always';
 
         this.hexText = this.service.rgbaToHex(rgba, allowHex8);
       }

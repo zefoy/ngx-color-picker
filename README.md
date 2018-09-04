@@ -81,7 +81,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 [cpPresetLabel]              // Label text for the preset colors if any provided ('Preset colors').
 [cpPresetColors]             // Array of preset colors to show in the color picker dialog ([]).
 
-[cpDefaultInput]             // Initial color input field shown: 'hex', 'rgba', 'hsla' ('hex').
+[cpDefaultInput]             // Initial color input field shown: 'auto', 'hex', 'rgba', 'hsla' ('auto').
 [cpDisableInput]             // Disables / hides the color input field from the dialog (false).
 
 [cpDialogDisplay]            // Dialog positioning mode: 'popup', 'inline' ('popup').

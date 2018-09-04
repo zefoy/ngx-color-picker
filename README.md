@@ -71,7 +71,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 [cpDisabled]                 // Disables opening of the color picker dialog via toggle / events.
 
 [cpOutputFormat]             // Output color format: 'auto', 'hex', 'rgba', 'hsla' ('auto').
-[cpAlphaChannel]             // Alpha in output value: 'enabled', 'disabled', 'always' ('enabled').
+[cpAlphaChannel]             // Alpha in output value: 'enabled', 'disabled', 'always', 'forced', 'hex8' ('enabled').
 [cpFallbackColor]            // Is used when the color is not well-formed or is undefined ('#000').
 
 [cpPosition]                 // Dialog position: 'right', 'left', 'top', 'bottom' ('right').
@@ -81,6 +81,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 [cpPresetLabel]              // Label text for the preset colors if any provided ('Preset colors').
 [cpPresetColors]             // Array of preset colors to show in the color picker dialog ([]).
 
+[cpDefaultInput]             // Initial color input field shown: 'hex', 'rgba', 'hsla' ('hex').
 [cpDisableInput]             // Disables / hides the color input field from the dialog (false).
 
 [cpDialogDisplay]            // Dialog positioning mode: 'popup', 'inline' ('popup').

@@ -248,7 +248,7 @@
 
   <div class="row">
     <div class="col-md-5">
-      <input [value]="color13" [style.background]="color13" [cpOutputFormat]="'rgba'" [cpAlphaChannel]="'disabled'" [(colorPicker)]="color13"/>
+      <input [value]="color13" [style.background]="color13" [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'rgba'" [(colorPicker)]="color13"/>
 
       <br>
 
@@ -256,30 +256,41 @@
 
       <br>
 
-      <input [value]="color15" [style.background]="rgbaText" [cpAlphaChannel]="'always'" [cpOutputFormat]="'hex'" [colorPicker]="color15" (colorPickerChange)="rgbaText=onChangeColorHex8($event);color15=$event"/>
+      <input [value]="color15" [style.background]="color15" [cpAlphaChannel]="'forced'" [cpDefaultInput]="'hex'" [cpOutputFormat]="'rgba'" [(colorPicker)]="color15"/>
+
+      <br>
+
+      <input [value]="color16" [style.background]="rgbaText" [cpAlphaChannel]="'always'" [cpOutputFormat]="'hex'" [colorPicker]="color16" (colorPickerChange)="rgbaText=onChangeColorHex8($event);color16=$event"/>
     </div>
 
     <div class="col-md-7">
       <p>Change alpha channel behaviour:</p>
       <pre>
-&lt;input [value]="color"
-       [style.background]="color"
+&lt;input [value]="color13"
+       [style.background]="color13"
        [cpAlphaChannel]="'disabled'"
        [cpOutputFormat]="'rgba'"
-       [(colorPicker)]="color5"/&gt;
+       [(colorPicker)]="color13"/&gt;
 
-&lt;input [value]="color"
-       [style.background]="color"
+&lt;input [value]="color14"
+       [style.background]="color14"
        [cpAlphaChannel]="'always'"
        [cpOutputFormat]="'rgba'"
-       [(colorPicker)]="color4"/&gt;
+       [(colorPicker)]="color14"/&gt;
 
-&lt;input [value]="color"
+&lt;input [value]="color15"
+       [style.background]="color15"
+       [cpAlphaChannel]="'forced'"
+       [cpDefaultInput]="'hex'"
+       [cpOutputFormat]="'rgba'"
+       [(colorPicker)]="color15"/&gt;
+
+&lt;input [value]="color16"
        [style.background]="rgbaText"
        [cpAlphaChannel]="'always'"
        [cpOutputFormat]="'hex'"
-       [colorPicker]="color"
-       (colorPickerChange)="rgbaText=onChangeColorHex8($event);color=$event"/&gt;
+       [colorPicker]="color16"
+       (colorPickerChange)="rgbaText=onChangeColorHex8($event);color16=$event"/&gt;
       </pre>
     </div>
   </div>
@@ -325,18 +336,18 @@
 
   <div class="row">
     <div class="col-md-5">
-      <input [style.background]="color16" [cpAlphaChannel]="'always'" [cpOutputFormat]="'rgba'" [cpPresetColors]="['#fff', '#2889e9']" [cpAddColorButton]="true" [(colorPicker)]="color16"/>
+      <input [style.background]="color17" [cpAlphaChannel]="'always'" [cpOutputFormat]="'rgba'" [cpPresetColors]="['#fff', '#2889e9']" [cpAddColorButton]="true" [(colorPicker)]="color17"/>
     </div>
 
     <div class="col-md-7">
       <p>Add and remove preset colors:</p>
       <pre>
-&lt;input [style.background]="color"
+&lt;input [style.background]="color17"
        [cpAlphaChannel]="'always'"
        [cpOutputFormat]="'rgba'"
        [cpPresetColors]="['#fff', '#2889e9']"
        [cpAddColorButton]="true"
-       [(colorPicker)]="color"/&gt;
+       [(colorPicker)]="color17"/&gt;
       </pre>
     </div>
   </div>
@@ -502,11 +513,31 @@
           </tr>
 
           <tr>
+            <td>cpDefaultInput</td>
+            <td>
+              <b>'hex'</b>, 'rgba', 'hsla'<br>
+              hex: initial color input field is set to hex6/hex8.<br>
+              rgba: initial color input field is set to rgba.<br>
+              hsla: initial color input field is set to hsla.<br>
+            </td>
+          </tr>
+
+          <tr>
+            <td>cpDisableInput</td>
+            <td>
+              <b>false</b>, true<br>
+              Disables / hides the color input field from the dialog.<br>
+            </td>
+          </tr>
+
+          <tr>
             <td>cpAlphaChannel</td>
             <td>
-              <b>'enabled'</b>, 'disabled', 'always'<br>
-              enabled: alpha channel is not included for hexadecimal values or for values without alpha (alpha = 1).<br>
-              always: alpha channel is included for hexadecimal values and values without alpha (alpha = 1).<br>
+              <b>'enabled'</b>, 'disabled', 'always', 'forced', 'hex8'<br>
+              enabled: alpha channel is not included for hexadecimal (hex6) values or for values without alpha (alpha = 1).<br>
+              always: alpha channel is included for hexadecimal (hex6) values and values without alpha (alpha = 1).<br>
+              hex8: alpha channel is included in hexadecimal (hex8) values.<br>
+              forced: alpha channel field is added for hexadecimal (hex6) values (alpha = 1).<br>
               disabled: alpha channel is completely disabled.<br>
             </td>
           </tr>

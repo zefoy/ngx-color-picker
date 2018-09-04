@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy, AfterViewInit,
   ViewChild, HostListener, ViewEncapsulation,
   ElementRef, ChangeDetectorRef } from '@angular/core';
 
-import { detectIE } from './helpers';
+import { detectIE, SliderDimension, SliderPosition } from './helpers';
 
-import { Rgba, Hsla, Hsva } from './formats';
-import { SliderPosition, SliderDimension } from './helpers';
+import { Formats, Hsla, Hsva, Rgba } from './formats';
+import { AlphaChannel, DefaultInput } from './types';
 
 import { ColorPickerService } from './color-picker.service';
 
@@ -22,6 +22,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private width: number;
   private height: number;
+
+  private formats: Formats[];
 
   private outputColor: string;
   private initialColor: string;
@@ -48,10 +50,11 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public left: number;
   public position: string;
 
-  public format: number;
+  public format: Formats;
   public slider: SliderPosition;
 
   public hexText: string;
+  public hexAlpha: number;
   public hslaText: Hsla;
   public rgbaText: Rgba;
 
@@ -64,9 +67,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public cpWidth: number;
   public cpHeight: number;
 
-  public cpAlphaChannel: string;
+  public cpAlphaChannel: AlphaChannel;
   public cpOutputFormat: string;
 
+  public cpDefaultInput: DefaultInput;
   public cpDisableInput: boolean;
   public cpDialogDisplay: string;
 
@@ -122,12 +126,13 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.sliderDimMax = new SliderDimension(hueWidth, this.cpWidth, 130, alphaWidth);
 
-    if (this.cpOutputFormat === 'rgba') {
-      this.format = 1;
-    } else if (this.cpOutputFormat === 'hsla') {
-      this.format = 2;
+    const inputFormat = this.cpDefaultInput === 'auto' ? this.cpOutputFormat : this.cpDefaultInput;
+    if (inputFormat === 'rgba') {
+      this.format = Formats.RGBA;
+    } else if (inputFormat === 'hsla') {
+      this.format = Formats.HSLA;
     } else {
-      this.format = 0;
+      this.format = Formats.HEX;
     }
 
     if (this.cpOutputFormat === 'auto') {
@@ -181,7 +186,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public setupDialog(instance: any, elementRef: ElementRef, color: any,
     cpWidth: string, cpHeight: string, cpDialogDisplay: string, cpFallbackColor: string,
-    cpAlphaChannel: string, cpOutputFormat: string, cpDisableInput: boolean,
+    cpAlphaChannel: AlphaChannel, cpOutputFormat: string, cpDisableInput: boolean, cpDefaultInput: DefaultInput,
     cpIgnoredElements: any, cpSaveClickOutside: boolean, cpUseRootViewContainer: boolean,
     cpPosition: string, cpPositionOffset: string, cpPositionRelativeToArrow: boolean,
     cpPresetLabel: string, cpPresetColors: string[], cpMaxPresetColorsLength: number,
@@ -198,6 +203,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.directiveInstance = instance;
     this.directiveElementRef = elementRef;
 
+    this.cpDefaultInput = cpDefaultInput;
     this.cpDisableInput = cpDisableInput;
 
     this.cpAlphaChannel = cpAlphaChannel;
@@ -211,6 +217,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.width = this.cpWidth = parseInt(cpWidth, 10);
     this.height = this.cpHeight = parseInt(cpHeight, 10);
+
+    this.formats = Object.keys(Formats)
+      .filter((format: any) => !isNaN(format))
+      .map(value => Number(value));
 
     this.cpPosition = cpPosition;
     this.cpPositionOffset = parseInt(cpPositionOffset, 10);
@@ -262,7 +272,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public setColorFromString(value: string, emit: boolean = true, update: boolean = true): void {
     let hsva: Hsva | null;
 
-    if (this.cpAlphaChannel === 'always') {
+    if (this.cpAlphaChannel === 'always' || this.cpAlphaChannel === 'forced') {
       hsva = this.service.stringToHsva(value, true);
 
       if (!hsva && !this.hsva) {
@@ -345,7 +355,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onFormatToggle(): void {
-    this.format = (this.format + 1) % 3;
+    this.format = this.formats[(this.formats.indexOf(this.format) + 1) % this.formats.length];
   }
 
   public onColorChange(value: {s: number, v: number, rgX: number, rgY: number}): void {
@@ -400,13 +410,29 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         value = '#' + value;
       }
 
-      this.setColorFromString(value, true, false);
+      let validHex = /^#([a-f0-9]{3}|[a-f0-9]{6})$/gi;
+      if (this.cpAlphaChannel === 'always') {
+        validHex = /^#([a-f0-9]{3}|[a-f0-9]{6}|[a-f0-9]{8})$/gi;
+      }
+      if (validHex.test(value)) {
+        if (value.length < 5) {
+          value = '#' + value.substring(1)
+            .split('')
+            .map(c => c + c)
+            .join('');
+        }
+        if (this.cpAlphaChannel === 'forced') {
+          value +=  Math.round(this.hsva.a * 255).toString(16);
+        }
 
-      this.directiveInstance.inputChanged({
-        input: 'hex',
-        value: value,
-        color: this.outputColor
-      });
+        this.setColorFromString(value, true, false);
+
+        this.directiveInstance.inputChanged({
+          input: 'hex',
+          value: value,
+          color: this.outputColor
+        });
+      }
     }
   }
 
@@ -597,6 +623,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         const allowHex8 = this.cpAlphaChannel === 'always';
 
         this.hexText = this.service.rgbaToHex(rgba, allowHex8);
+        this.hexAlpha = this.rgbaText.a;
       }
 
       this.hueSliderColor = 'rgb(' + hue.r + ',' + hue.g + ',' + hue.b + ')';

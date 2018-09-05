@@ -1,6 +1,14 @@
-import { Component, OnInit, OnDestroy, AfterViewInit,
-  ViewChild, HostListener, ViewEncapsulation,
-  ElementRef, ChangeDetectorRef } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    HostListener,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 
 import { detectIE, SliderDimension, SliderPosition } from './helpers';
 
@@ -23,8 +31,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   private width: number;
   private height: number;
 
-  private formats: Formats[];
-
   private outputColor: string;
   private initialColor: string;
   private fallbackColor: string;
@@ -38,6 +44,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   private sliderDimMax: SliderDimension;
   private directiveElementRef: ElementRef;
 
+  private dialogInputFields: Formats[] = [Formats.HEX, Formats.RGBA, Formats.HSLA];
   private dialogArrowSize: number = 10;
   private dialogArrowOffset: number = 15;
 
@@ -218,10 +225,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.width = this.cpWidth = parseInt(cpWidth, 10);
     this.height = this.cpHeight = parseInt(cpHeight, 10);
 
-    this.formats = Object.keys(Formats)
-      .filter((format: any) => !isNaN(format))
-      .map(value => Number(value));
-
     this.cpPosition = cpPosition;
     this.cpPositionOffset = parseInt(cpPositionOffset, 10);
 
@@ -355,7 +358,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onFormatToggle(): void {
-    this.format = this.formats[(this.formats.indexOf(this.format) + 1) % this.formats.length];
+    const nextInput = (this.dialogInputFields.indexOf(this.format) + 1) % this.dialogInputFields.length;
+    this.format = this.dialogInputFields[nextInput];
   }
 
   public onColorChange(value: {s: number, v: number, rgX: number, rgY: number}): void {
@@ -422,7 +426,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
             .join('');
         }
         if (this.cpAlphaChannel === 'forced') {
-          value +=  Math.round(this.hsva.a * 255).toString(16);
+          value += Math.round(this.hsva.a * 255).toString(16);
         }
 
         this.setColorFromString(value, true, false);

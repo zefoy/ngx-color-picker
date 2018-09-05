@@ -251,7 +251,7 @@ export class ColorPickerService {
         }
 
       default:
-        const allowHex8 = (alphaChannel === 'always' || alphaChannel === 'hex8');
+        const allowHex8 = (alphaChannel === 'always' || alphaChannel === 'forced' || alphaChannel === 'hex8');
 
         return this.rgbaToHex(this.denormalizeRGBA(this.hsvaToRgba(hsva)), allowHex8);
     }

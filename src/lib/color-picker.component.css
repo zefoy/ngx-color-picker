@@ -197,6 +197,12 @@
   border: #a9a9a9 solid 1px;
 }
 
+.color-picker .hex-text--with-alpha .box div:first-child,
+.color-picker .hex-text--with-alpha .box input:first-child {
+  flex-grow: 3;
+  margin-right: 8px;
+}
+
 .color-picker .hsla-text,
 .color-picker .rgba-text {
   width: 100%;

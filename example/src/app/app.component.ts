@@ -37,8 +37,9 @@ export class AppComponent {
   public color12: string = '#f200bd';
   public color13: string = 'rgba(0, 255, 0, 0.5)';
   public color14: string = 'rgb(0, 255, 255)';
-  public color15: string = '#a51ad633';
-  public color16: string = 'rgba(45,208,45,0.5)';
+  public color15: string = 'rgb(255, 0, 0)';
+  public color16: string = '#a51ad633';
+  public color17: string = 'rgba(45,208,45,0.5)';
 
   public cmykColor: Cmyk = new Cmyk(0, 0, 0, 0);
 

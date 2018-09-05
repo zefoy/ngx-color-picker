@@ -1,19 +1,11 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    HostListener,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit,
+  ViewChild, HostListener, ViewEncapsulation,
+  ElementRef, ChangeDetectorRef } from '@angular/core';
 
-import { detectIE, SliderDimension, SliderPosition } from './helpers';
+import { detectIE } from './helpers';
 
-import { Formats, Hsla, Hsva, Rgba } from './formats';
-import { AlphaChannel } from './types';
+import { ColorFormats, Hsla, Hsva, Rgba } from './formats';
+import { AlphaChannel, OutputFormat, SliderDimension, SliderPosition } from './helpers';
 
 import { ColorPickerService } from './color-picker.service';
 
@@ -44,9 +36,14 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   private sliderDimMax: SliderDimension;
   private directiveElementRef: ElementRef;
 
-  private dialogInputFields: Formats[] = [Formats.HEX, Formats.RGBA, Formats.HSLA];
   private dialogArrowSize: number = 10;
   private dialogArrowOffset: number = 15;
+
+  private dialogInputFields: ColorFormats[] = [
+    ColorFormats.HEX,
+    ColorFormats.RGBA,
+    ColorFormats.HSLA
+  ];
 
   private useRootViewContainer: boolean = false;
 
@@ -57,11 +54,12 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public left: number;
   public position: string;
 
-  public format: Formats;
+  public format: ColorFormats;
   public slider: SliderPosition;
 
   public hexText: string;
   public hexAlpha: number;
+
   public hslaText: Hsla;
   public rgbaText: Rgba;
 
@@ -75,7 +73,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public cpHeight: number;
 
   public cpAlphaChannel: AlphaChannel;
-  public cpOutputFormat: string;
+  public cpOutputFormat: OutputFormat;
 
   public cpDisableInput: boolean;
   public cpDialogDisplay: string;
@@ -133,11 +131,11 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.sliderDimMax = new SliderDimension(hueWidth, this.cpWidth, 130, alphaWidth);
 
     if (this.cpOutputFormat === 'rgba') {
-      this.format = Formats.RGBA;
+      this.format = ColorFormats.RGBA;
     } else if (this.cpOutputFormat === 'hsla') {
-      this.format = Formats.HSLA;
+      this.format = ColorFormats.HSLA;
     } else {
-      this.format = Formats.HEX;
+      this.format = ColorFormats.HEX;
     }
 
     if (this.cpOutputFormat === 'auto') {
@@ -191,7 +189,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public setupDialog(instance: any, elementRef: ElementRef, color: any,
     cpWidth: string, cpHeight: string, cpDialogDisplay: string, cpFallbackColor: string,
-    cpAlphaChannel: AlphaChannel, cpOutputFormat: string, cpDisableInput: boolean,
+    cpAlphaChannel: AlphaChannel, cpOutputFormat: OutputFormat, cpDisableInput: boolean,
     cpIgnoredElements: any, cpSaveClickOutside: boolean, cpUseRootViewContainer: boolean,
     cpPosition: string, cpPositionOffset: string, cpPositionRelativeToArrow: boolean,
     cpPresetLabel: string, cpPresetColors: string[], cpMaxPresetColorsLength: number,
@@ -355,8 +353,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onFormatToggle(): void {
-    const nextInput = (this.dialogInputFields.indexOf(this.format) + 1) % this.dialogInputFields.length;
-    this.format = this.dialogInputFields[nextInput];
+    const nextFormat = (this.dialogInputFields.indexOf(this.format) + 1) % this.dialogInputFields.length;
+
+    this.format = this.dialogInputFields[nextFormat];
   }
 
   public onColorChange(value: {s: number, v: number, rgX: number, rgY: number}): void {
@@ -412,9 +411,11 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       let validHex = /^#([a-f0-9]{3}|[a-f0-9]{6})$/gi;
+
       if (this.cpAlphaChannel === 'always') {
         validHex = /^#([a-f0-9]{3}|[a-f0-9]{6}|[a-f0-9]{8})$/gi;
       }
+
       if (validHex.test(value)) {
         if (value.length < 5) {
           value = '#' + value.substring(1)
@@ -422,6 +423,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
             .map(c => c + c)
             .join('');
         }
+
         if (this.cpAlphaChannel === 'forced') {
           value += Math.round(this.hsva.a * 255).toString(16);
         }

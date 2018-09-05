@@ -1,3 +1,9 @@
+export enum ColorFormats {
+  HEX,
+  RGBA,
+  HSLA
+}
+
 export class Cmyk {
   constructor(public c: number, public m: number, public y: number, public k: number) {}
 }
@@ -12,10 +18,4 @@ export class Hsva {
 
 export class Rgba {
   constructor(public r: number, public g: number, public b: number, public a: number) {}
-}
-
-export enum Formats {
-  HEX,
-  RGBA,
-  HSLA
 }

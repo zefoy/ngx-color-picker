@@ -2,9 +2,10 @@ import { Directive, OnChanges, OnDestroy, Input, Output, EventEmitter,
   HostListener, ApplicationRef, ComponentRef, ElementRef, ViewContainerRef,
   Injector, ReflectiveInjector, ComponentFactoryResolver } from '@angular/core';
 
+import { AlphaChannel, OutputFormat } from './helpers';
+
 import { ColorPickerService } from './color-picker.service';
 import { ColorPickerComponent } from './color-picker.component';
-import { AlphaChannel } from './types';
 
 @Directive({
   selector: '[colorPicker]',
@@ -30,7 +31,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @Input() cpDisableInput: boolean = false;
 
-  @Input() cpOutputFormat: string = 'auto';
+  @Input() cpOutputFormat: OutputFormat = 'auto';
   @Input() cpAlphaChannel: AlphaChannel = 'enabled';
 
   @Input() cpFallbackColor: string = '#fff';

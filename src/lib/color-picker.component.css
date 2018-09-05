@@ -28,6 +28,7 @@
 }
 
 .color-picker input {
+  width: 0;
   height: 26px;
   min-width: 0;
 
@@ -197,8 +198,8 @@
   border: #a9a9a9 solid 1px;
 }
 
-.color-picker .hex-text--with-alpha .box div:first-child,
-.color-picker .hex-text--with-alpha .box input:first-child {
+.color-picker .hex-alpha .box div:first-child,
+.color-picker .hex-alpha .box input:first-child {
   flex-grow: 3;
   margin-right: 8px;
 }
@@ -241,7 +242,6 @@
   -ms-flex: 1;
 
   flex: 1;
-  min-width: 0;
   padding: 1px;
   margin: 0 8px 0 0;
   border: #a9a9a9 solid 1px;

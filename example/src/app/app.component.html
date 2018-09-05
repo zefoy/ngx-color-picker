@@ -219,6 +219,26 @@
 
   <div class="row">
     <div class="col-md-5">
+      <input [style.background]="color13" [cpAlphaChannel]="'always'" [cpOutputFormat]="'rgba'" [cpPresetColors]="['#fff', '#2889e9']" [cpAddColorButton]="true" [(colorPicker)]="color13"/>
+    </div>
+
+    <div class="col-md-7">
+      <p>Add and remove preset colors:</p>
+      <pre>
+&lt;input [style.background]="color"
+       [cpAlphaChannel]="'always'"
+       [cpOutputFormat]="'rgba'"
+       [cpPresetColors]="['#fff', '#2889e9']"
+       [cpAddColorButton]="true"
+       [(colorPicker)]="color"/&gt;
+      </pre>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-md-5">
       <input #ignoredInput [style.background]="color12" [cpFallbackColor]="'#f200bd'" [cpIgnoredElements]="[ignoredButton, ignoredInput]" [(cpToggle)]="toggle" [(colorPicker)]="color12"/>
 
       <div class="clearfix"></div>
@@ -248,48 +268,49 @@
 
   <div class="row">
     <div class="col-md-5">
+      <input [value]="color14" [style.background]="color14" [cpAlphaChannel]="'always'" [cpOutputFormat]="'rgba'" [(colorPicker)]="color14"/>
+
+      <br>
+
       <input [value]="color13" [style.background]="color13" [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'rgba'" [(colorPicker)]="color13"/>
 
       <br>
 
-      <input [value]="color14" [style.background]="color14" [cpAlphaChannel]="'always'" [cpOutputFormat]="'rgba'" [(colorPicker)]="color14"/>
+      <input [value]="color16" [style.background]="rgbaText" [cpAlphaChannel]="'always'" [cpOutputFormat]="'hex'" [colorPicker]="color16" (colorPickerChange)="rgbaText=onChangeColorHex8($event);color16=$event"/>
 
       <br>
 
       <input [value]="color15" [style.background]="color15" [cpAlphaChannel]="'forced'" [cpOutputFormat]="'hex'" [(colorPicker)]="color15"/>
 
-      <br>
-
-      <input [value]="color16" [style.background]="rgbaText" [cpAlphaChannel]="'always'" [cpOutputFormat]="'hex'" [colorPicker]="color16" (colorPickerChange)="rgbaText=onChangeColorHex8($event);color16=$event"/>
     </div>
 
     <div class="col-md-7">
       <p>Change alpha channel behaviour:</p>
       <pre>
-&lt;input [value]="color13"
+&lt;input [value]="color"
+       [style.background]="color"
+       [cpAlphaChannel]="'always'"
+       [cpOutputFormat]="'rgba'"
+       [(colorPicker)]="color"/&gt;
+
+&lt;input [value]="color"
        [style.background]="color13"
        [cpAlphaChannel]="'disabled'"
        [cpOutputFormat]="'rgba'"
-       [(colorPicker)]="color13"/&gt;
+       [(colorPicker)]="color"/&gt;
 
-&lt;input [value]="color14"
-       [style.background]="color14"
-       [cpAlphaChannel]="'always'"
-       [cpOutputFormat]="'rgba'"
-       [(colorPicker)]="color14"/&gt;
-
-&lt;input [value]="color15"
-       [style.background]="color15"
-       [cpAlphaChannel]="'forced'"
-       [cpOutputFormat]="'hex'"
-       [(colorPicker)]="color15"/&gt;
-
-&lt;input [value]="color16"
+&lt;input [value]="color"
        [style.background]="rgbaText"
        [cpAlphaChannel]="'always'"
        [cpOutputFormat]="'hex'"
-       [colorPicker]="color16"
+       [colorPicker]="color"
        (colorPickerChange)="rgbaText=onChangeColorHex8($event);color16=$event"/&gt;
+
+&lt;input [value]="color"
+       [style.background]="color"
+       [cpAlphaChannel]="'forced'"
+       [cpOutputFormat]="'hex'"
+       [(colorPicker)]="color"/&gt;
       </pre>
     </div>
   </div>
@@ -327,26 +348,6 @@
 
 &lt;div [style.background]="arrayColors['color2']"
      (click)="selectedColor='color2'"&gt;&lt;/div&gt;
-      </pre>
-    </div>
-  </div>
-
-  <hr>
-
-  <div class="row">
-    <div class="col-md-5">
-      <input [style.background]="color17" [cpAlphaChannel]="'always'" [cpOutputFormat]="'rgba'" [cpPresetColors]="['#fff', '#2889e9']" [cpAddColorButton]="true" [(colorPicker)]="color17"/>
-    </div>
-
-    <div class="col-md-7">
-      <p>Add and remove preset colors:</p>
-      <pre>
-&lt;input [style.background]="color17"
-       [cpAlphaChannel]="'always'"
-       [cpOutputFormat]="'rgba'"
-       [cpPresetColors]="['#fff', '#2889e9']"
-       [cpAddColorButton]="true"
-       [(colorPicker)]="color17"/&gt;
       </pre>
     </div>
   </div>
@@ -524,9 +525,9 @@
             <td>
               <b>'enabled'</b>, 'disabled', 'always', 'forced'<br>
               enabled: alpha channel is not included for hexadecimal (hex6) values or for values without alpha (alpha = 1).<br>
+              disabled: alpha channel is completely disabled.<br>
               always: alpha channel is included for hexadecimal (hex6) values and values without alpha (alpha = 1).<br>
               forced: alpha channel field is added for hexadecimal (hex6) values.<br>
-              disabled: alpha channel is completely disabled.<br>
             </td>
           </tr>
 

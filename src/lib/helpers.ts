@@ -1,5 +1,9 @@
 import { Directive, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
 
+export type AlphaChannel = 'enabled' | 'disabled' | 'always' | 'forced';
+
+export type OutputFormat = 'auto' | 'hex' | 'rgba' | 'hsla';
+
 export function detectIE(): boolean | number {
   let ua = '';
 

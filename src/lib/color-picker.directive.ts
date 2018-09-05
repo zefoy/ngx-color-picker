@@ -4,7 +4,7 @@ import { Directive, OnChanges, OnDestroy, Input, Output, EventEmitter,
 
 import { ColorPickerService } from './color-picker.service';
 import { ColorPickerComponent } from './color-picker.component';
-import { AlphaChannel, DefaultInput } from './types';
+import { AlphaChannel } from './types';
 
 @Directive({
   selector: '[colorPicker]',
@@ -28,7 +28,6 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @Input() cpIgnoredElements: any = [];
 
-  @Input() cpDefaultInput: DefaultInput = 'auto';
   @Input() cpDisableInput: boolean = false;
 
   @Input() cpOutputFormat: string = 'auto';
@@ -164,7 +163,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
       this.cmpRef.instance.setupDialog(this, this.elRef, this.colorPicker,
         this.cpWidth, this.cpHeight, this.cpDialogDisplay, this.cpFallbackColor,
-        this.cpAlphaChannel, this.cpOutputFormat, this.cpDisableInput, this.cpDefaultInput,
+        this.cpAlphaChannel, this.cpOutputFormat, this.cpDisableInput,
         this.cpIgnoredElements, this.cpSaveClickOutside, this.cpUseRootViewContainer,
         this.cpPosition, this.cpPositionOffset, this.cpPositionRelativeToArrow,
         this.cpPresetLabel, this.cpPresetColors, this.cpMaxPresetColorsLength,

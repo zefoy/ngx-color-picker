@@ -13,7 +13,7 @@ import {
 import { detectIE, SliderDimension, SliderPosition } from './helpers';
 
 import { Formats, Hsla, Hsva, Rgba } from './formats';
-import { AlphaChannel, DefaultInput } from './types';
+import { AlphaChannel } from './types';
 
 import { ColorPickerService } from './color-picker.service';
 
@@ -77,7 +77,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public cpAlphaChannel: AlphaChannel;
   public cpOutputFormat: string;
 
-  public cpDefaultInput: DefaultInput;
   public cpDisableInput: boolean;
   public cpDialogDisplay: string;
 
@@ -133,10 +132,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.sliderDimMax = new SliderDimension(hueWidth, this.cpWidth, 130, alphaWidth);
 
-    const inputFormat = this.cpDefaultInput === 'auto' ? this.cpOutputFormat : this.cpDefaultInput;
-    if (inputFormat === 'rgba') {
+    if (this.cpOutputFormat === 'rgba') {
       this.format = Formats.RGBA;
-    } else if (inputFormat === 'hsla') {
+    } else if (this.cpOutputFormat === 'hsla') {
       this.format = Formats.HSLA;
     } else {
       this.format = Formats.HEX;
@@ -193,7 +191,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public setupDialog(instance: any, elementRef: ElementRef, color: any,
     cpWidth: string, cpHeight: string, cpDialogDisplay: string, cpFallbackColor: string,
-    cpAlphaChannel: AlphaChannel, cpOutputFormat: string, cpDisableInput: boolean, cpDefaultInput: DefaultInput,
+    cpAlphaChannel: AlphaChannel, cpOutputFormat: string, cpDisableInput: boolean,
     cpIgnoredElements: any, cpSaveClickOutside: boolean, cpUseRootViewContainer: boolean,
     cpPosition: string, cpPositionOffset: string, cpPositionRelativeToArrow: boolean,
     cpPresetLabel: string, cpPresetColors: string[], cpMaxPresetColorsLength: number,
@@ -210,7 +208,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.directiveInstance = instance;
     this.directiveElementRef = elementRef;
 
-    this.cpDefaultInput = cpDefaultInput;
     this.cpDisableInput = cpDisableInput;
 
     this.cpAlphaChannel = cpAlphaChannel;
@@ -258,7 +255,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dialogArrowOffset = 0;
     }
 
-    if (cpOutputFormat === 'hex' && cpAlphaChannel !== 'always') {
+    if (cpOutputFormat === 'hex' && cpAlphaChannel !== 'always' && cpAlphaChannel !== 'forced') {
       this.cpAlphaChannel = 'disabled';
     }
   }

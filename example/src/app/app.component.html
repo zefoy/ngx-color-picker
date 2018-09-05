@@ -256,7 +256,7 @@
 
       <br>
 
-      <input [value]="color15" [style.background]="color15" [cpAlphaChannel]="'forced'" [cpDefaultInput]="'hex'" [cpOutputFormat]="'rgba'" [(colorPicker)]="color15"/>
+      <input [value]="color15" [style.background]="color15" [cpAlphaChannel]="'forced'" [cpOutputFormat]="'hex'" [(colorPicker)]="color15"/>
 
       <br>
 
@@ -281,8 +281,7 @@
 &lt;input [value]="color15"
        [style.background]="color15"
        [cpAlphaChannel]="'forced'"
-       [cpDefaultInput]="'hex'"
-       [cpOutputFormat]="'rgba'"
+       [cpOutputFormat]="'hex'"
        [(colorPicker)]="color15"/&gt;
 
 &lt;input [value]="color16"
@@ -509,16 +508,6 @@
               <b>'popup'</b>, 'inline'<br>
               popup: dialog is showed when user clicks in the directive.<br>
               inline: dialog is showed permanently. You can show/hide the dialog with cpToggle.<br>
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpDefaultInput</td>
-            <td>
-              <b>'hex'</b>, 'rgba', 'hsla'<br>
-              hex: initial color input field is set to hex.<br>
-              rgba: initial color input field is set to rgba.<br>
-              hsla: initial color input field is set to hsla.<br>
             </td>
           </tr>
 

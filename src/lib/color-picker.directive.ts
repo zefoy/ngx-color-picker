@@ -1,6 +1,8 @@
-import { Directive, OnChanges, OnDestroy, Input, Output, EventEmitter,
+import {
+  Directive, OnChanges, OnDestroy, Input, Output, EventEmitter,
   HostListener, ApplicationRef, ComponentRef, ElementRef, ViewContainerRef,
-  Injector, ReflectiveInjector, ComponentFactoryResolver } from '@angular/core';
+  Injector, ReflectiveInjector, ComponentFactoryResolver
+} from '@angular/core';
 
 import { AlphaChannel, OutputFormat } from './helpers';
 
@@ -22,6 +24,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   @Input() colorPicker: string;
 
   @Input() cpWidth: string = '230px';
+
   @Input() cpHeight: string = 'auto';
 
   @Input() cpToggle: boolean = false;
@@ -37,6 +40,8 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   @Input() cpFallbackColor: string = '#fff';
 
   @Input() cpDialogDisplay: string = 'popup';
+
+  @Input() cpColorMode: string = '1';
 
   @Input() cpSaveClickOutside: boolean = true;
 
@@ -98,7 +103,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   constructor(private injector: Injector, private cfr: ComponentFactoryResolver,
     private appRef: ApplicationRef, private vcRef: ViewContainerRef, private elRef: ElementRef,
-    private _service: ColorPickerService) {}
+    private _service: ColorPickerService) { }
 
   ngOnDestroy(): void {
     if (this.cmpRef !== undefined) {
@@ -172,7 +177,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
         this.cpOKButton, this.cpOKButtonClass, this.cpOKButtonText,
         this.cpCancelButton, this.cpCancelButtonClass, this.cpCancelButtonText,
         this.cpAddColorButton, this.cpAddColorButtonClass, this.cpAddColorButtonText,
-        this.cpRemoveColorButtonClass);
+        this.cpRemoveColorButtonClass, this.cpColorMode);
 
       this.dialog = this.cmpRef.instance;
 

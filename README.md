@@ -115,6 +115,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 
 [cpColorMode]               // Limit color selection based on color mode
                             // colorMode: 'color', 'greyscale', 'monochrome'
+                            // Note: modes can be shortened to 'color','grey','mono','C','G','M' or '1','2','3'
 
 (colorPickerOpen)            // Current color value, send when dialog is opened (value: string).
 (colorPickerClose)           // Current color value, send when dialog is closed (value: string).

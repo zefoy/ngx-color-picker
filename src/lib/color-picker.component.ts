@@ -251,7 +251,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.fallbackColor = cpFallbackColor || '#fff';
 
     if (this.cpColorMode === 3) {
-      this.setPresetConfig(cpPresetLabel, ['#fff', '#000']);
+      this.setPresetConfig(cpPresetLabel, ['#000']);
     } else {
       this.setPresetConfig(cpPresetLabel, cpPresetColors);
     }

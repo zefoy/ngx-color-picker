@@ -132,8 +132,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const hueWidth = this.hueSlider.nativeElement.offsetWidth || 140;
     const alphaWidth = this.alphaSlider.nativeElement.offsetWidth || 140;
-    const lightnessWidth = this.lightnessSlider.nativeElement.offsetWidth || 140;
-
     this.sliderDimMax = new SliderDimension(hueWidth, this.cpWidth, 130, alphaWidth);
 
     if (this.cpOutputFormat === 'rgba') {

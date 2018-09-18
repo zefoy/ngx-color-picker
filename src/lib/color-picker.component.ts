@@ -221,9 +221,11 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.setInitialColor('#fff');
     }
-
+    this.fallbackColor = cpFallbackColor || '#fff';
     if (this.cpColorMode === 3) {
       this.cpAlphaChannel = 'disabled';
+      this.setInitialColor('#000');
+      this.fallbackColor = '#000';
     }
 
     this.cpOutputFormat = cpOutputFormat;
@@ -248,7 +250,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cpCancelButtonText = cpCancelButtonText;
     this.cpCancelButtonClass = cpCancelButtonClass;
 
-    this.fallbackColor = cpFallbackColor || '#fff';
+
 
     if (this.cpColorMode === 3) {
       this.setPresetConfig(cpPresetLabel, ['#000']);

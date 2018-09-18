@@ -113,6 +113,9 @@ import { ColorPickerModule } from 'ngx-color-picker';
 [cpUseRootViewContainer]     // Create dialog component in the root view container (false).
                              // Note: The root component needs to have public viewContainerRef.
 
+[cpColorMode]               // Limit color selection based on color mode
+                            // colorMode: 'color', 'greyscale', 'monochrome'
+
 (colorPickerOpen)            // Current color value, send when dialog is opened (value: string).
 (colorPickerClose)           // Current color value, send when dialog is closed (value: string).
 

@@ -224,7 +224,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.fallbackColor = cpFallbackColor || '#fff';
     if (this.cpColorMode === 3) {
       this.cpAlphaChannel = 'disabled';
-      this.setInitialColor('#000');
+      this.setInitialColor(color);
       this.fallbackColor = '#000';
     }
 
@@ -253,7 +253,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
     if (this.cpColorMode === 3) {
-      this.setPresetConfig(cpPresetLabel, ['#000']);
+      this.setPresetConfig(cpPresetLabel, [this.initialColor]);
     } else {
       this.setPresetConfig(cpPresetLabel, cpPresetColors);
     }

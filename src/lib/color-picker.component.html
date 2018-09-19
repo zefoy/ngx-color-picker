@@ -23,7 +23,7 @@
       <div *ngIf="cpAlphaChannel==='disabled'" style="height: 16px;"></div>
 
       <div #hueSlider class="hue" [slider] [rgX]="1" (newValue)="onHueChange($event)" (dragStart)="onDragStart('hue')"
-        (dragEnd)="onDragEnd('hue')" [style.display]="cpColorMode === 'color'? 'block' : 'none'">
+        (dragEnd)="onDragEnd('hue')" [style.display]="cpColorMode === 1? 'block' : 'none'">
         <div class="cursor" [style.left.px]="slider.h"></div>
       </div>
 

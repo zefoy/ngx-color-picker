@@ -565,6 +565,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onGreyInput(value: { v: number, rg: number }): void {
     this.hsva.v = value.v / value.rg;
 
+    this.hsva.s = 0;
     this.updateColorPicker();
 
     this.directiveInstance.inputChanged({
@@ -577,6 +578,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onAlphaInput(value: { v: number, rg: number }): void {
     this.hsva.a = value.v / value.rg;
 
+    if (this.cpColorMode === 2) {
+      this.hsva.s = 0;
+    }
     this.updateColorPicker();
 
     this.directiveInstance.inputChanged({
@@ -604,6 +608,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     const hsla = this.service.hsva2hsla(this.hsva);
 
     hsla.l = value.v / value.rg;
+
 
     this.hsva = this.service.hsla2hsva(hsla);
 

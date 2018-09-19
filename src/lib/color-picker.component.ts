@@ -458,7 +458,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onLightnessChange(value: { v: number, rgX: number }): void {
 
     this.hsva.v = value.v / value.rgX;
-
     this.hsva.s = 0;
     this.updateColorPicker();
 

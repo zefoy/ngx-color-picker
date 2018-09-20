@@ -252,11 +252,17 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
 
-    if (this.cpColorMode === 3) {
-      this.setPresetConfig(cpPresetLabel, [this.initialColor]);
-    } else {
-      this.setPresetConfig(cpPresetLabel, cpPresetColors);
+    switch (this.cpColorMode) {
+      case 3:
+        this.setPresetConfig(cpPresetLabel, [this.initialColor]);
+        break;
+      case 2: this.setPresetConfig(cpPresetLabel, []);
+        break;
+      default:
+        this.setPresetConfig(cpPresetLabel, cpPresetColors)
+        break;
     }
+
 
 
     this.cpMaxPresetColorsLength = cpMaxPresetColorsLength;

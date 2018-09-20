@@ -294,6 +294,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       case '3':
         this.cpColorMode = 3;
         break;
+      case '4':
+        this.cpColorMode = 4;
+        break;
       case 'COLOR':
         this.cpColorMode = 1;
         break;
@@ -303,11 +306,17 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       case 'MONOCHROME':
         this.cpColorMode = 3;
         break;
+      case 'LIMITED':
+        this.cpColorMode = 4;
+        break;
       case 'GREY':
         this.cpColorMode = 2;
         break;
       case 'MONO':
         this.cpColorMode = 3;
+        break;
+      case 'LIMIT':
+        this.cpColorMode = 4;
         break;
       case 'C':
         this.cpColorMode = 1;
@@ -317,6 +326,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
       case 'M':
         this.cpColorMode = 3;
+        break;
+      case 'L':
+        this.cpColorMode = 4;
         break;
       default:
         this.cpColorMode = 1;

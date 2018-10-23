@@ -141,10 +141,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.format = ColorFormats.HEX;
     }
 
-    if (this.cpOutputFormat === 'auto') {
-      this.cpOutputFormat = (this.cpAlphaChannel !== 'disabled') ? 'rgba' : 'hex';
-    }
-
     this.listenerMouseDown = (event: any) => { this.onMouseDown(event); };
     this.listenerResize = () => { this.onResize(); };
 
@@ -258,7 +254,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.dialogArrowOffset = 0;
     }
 
-    if (cpOutputFormat === 'hex' && cpAlphaChannel !== 'always' && cpAlphaChannel !== 'forced') {
+    if (cpOutputFormat === 'hex' &&
+        cpAlphaChannel !== 'always' && cpAlphaChannel !== 'forced')
+    {
       this.cpAlphaChannel = 'disabled';
     }
   }
@@ -690,6 +688,12 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.hexText = this.service.rgbaToHex(rgba, allowHex8);
         this.hexAlpha = this.rgbaText.a;
+      }
+
+      if (this.cpOutputFormat === 'auto') {
+        if (this.hsva.a < 1) {
+          this.format = this.hsva.a < 1 ? ColorFormats.RGBA : ColorFormats.HEX;
+        }
       }
 
       this.hueSliderColor = 'rgb(' + hue.r + ',' + hue.g + ',' + hue.b + ')';

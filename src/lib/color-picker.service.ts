@@ -226,6 +226,10 @@ export class ColorPickerService {
   }
 
   public outputFormat(hsva: Hsva, outputFormat: string, alphaChannel: string | null): string {
+    if (outputFormat === 'auto') {
+      outputFormat = hsva.a < 1 ? 'rgba' : 'hex';
+    }
+
     switch (outputFormat) {
       case 'hsla':
         const hsla = this.hsva2hsla(hsva);

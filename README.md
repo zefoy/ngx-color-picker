@@ -70,8 +70,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 [cpToggle]                   // Sets the default open / close state of the color picker (false).
 [cpDisabled]                 // Disables opening of the color picker dialog via toggle / events.
 
-[cpColorMode]                // Dialog color mode: 'color', 'grayscale', 'monochrome' ('color').
-                             // Shorthand values: 'color','gray','mono','C','G','M' or '1','2','3'
+[cpColorMode]                // Dialog color mode: 'color', 'grayscale', 'presets' ('color').
 
 [cpOutputFormat]             // Output color format: 'auto', 'hex', 'rgba', 'hsla' ('auto').
 [cpAlphaChannel]             // Alpha mode: 'enabled', 'disabled', 'always', 'forced' ('enabled').

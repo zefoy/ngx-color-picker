@@ -236,11 +236,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cpCancelButtonText = cpCancelButtonText;
     this.cpCancelButtonClass = cpCancelButtonClass;
 
-    if (this.cpColorMode === 3) {
-      this.fallbackColor = cpFallbackColor || '#000';
-    } else {
-      this.fallbackColor = cpFallbackColor || '#fff';
-    }
+    this.fallbackColor = cpFallbackColor || '#fff';
 
     this.setPresetConfig(cpPresetLabel, cpPresetColors);
 
@@ -276,14 +272,12 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
       case '2':
       case 'G':
-      case 'GRAY':
       case 'GRAYSCALE':
         this.cpColorMode = 2;
         break;
       case '3':
-      case 'M':
-      case 'MONO':
-      case 'MONOCHROME':
+      case 'P':
+      case 'PRESETS':
         this.cpColorMode = 3;
         break;
       default:
@@ -429,7 +423,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.updateColorPicker();
 
     this.directiveInstance.sliderChanged({
-      slider: 'lightness',
+      slider: 'value',
       value: this.hsva.v,
       color: this.outputColor
     });
@@ -558,7 +552,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.updateColorPicker();
 
     this.directiveInstance.inputChanged({
-      input: 'lightness',
+      input: 'value',
       value: this.hsva.v,
       color: this.outputColor
     });

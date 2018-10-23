@@ -23,7 +23,7 @@
         <div class="cursor" [style.left.px]="slider.h"></div>
       </div>
 
-      <div #valueSlider class="lightness" [slider] [rgX]="1" [style.display]="cpColorMode !== 1 ? 'block': 'none'" (newValue)="onValueChange($event)" (dragStart)="onDragStart('lightness')" (dragEnd)="onDragEnd('lightness')">
+      <div #valueSlider class="value" [slider] [rgX]="1" [style.display]="cpColorMode === 2 ? 'block': 'none'" (newValue)="onValueChange($event)" (dragStart)="onDragStart('value')" (dragEnd)="onDragEnd('value')">
         <div class="cursor" [style.right.px]="slider.v"></div>
       </div>
 
@@ -72,7 +72,7 @@
     </div>
   </div>
 
-  <div *ngIf="!cpDisableInput && cpColorMode !== 1" class="value-text">
+  <div *ngIf="!cpDisableInput && cpColorMode === 2" class="value-text">
     <div class="box">
       <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="hslaText?.l" (keyup.enter)="onAcceptColor($event)" (newValue)="onValueInput($event)" />
       <input *ngIf="cpAlphaChannel!=='disabled'" type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1"  [text] [rg]="1" [value]="hslaText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />

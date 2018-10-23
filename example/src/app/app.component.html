@@ -29,6 +29,38 @@
 
   <div class="row">
     <div class="col-md-5">
+      <input [style.background]="color17" [(colorPicker)]="color17" [cpColorMode]="'grayscale'" (colorPickerOpen)="onEventLog('colorPickerOpen', $event)" (colorPickerClose)="onEventLog('colorPickerClose', $event)" (cpInputChange)="onEventLog('cpInputChange', $event)" (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"/>
+    </div>
+
+    <div class="col-md-7">
+      <p>Grayscale color mode:</p>
+      <pre>
+&lt;input [(colorPicker)]="color" [cpColorMode]="'grayscale'"
+       [style.background]="color"/&gt;
+      </pre>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-md-5">
+      <input [style.background]="color18" [(colorPicker)]="color18" [cpColorMode]="'monochrome'" (colorPickerOpen)="onEventLog('colorPickerOpen', $event)" (colorPickerClose)="onEventLog('colorPickerClose', $event)" (cpInputChange)="onEventLog('cpInputChange', $event)" (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"/>
+    </div>
+
+    <div class="col-md-7">
+      <p>Monochrome color mode:</p>
+      <pre>
+&lt;input [(colorPicker)]="color" [cpColorMode]="'monochrome'"
+       [style.background]="color"/&gt;
+      </pre>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-md-5">
       <input [value]="color2" [style.background]="color2" [(colorPicker)]="color2"/>
     </div>
 

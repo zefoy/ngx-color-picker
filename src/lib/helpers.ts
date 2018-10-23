@@ -1,5 +1,8 @@
 import { Directive, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
 
+export type ColorMode = 'color' | 'c' | '1' |
+  'grayscale' | 'gray' | 'g' | '2' | 'monochrome' | 'mono' | 'm' | '3';
+
 export type AlphaChannel = 'enabled' | 'disabled' | 'always' | 'forced';
 
 export type OutputFormat = 'auto' | 'hex' | 'rgba' | 'hsla';

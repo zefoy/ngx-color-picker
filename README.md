@@ -70,6 +70,9 @@ import { ColorPickerModule } from 'ngx-color-picker';
 [cpToggle]                   // Sets the default open / close state of the color picker (false).
 [cpDisabled]                 // Disables opening of the color picker dialog via toggle / events.
 
+[cpColorMode]                // Dialog color mode: 'color', 'grayscale', 'monochrome' ('color').
+                             // Shorthand values: 'color','gray','mono','C','G','M' or '1','2','3'
+
 [cpOutputFormat]             // Output color format: 'auto', 'hex', 'rgba', 'hsla' ('auto').
 [cpAlphaChannel]             // Alpha mode: 'enabled', 'disabled', 'always', 'forced' ('enabled').
 [cpFallbackColor]            // Used when the color is not well-formed or is undefined ('#000').
@@ -112,10 +115,6 @@ import { ColorPickerModule } from 'ngx-color-picker';
 
 [cpUseRootViewContainer]     // Create dialog component in the root view container (false).
                              // Note: The root component needs to have public viewContainerRef.
-
-[cpColorMode]               // Limit color selection based on color mode
-                            // colorMode: 'color', 'greyscale', 'monochrome'
-                            // Note: modes can be shortened to 'color','grey','mono','C','G','M' or '1','2','3'
 
 (colorPickerOpen)            // Current color value, send when dialog is opened (value: string).
 (colorPickerClose)           // Current color value, send when dialog is closed (value: string).

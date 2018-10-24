@@ -86,12 +86,12 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @Output() cpPresetColorsChange = new EventEmitter<any>(true);
 
-  @HostListener('click', ['$event']) handleClick(event: any): void {
-    this.inputFocus(event);
+  @HostListener('click', ['$event']) handleClick(): void {
+    this.inputFocus();
   }
 
-  @HostListener('focus', ['$event']) handleFocus(event: any): void {
-    this.inputFocus(event);
+  @HostListener('focus') handleFocus(): void {
+    this.inputFocus();
   }
 
   @HostListener('input', ['$event']) handleInput(event: any): void {
@@ -216,7 +216,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     this.colorPickerSelect.emit(value);
   }
 
-  public inputFocus(event: any): void {
+  public inputFocus(): void {
     const element = this.elRef.nativeElement;
 
     const ignored = this.cpIgnoredElements.filter((item: any) => item === element);

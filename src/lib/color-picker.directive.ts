@@ -86,7 +86,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @Output() cpPresetColorsChange = new EventEmitter<any>(true);
 
-  @HostListener('click', ['$event']) handleClick(): void {
+  @HostListener('click') handleClick(): void {
     this.inputFocus();
   }
 

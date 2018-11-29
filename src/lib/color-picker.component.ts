@@ -285,6 +285,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public setInitialColor(color: any): void {
     this.initialColor = color;
+
+    if (this.cpDialogDisplay === 'inline') {
+      this.cdRef.detectChanges();
+    }
   }
 
   public setPresetConfig(cpPresetLabel: string, cpPresetColors: string[]): void {

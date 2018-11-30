@@ -381,8 +381,13 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.directiveInstance.colorCanceled();
   }
 
-  public onFormatToggle(): void {
-    const nextFormat = (this.dialogInputFields.indexOf(this.format) + 1) % this.dialogInputFields.length;
+  public onFormatToggle(change: number): void {
+
+    const availableFormats = this.dialogInputFields.length;
+    // Javascript modulo operation doesn't work that well with negative numbers, so we have to take
+    // things a bit further to get the proper behavior for negative wrap around.
+    const nextFormat = (((this.dialogInputFields.indexOf(this.format) + change) % availableFormats)
+        + availableFormats) % availableFormats;
 
     this.format = this.dialogInputFields[nextFormat];
   }

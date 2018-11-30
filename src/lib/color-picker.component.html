@@ -83,7 +83,10 @@
     </div>
   </div>
 
-  <div *ngIf="!cpDisableInput && (cpColorMode || 1) === 1" class="type-policy" (click)="onFormatToggle()"></div>
+  <div *ngIf="!cpDisableInput && (cpColorMode || 1) === 1" class="type-policy">
+    <span class="type-policy-arrow" (click)="onFormatToggle(1)"></span>
+    <span class="type-policy-arrow" (click)="onFormatToggle(-1)"></span>
+  </div>
 
   <div *ngIf="cpPresetColors?.length || cpAddColorButton" class="preset-area">
     <hr>

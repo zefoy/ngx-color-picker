@@ -152,7 +152,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.cpWidth !== 230) {
+    if (this.cpWidth !== 230 || this.cpDialogDisplay === 'inline') {
       const hueWidth = this.hueSlider.nativeElement.offsetWidth || 140;
       const alphaWidth = this.alphaSlider.nativeElement.offsetWidth || 140;
 
@@ -285,10 +285,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public setInitialColor(color: any): void {
     this.initialColor = color;
-
-    if (this.cpDialogDisplay === 'inline') {
-      this.cdRef.detectChanges();
-    }
   }
 
   public setPresetConfig(cpPresetLabel: string, cpPresetColors: string[]): void {
@@ -382,12 +378,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onFormatToggle(change: number): void {
-
     const availableFormats = this.dialogInputFields.length;
-    // Javascript modulo operation doesn't work that well with negative numbers, so we have to take
-    // things a bit further to get the proper behavior for negative wrap around.
-    const nextFormat = (((this.dialogInputFields.indexOf(this.format) + change) % availableFormats)
-        + availableFormats) % availableFormats;
+
+    const nextFormat = (((this.dialogInputFields.indexOf(this.format) + change) %
+      availableFormats) + availableFormats) % availableFormats;
 
     this.format = this.dialogInputFields[nextFormat];
   }

@@ -3,7 +3,7 @@
   "description": "Color picker widget for Angular",
   "bugs": "https://github.com/zefoy/ngx-color-picker/issues",
   "license": "MIT",
-  "version": "7.2.0",
+  "version": "7.2.1",
   "main": "./bundles/ngx-color-picker.umd.js",
   "module": "./dist/ngx-color-picker.es5.js",
   "typings": "./dist/ngx-color-picker.d.ts",

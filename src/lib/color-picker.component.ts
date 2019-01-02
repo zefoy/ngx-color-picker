@@ -326,15 +326,11 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public onDragEnd(event: Event, slider: string): void {
-    event.stopPropagation();
-
+  public onDragEnd(slider: string): void {
     this.directiveInstance.sliderDragEnd({ slider: slider, color: this.outputColor });
   }
 
-  public onDragStart(event: Event, slider: string): void {
-    event.stopPropagation();
-
+  public onDragStart(slider: string): void {
     this.directiveInstance.sliderDragStart({ slider: slider, color: this.outputColor });
   }
 

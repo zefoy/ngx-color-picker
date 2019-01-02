@@ -1,7 +1,7 @@
 <div #dialogPopup class="color-picker" [style.visibility]="hidden || !show ? 'hidden' : 'visible'" [style.top.px]="top" [style.left.px]="left" [style.position]="position" [style.height.px]="cpHeight" [style.width.px]="cpWidth" (click)="$event.stopPropagation()">
   <div *ngIf="cpDialogDisplay=='popup'" class="arrow arrow-{{cpPosition}}" [style.top.px]="arrowTop"></div>
 
-  <div *ngIf="(cpColorMode || 1) === 1" class="saturation-lightness" [slider] [rgX]="1" [rgY]="1" [style.background-color]="hueSliderColor" (newValue)="onColorChange($event)" (dragStart)="onDragStart($event, 'saturation-lightness')" (dragEnd)="onDragEnd($event, 'saturation-lightness')">
+  <div *ngIf="(cpColorMode || 1) === 1" class="saturation-lightness" [slider] [rgX]="1" [rgY]="1" [style.background-color]="hueSliderColor" (newValue)="onColorChange($event)" (dragStart)="onDragStart('saturation-lightness')" (dragEnd)="onDragEnd('saturation-lightness')">
     <div class="cursor" [style.top.px]="slider?.v" [style.left.px]="slider?.s"></div>
   </div>
 
@@ -19,15 +19,15 @@
     <div class="right">
       <div *ngIf="cpAlphaChannel==='disabled'" style="height: 16px;"></div>
 
-      <div #hueSlider class="hue" [slider] [rgX]="1" [style.display]="(cpColorMode || 1) === 1 ? 'block' : 'none'" (newValue)="onHueChange($event)" (dragStart)="onDragStart($event, 'hue')" (dragEnd)="onDragEnd($event, 'hue')">
+      <div #hueSlider class="hue" [slider] [rgX]="1" [style.display]="(cpColorMode || 1) === 1 ? 'block' : 'none'" (newValue)="onHueChange($event)" (dragStart)="onDragStart('hue')" (dragEnd)="onDragEnd('hue')">
         <div class="cursor" [style.left.px]="slider?.h"></div>
       </div>
 
-      <div #valueSlider class="value" [slider] [rgX]="1" [style.display]="(cpColorMode || 1) === 2 ? 'block': 'none'" (newValue)="onValueChange($event)" (dragStart)="onDragStart($event, 'value')" (dragEnd)="onDragEnd($event, 'value')">
+      <div #valueSlider class="value" [slider] [rgX]="1" [style.display]="(cpColorMode || 1) === 2 ? 'block': 'none'" (newValue)="onValueChange($event)" (dragStart)="onDragStart('value')" (dragEnd)="onDragEnd('value')">
         <div class="cursor" [style.right.px]="slider?.v"></div>
       </div>
 
-      <div #alphaSlider class="alpha" [slider] [rgX]="1" [style.display]="cpAlphaChannel === 'disabled' ? 'none' : 'block'" [style.background-color]="alphaSliderColor" (newValue)="onAlphaChange($event)" (dragStart)="onDragStart($event, 'alpha')" (dragEnd)="onDragEnd($event, 'alpha')">
+      <div #alphaSlider class="alpha" [slider] [rgX]="1" [style.display]="cpAlphaChannel === 'disabled' ? 'none' : 'block'" [style.background-color]="alphaSliderColor" (newValue)="onAlphaChange($event)" (dragStart)="onDragStart('alpha')" (dragEnd)="onDragEnd('alpha')">
         <div class="cursor" [style.left.px]="slider?.a"></div>
       </div>
     </div>

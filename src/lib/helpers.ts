@@ -89,6 +89,8 @@ export class SliderDirective {
   private start(event: any): void {
     this.setCursor(event);
 
+    event.stopPropagation();
+
     document.addEventListener('mouseup', this.listenerStop);
     document.addEventListener('touchend', this.listenerStop);
     document.addEventListener('mousemove', this.listenerMove);

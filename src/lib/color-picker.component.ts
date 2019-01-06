@@ -456,7 +456,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         validHex = /^#([a-f0-9]{3}|[a-f0-9]{6}|[a-f0-9]{8})$/gi;
       }
 
-      if (validHex.test(value)) {
+      const valid = validHex.test(value);
+
+      if (valid) {
         if (value.length < 5) {
           value = '#' + value.substring(1)
             .split('')
@@ -469,13 +471,14 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
         this.setColorFromString(value, true, false);
-
-        this.directiveInstance.inputChanged({
-          input: 'hex',
-          value: value,
-          color: this.outputColor
-        });
       }
+
+      this.directiveInstance.inputChanged({
+        input: 'hex',
+        value: value,
+        valid: valid,
+        color: this.outputColor
+      });
     }
   }
 

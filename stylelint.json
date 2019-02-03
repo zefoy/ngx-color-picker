@@ -171,6 +171,7 @@
             "cursor",
             "resize",
             "user-select",
+            "touch-action",
             "pointer-events",
             "font-size",
             "font-style",

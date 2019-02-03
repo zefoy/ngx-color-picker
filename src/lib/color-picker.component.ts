@@ -475,8 +475,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.directiveInstance.inputChanged({
         input: 'hex',
-        value: value,
         valid: valid,
+        value: value,
         color: this.outputColor
       });
     }
@@ -485,16 +485,21 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onRedInput(value: { v: number, rg: number }): void {
     const rgba = this.service.hsvaToRgba(this.hsva);
 
-    rgba.r = value.v / value.rg;
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    this.hsva = this.service.rgbaToHsva(rgba);
+    if (valid) {
+      rgba.r = value.v / value.rg;
 
-    this.sliderH = this.hsva.h;
+      this.hsva = this.service.rgbaToHsva(rgba);
 
-    this.updateColorPicker();
+      this.sliderH = this.hsva.h;
+
+      this.updateColorPicker();
+    }
 
     this.directiveInstance.inputChanged({
       input: 'red',
+      valid: valid,
       value: rgba.r,
       color: this.outputColor
     });
@@ -503,16 +508,21 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onBlueInput(value: { v: number, rg: number }): void {
     const rgba = this.service.hsvaToRgba(this.hsva);
 
-    rgba.b = value.v / value.rg;
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    this.hsva = this.service.rgbaToHsva(rgba);
+    if (valid) {
+      rgba.b = value.v / value.rg;
 
-    this.sliderH = this.hsva.h;
+      this.hsva = this.service.rgbaToHsva(rgba);
 
-    this.updateColorPicker();
+      this.sliderH = this.hsva.h;
+
+      this.updateColorPicker();
+    }
 
     this.directiveInstance.inputChanged({
       input: 'blue',
+      valid: valid,
       value: rgba.b,
       color: this.outputColor
     });
@@ -521,54 +531,74 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onGreenInput(value: { v: number, rg: number }): void {
     const rgba = this.service.hsvaToRgba(this.hsva);
 
-    rgba.g = value.v / value.rg;
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    this.hsva = this.service.rgbaToHsva(rgba);
+    if (valid) {
+      rgba.g = value.v / value.rg;
 
-    this.sliderH = this.hsva.h;
+      this.hsva = this.service.rgbaToHsva(rgba);
 
-    this.updateColorPicker();
+      this.sliderH = this.hsva.h;
+
+      this.updateColorPicker();
+    }
 
     this.directiveInstance.inputChanged({
       input: 'green',
+      valid: valid,
       value: rgba.g,
       color: this.outputColor
     });
   }
 
   public onHueInput(value: { v: number, rg: number }) {
-    this.hsva.h = value.v / value.rg;
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    this.sliderH = this.hsva.h;
+    if (valid) {
+      this.hsva.h = value.v / value.rg;
 
-    this.updateColorPicker();
+      this.sliderH = this.hsva.h;
+
+      this.updateColorPicker();
+    }
 
     this.directiveInstance.inputChanged({
       input: 'hue',
+      valid: valid,
       value: this.hsva.h,
       color: this.outputColor
     });
   }
 
   public onValueInput(value: { v: number, rg: number }): void {
-    this.hsva.v = value.v / value.rg;
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    this.updateColorPicker();
+    if (valid) {
+      this.hsva.v = value.v / value.rg;
+
+      this.updateColorPicker();
+    }
 
     this.directiveInstance.inputChanged({
       input: 'value',
+      valid: valid,
       value: this.hsva.v,
       color: this.outputColor
     });
   }
 
   public onAlphaInput(value: { v: number, rg: number }): void {
-    this.hsva.a = value.v / value.rg;
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    this.updateColorPicker();
+    if (valid) {
+      this.hsva.a = value.v / value.rg;
+
+      this.updateColorPicker();
+    }
 
     this.directiveInstance.inputChanged({
       input: 'alpha',
+      valid: valid,
       value: this.hsva.a,
       color: this.outputColor
     });
@@ -577,16 +607,21 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onLightnessInput(value: { v: number, rg: number }): void {
     const hsla = this.service.hsva2hsla(this.hsva);
 
-    hsla.l = value.v / value.rg;
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    this.hsva = this.service.hsla2hsva(hsla);
+    if (valid) {
+      hsla.l = value.v / value.rg;
 
-    this.sliderH = this.hsva.h;
+      this.hsva = this.service.hsla2hsva(hsla);
 
-    this.updateColorPicker();
+      this.sliderH = this.hsva.h;
+
+      this.updateColorPicker();
+    }
 
     this.directiveInstance.inputChanged({
       input: 'lightness',
+      valid: valid,
       value: hsla.l,
       color: this.outputColor
     });
@@ -595,16 +630,21 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onSaturationInput(value: { v: number, rg: number }): void {
     const hsla = this.service.hsva2hsla(this.hsva);
 
-    hsla.s = value.v / value.rg;
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-    this.hsva = this.service.hsla2hsva(hsla);
+    if (valid) {
+      hsla.s = value.v / value.rg;
 
-    this.sliderH = this.hsva.h;
+      this.hsva = this.service.hsla2hsva(hsla);
 
-    this.updateColorPicker();
+      this.sliderH = this.hsva.h;
+
+      this.updateColorPicker();
+    }
 
     this.directiveInstance.inputChanged({
       input: 'saturation',
+      valid: valid,
       value: hsla.s,
       color: this.outputColor
     });

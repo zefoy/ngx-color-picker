@@ -42,9 +42,7 @@ export class TextDirective {
     } else {
       const numeric = parseFloat(value);
 
-      if (!isNaN(numeric) && numeric >= 0 && numeric <= this.rg) {
-        this.newValue.emit({ v: numeric, rg: this.rg });
-      }
+      this.newValue.emit({ v: numeric, rg: this.rg });
     }
   }
 }

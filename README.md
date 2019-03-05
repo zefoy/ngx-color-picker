@@ -92,6 +92,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 [cpIgnoredElements]          // Array of HTML elements that will be ignored when clicked ([]).
 
 [cpSaveClickOutside]         // Save currently selected color when user clicks outside (true).
+[cpCloseClickOutside]        // Close the color picker dialog when user clicks outside (true).
 
 [cpOKButton]                 // Show an OK / Apply button which saves the color (false).
 [cpOKButtonText]             // Button label text shown inside the OK / Apply button ('OK').
@@ -141,5 +142,3 @@ import { ColorPickerModule } from 'ngx-color-picker';
 openDialog()                 // Opens the color picker dialog if not already open.
 closeDialog()                // Closes the color picker dialog if not already closed.
 ```
-
-

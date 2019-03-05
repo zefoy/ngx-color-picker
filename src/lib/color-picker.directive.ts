@@ -41,6 +41,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   @Input() cpDialogDisplay: string = 'popup';
 
   @Input() cpSaveClickOutside: boolean = true;
+  @Input() cpCloseClickOutside: boolean = true;
 
   @Input() cpUseRootViewContainer: boolean = false;
 
@@ -167,10 +168,10 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
       this.cmpRef.instance.setupDialog(this, this.elRef, this.colorPicker,
         this.cpWidth, this.cpHeight, this.cpDialogDisplay, this.cpFallbackColor,
         this.cpColorMode, this.cpAlphaChannel, this.cpOutputFormat, this.cpDisableInput,
-        this.cpIgnoredElements, this.cpSaveClickOutside, this.cpUseRootViewContainer,
-        this.cpPosition, this.cpPositionOffset, this.cpPositionRelativeToArrow,
-        this.cpPresetLabel, this.cpPresetColors, this.cpMaxPresetColorsLength,
-        this.cpPresetEmptyMessage, this.cpPresetEmptyMessageClass,
+        this.cpIgnoredElements, this.cpSaveClickOutside, this.cpCloseClickOutside,
+        this.cpUseRootViewContainer, this.cpPosition, this.cpPositionOffset,
+        this.cpPositionRelativeToArrow, this.cpPresetLabel, this.cpPresetColors,
+        this.cpMaxPresetColorsLength, this.cpPresetEmptyMessage, this.cpPresetEmptyMessageClass,
         this.cpOKButton, this.cpOKButtonClass, this.cpOKButtonText,
         this.cpCancelButton, this.cpCancelButtonClass, this.cpCancelButtonText,
         this.cpAddColorButton, this.cpAddColorButtonClass, this.cpAddColorButtonText,

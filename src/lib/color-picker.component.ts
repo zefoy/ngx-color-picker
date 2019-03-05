@@ -81,7 +81,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public cpDialogDisplay: string;
 
   public cpIgnoredElements: any;
+
   public cpSaveClickOutside: boolean;
+  public cpCloseClickOutside: boolean;
 
   public cpPosition: string;
   public cpPositionOffset: number;
@@ -190,13 +192,13 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     cpWidth: string, cpHeight: string, cpDialogDisplay: string, cpFallbackColor: string,
     cpColorMode: string, cpAlphaChannel: AlphaChannel, cpOutputFormat: OutputFormat,
     cpDisableInput: boolean, cpIgnoredElements: any, cpSaveClickOutside: boolean,
-    cpUseRootViewContainer: boolean, cpPosition: string, cpPositionOffset: string,
-    cpPositionRelativeToArrow: boolean, cpPresetLabel: string, cpPresetColors: string[],
-    cpMaxPresetColorsLength: number, cpPresetEmptyMessage: string, cpPresetEmptyMessageClass: string,
-    cpOKButton: boolean, cpOKButtonClass: string, cpOKButtonText: string,
-    cpCancelButton: boolean, cpCancelButtonClass: string, cpCancelButtonText: string,
-    cpAddColorButton: boolean, cpAddColorButtonClass: string, cpAddColorButtonText: string,
-    cpRemoveColorButtonClass: string): void
+    cpCloseClickOutside: boolean, cpUseRootViewContainer: boolean, cpPosition: string,
+    cpPositionOffset: string, cpPositionRelativeToArrow: boolean, cpPresetLabel: string,
+    cpPresetColors: string[], cpMaxPresetColorsLength: number, cpPresetEmptyMessage: string,
+    cpPresetEmptyMessageClass: string, cpOKButton: boolean, cpOKButtonClass: string,
+    cpOKButtonText: string, cpCancelButton: boolean, cpCancelButtonClass: string,
+    cpCancelButtonText: string, cpAddColorButton: boolean, cpAddColorButtonClass: string,
+    cpAddColorButtonText: string, cpRemoveColorButtonClass: string): void
   {
     this.setInitialColor(color);
 
@@ -214,7 +216,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cpDialogDisplay = cpDialogDisplay;
 
     this.cpIgnoredElements = cpIgnoredElements;
+
     this.cpSaveClickOutside = cpSaveClickOutside;
+    this.cpCloseClickOutside = cpCloseClickOutside;
 
     this.useRootViewContainer = cpUseRootViewContainer;
 
@@ -347,7 +351,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.directiveInstance.colorChanged(this.initialColor);
       }
 
-      this.closeColorPicker();
+      if (this.cpCloseClickOutside) {
+        this.closeColorPicker();
+      }
     }
   }
 

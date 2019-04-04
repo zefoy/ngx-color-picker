@@ -345,7 +345,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         !this.isDescendant(this.directiveElementRef.nativeElement, event.target) &&
         this.cpIgnoredElements.filter((item: any) => item === event.target).length === 0)
     {
-      if (!this.cpSaveClickOutside) {
+      if (this.cpSaveClickOutside) {
+        this.directiveInstance.colorSelected(this.outputColor);
+      } else {
         this.setColorFromString(this.initialColor, false);
 
         this.directiveInstance.colorChanged(this.initialColor);

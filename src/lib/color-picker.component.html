@@ -11,7 +11,7 @@
 
       <div class="selected-color" [style.background-color]="selectedColor"></div>
 
-      <button *ngIf="cpAddColorButton" class="{{cpAddColorButtonClass}}" [disabled]="cpPresetColors && cpPresetColors.length >= cpMaxPresetColorsLength" (click)="onAddPresetColor($event, selectedColor)">
+      <button *ngIf="cpAddColorButton" type="button" class="{{cpAddColorButtonClass}}" [disabled]="cpPresetColors && cpPresetColors.length >= cpMaxPresetColorsLength" (click)="onAddPresetColor($event, selectedColor)">
         {{cpAddColorButtonText}}
       </button>
     </div>

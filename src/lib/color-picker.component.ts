@@ -4,15 +4,14 @@ import { Component, OnInit, OnDestroy, AfterViewInit,
 
 import { detectIE } from './helpers';
 
-import { ColorFormats, Hsla, Hsva, Rgba } from './formats';
+import { ColorFormats, Hsla, Hsva, Rgba, Cmyk } from './formats';
 import { AlphaChannel, OutputFormat, SliderDimension, SliderPosition } from './helpers';
-
 import { ColorPickerService } from './color-picker.service';
 
 @Component({
   selector: 'color-picker',
-  templateUrl: '../../dist/lib/color-picker.component.html',
-  styleUrls: [ '../../dist/lib/color-picker.component.css' ],
+  templateUrl: './color-picker.component.html',
+  styleUrls: [ './color-picker.component.css' ],
   encapsulation: ViewEncapsulation.None
 })
 export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
@@ -21,11 +20,12 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   private hsva: Hsva;
 
   private width: number;
-  private height: number;
+  private height: number;border_clear
 
   private outputColor: string;
   private initialColor: string;
   private fallbackColor: string;
+  private cmykColor: string = '';
 
   private listenerResize: any;
   private listenerMouseDown: any;
@@ -40,9 +40,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   private dialogArrowOffset: number = 15;
 
   private dialogInputFields: ColorFormats[] = [
-    ColorFormats.HEX,
     ColorFormats.RGBA,
-    ColorFormats.HSLA
+    ColorFormats.HEX,
+    ColorFormats.HSLA,
+    ColorFormats.CMYK,
   ];
 
   private useRootViewContainer: boolean = false;
@@ -62,6 +63,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public hslaText: Hsla;
   public rgbaText: Rgba;
+
+  public cmykText: Cmyk;
+
+  public cmyk: Cmyk;
 
   public arrowTop: number;
 
@@ -135,12 +140,19 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.sliderDimMax = new SliderDimension(hueWidth, this.cpWidth, 130, alphaWidth);
 
-    if (this.cpOutputFormat === 'rgba') {
+    switch (this.cpOutputFormat) {
+      case 'rgba':
       this.format = ColorFormats.RGBA;
-    } else if (this.cpOutputFormat === 'hsla') {
+      break;
+      case 'hsla':
       this.format = ColorFormats.HSLA;
-    } else {
+      break;
+      case 'cmyk':
+      this.format = ColorFormats.CMYK;
+      break;
+      default:
       this.format = ColorFormats.HEX;
+      break;
     }
 
     this.listenerMouseDown = (event: any) => { this.onMouseDown(event); };
@@ -346,11 +358,11 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.cpIgnoredElements.filter((item: any) => item === event.target).length === 0)
     {
       if (this.cpSaveClickOutside) {
-        this.directiveInstance.colorSelected(this.outputColor);
+        this.directiveInstance.colorSelected(this.outputColor, this.cmykColor);
       } else {
         this.setColorFromString(this.initialColor, false);
 
-        this.directiveInstance.colorChanged(this.initialColor);
+        this.directiveInstance.colorChanged(this.initialColor, this.cmykColor);
       }
 
       if (this.cpCloseClickOutside) {
@@ -367,7 +379,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     if (this.outputColor) {
-      this.directiveInstance.colorSelected(this.outputColor);
+      this.directiveInstance.colorSelected(this.outputColor, this.cmykColor);
     }
   }
 
@@ -377,7 +389,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.setColorFromString(this.initialColor, true);
 
     if (this.cpDialogDisplay === 'popup') {
-      this.directiveInstance.colorChanged(this.initialColor, true);
+      this.directiveInstance.colorChanged(this.initialColor, this.cmykColor, true);
 
       this.closeColorPicker();
     }
@@ -559,6 +571,75 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  public onCyanInput(value: { v: number, rg: number }): void {
+
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
+
+    if (valid) {
+      this.cmyk.c = value.v;
+      this.updateColorPicker(false, true, true);
+    }
+
+    this.directiveInstance.inputChanged({
+      input: 'cyan',
+      valid: true,
+      value: this.cmyk.c,
+      color: this.outputColor
+    });
+  }
+
+  public onMagentaInput(value: { v: number, rg: number }): void {
+
+   const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
+
+    if (valid) {
+      this.cmyk.m = value.v;
+      this.updateColorPicker(false, true, true);
+    }
+
+    this.directiveInstance.inputChanged({
+      input: 'magenta',
+      valid: true,
+      value: this.cmyk.m,
+      color: this.outputColor
+    });
+  }
+
+  public onYellowInput(value: { v: number, rg: number }): void {
+
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
+
+    if (valid) {
+      this.cmyk.y = value.v;
+      this.updateColorPicker(false, true, true);
+    }
+
+    this.directiveInstance.inputChanged({
+      input: 'yellow',
+      valid: true,
+      value: this.cmyk.y,
+      color: this.outputColor
+    });
+  }
+
+  public onBlackInput(value: { v: number, rg: number }): void {
+
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
+
+    if (valid) {
+      this.cmyk.k = value.v;
+      this.updateColorPicker(false, true, true);
+    }
+
+    this.directiveInstance.inputChanged({
+      input: 'black',
+      valid: true,
+      value: this.cmyk.k,
+      color: this.outputColor
+    });
+
+  }
+
   public onHueInput(value: { v: number, rg: number }) {
     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
@@ -719,7 +800,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  private updateColorPicker(emit: boolean = true, update: boolean = true): void {
+  private updateColorPicker(emit: boolean = true, update: boolean = true, cmykInput: boolean = false): void {
+
     if (this.sliderDimMax) {
       if (this.cpColorMode === 2) {
         this.hsva.s = 0;
@@ -727,16 +809,34 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       const lastOutput = this.outputColor;
 
-      const hsla = this.service.hsva2hsla(this.hsva);
-      const rgba = this.service.denormalizeRGBA(this.service.hsvaToRgba(this.hsva));
+      let hsla: Hsla;
+      let rgbTemp: Rgba;
+      let rgba: Rgba;
+      let hue: Rgba;
 
-      const hue = this.service.denormalizeRGBA(this.service.hsvaToRgba(new Hsva(this.sliderH || this.hsva.h, 1, 1, 1)));
+      // color changed via picker or other input modes
+      if (!cmykInput) {
+        rgbTemp = this.service.hsvaToRgba(this.hsva);
+        rgba = this.service.denormalizeRGBA(rgbTemp);
+        this.cmyk = this.service.denormalizeCMYK(this.service.rgbaToCmyk(rgbTemp));
+      } else {
+        //user manually entered C,M,Y or K value so use those in conversion
+        //to preserve that input and avoid color conversion error
+        rgba = this.service.cmykToRgb(this.service.normalizeCMYK(this.cmyk));
+        this.hsva = this.service.rgbaToHsva(rgba);
+        rgba = this.service.denormalizeRGBA(rgba);
+      }
+
+      this.sliderH = this.hsva.h;
+      hue = this.service.denormalizeRGBA(this.service.hsvaToRgba(new Hsva(this.sliderH || this.hsva.h, 1, 1, 1)));
+      hsla = this.service.hsva2hsla(this.hsva);
 
       if (update) {
         this.hslaText = new Hsla(Math.round((hsla.h) * 360), Math.round(hsla.s * 100), Math.round(hsla.l * 100),
           Math.round(hsla.a * 100) / 100);
 
         this.rgbaText = new Rgba(rgba.r, rgba.g, rgba.b, Math.round(rgba.a * 100) / 100);
+        this.cmykText = new Cmyk(this.cmyk.c, this.cmyk.m, this.cmyk.y, this.cmyk.k, Math.round(this.cmyk.a * 100) / 100);
 
         const allowHex8 = this.cpAlphaChannel === 'always';
 
@@ -745,8 +845,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       if (this.cpOutputFormat === 'auto') {
-        if (this.hsva.a < 1) {
-          this.format = this.hsva.a < 1 ? ColorFormats.RGBA : ColorFormats.HEX;
+        if (this.format !== ColorFormats.RGBA && this.format !== ColorFormats.CMYK) {
+          if (this.hsva.a < 1) {
+            this.format = this.hsva.a < 1 ? ColorFormats.RGBA : ColorFormats.HEX;
+          }
         }
       }
 
@@ -754,6 +856,19 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.alphaSliderColor = 'rgb(' + rgba.r + ',' + rgba.g + ',' + rgba.b + ')';
 
       this.outputColor = this.service.outputFormat(this.hsva, this.cpOutputFormat, this.cpAlphaChannel);
+
+      //cmyk format selected so emit CMYK values
+      if (this.format !== ColorFormats.CMYK) {
+        this.cmykColor = '';
+      } else {
+         if (this.cpAlphaChannel === 'always' || this.cpAlphaChannel === 'enabled' || this.cpAlphaChannel === 'forced') {
+           this.cmykColor = `cmyka(${this.cmyk.c},${this.cmyk.m},${this.cmyk.y},${this.cmyk.k},${Math.round(this.cmyk.a * 100) / 100})`;
+         } else {
+           this.cmykColor = `cmyk(${this.cmyk.c},${this.cmyk.m},${this.cmyk.y},${this.cmyk.k})`;
+         }
+      }
+
+      //selected color should always be RGB for display purposes
       this.selectedColor = this.service.outputFormat(this.hsva, 'rgba', null);
 
       this.slider = new SliderPosition(
@@ -764,13 +879,12 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       );
 
       if (emit && lastOutput !== this.outputColor) {
-        this.directiveInstance.colorChanged(this.outputColor);
+          this.directiveInstance.colorChanged(this.outputColor, this.cmykColor);
       }
     }
   }
 
   // Private helper functions for the color picker dialog positioning
-
   private setDialogPosition(): void {
     if (this.cpDialogDisplay === 'inline') {
       this.position = 'relative';

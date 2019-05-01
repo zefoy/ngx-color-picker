@@ -1,11 +1,12 @@
 export enum ColorFormats {
   HEX,
   RGBA,
-  HSLA
+  HSLA,
+  CMYK
 }
 
 export class Cmyk {
-  constructor(public c: number, public m: number, public y: number, public k: number) {}
+  constructor(public c: number, public m: number, public y: number, public k: number, public a: number = 1) {}
 }
 
 export class Hsla {

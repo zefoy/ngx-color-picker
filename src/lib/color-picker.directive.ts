@@ -84,6 +84,9 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   @Output() colorPickerCancel = new EventEmitter<string>(true);
   @Output() colorPickerSelect = new EventEmitter<string>(true);
   @Output() colorPickerChange = new EventEmitter<string>(false);
+  @Output() cpCmykColor       = new EventEmitter<string>(true);
+
+
 
   @Output() cpPresetColorsChange = new EventEmitter<any>(true);
 
@@ -203,18 +206,20 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     }
   }
 
-  public colorChanged(value: string, ignore: boolean = true): void {
+  public colorChanged(value: string, cmyk: string, ignore: boolean = true): void {
     this.ignoreChanges = ignore;
 
     this.colorPickerChange.emit(value);
+    this.cpCmykColor.emit(cmyk);
   }
 
   public colorCanceled(): void {
     this.colorPickerCancel.emit();
   }
 
-  public colorSelected(value: string): void {
+  public colorSelected(value: string, cmyk: string): void {
     this.colorPickerSelect.emit(value);
+    this.cpCmykColor.emit(cmyk);
   }
 
   public inputFocus(): void {

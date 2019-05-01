@@ -41,6 +41,7 @@ export class AppComponent {
   public color16: string = '#a51ad633';
   public color17: string = '#666666';
   public color18: string = '#ff0000';
+  private CMYKValue: string = '';
 
   public cmykColor: Cmyk = new Cmyk(0, 0, 0, 0);
 
@@ -48,6 +49,10 @@ export class AppComponent {
 
   public onEventLog(event: string, data: any): void {
     console.log(event, data);
+  }
+
+  setCmyk(value: string) {
+    this.CMYKValue = value;
   }
 
   public onChangeColorCmyk(color: string): Cmyk {

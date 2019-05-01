@@ -206,6 +206,7 @@
 
 .color-picker .hsla-text,
 .color-picker .rgba-text,
+.color-picker .cmyk-text,
 .color-picker .value-text {
   width: 100%;
   padding: 4px 8px;
@@ -214,7 +215,8 @@
 }
 
 .color-picker .hsla-text .box,
-.color-picker .rgba-text .box {
+.color-picker .rgba-text .box,
+.color-picker .cmyk-text .box {
   padding: 0 24px 8px 8px;
 }
 
@@ -224,6 +226,7 @@
 
 .color-picker .hsla-text .box div,
 .color-picker .rgba-text .box div,
+.color-picker .cmyk-text .box div,
 .color-picker .value-text .box div {
   -webkit-flex: 1 1 auto;
   -ms-flex: 1 1 auto;
@@ -237,12 +240,14 @@
 
 .color-picker .hsla-text .box div:last-child,
 .color-picker .rgba-text .box div:last-child,
+.color-picker .cmyk-text .box div:last-child,
 .color-picker .value-text .box div:last-child {
   margin-right: 0;
 }
 
 .color-picker .hsla-text .box input,
 .color-picker .rgba-text .box input,
+.color-picker .cmyk-text .box input,
 .color-picker .value-text .box input {
   float: left;
 
@@ -257,6 +262,7 @@
 
 .color-picker .hsla-text .box input:last-child,
 .color-picker .rgba-text .box input:last-child,
+.color-picker .cmyk-text .box input:last-child,
 .color-picker .value-text .box input:last-child {
   margin-right: 0;
 }

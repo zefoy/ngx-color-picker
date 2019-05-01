@@ -5,7 +5,7 @@ export type ColorMode = 'color' | 'c' | '1' |
 
 export type AlphaChannel = 'enabled' | 'disabled' | 'always' | 'forced';
 
-export type OutputFormat = 'auto' | 'hex' | 'rgba' | 'hsla';
+export type OutputFormat = 'auto' | 'hex' | 'rgba' | 'hsla' | 'cmyk';
 
 export function detectIE(): boolean | number {
   let ua = '';

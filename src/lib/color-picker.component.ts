@@ -404,6 +404,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       availableFormats) + availableFormats) % availableFormats;
 
     this.format = this.dialogInputFields[nextFormat];
+    if (this.format !== ColorFormats.CMYK){
+      this.cmykColor = '';
+    }
   }
 
   public onColorChange(value: { s: number, v: number, rgX: number, rgY: number }): void {

@@ -33,6 +33,8 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @Input() cpColorMode: ColorMode = 'color';
 
+  @Input() cpCmykEnabled: boolean = false;
+
   @Input() cpOutputFormat: OutputFormat = 'auto';
   @Input() cpAlphaChannel: AlphaChannel = 'enabled';
 
@@ -84,6 +86,8 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   @Output() colorPickerCancel = new EventEmitter<string>(true);
   @Output() colorPickerSelect = new EventEmitter<string>(true);
   @Output() colorPickerChange = new EventEmitter<string>(false);
+
+  @Output() cpCmykColorChange = new EventEmitter<string>(true);
 
   @Output() cpPresetColorsChange = new EventEmitter<any>(true);
 
@@ -166,8 +170,8 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
       this.cmpRef = vcRef.createComponent(compFactory, 0, injector, []);
 
       this.cmpRef.instance.setupDialog(this, this.elRef, this.colorPicker,
-        this.cpWidth, this.cpHeight, this.cpDialogDisplay, this.cpFallbackColor,
-        this.cpColorMode, this.cpAlphaChannel, this.cpOutputFormat, this.cpDisableInput,
+        this.cpWidth, this.cpHeight, this.cpDialogDisplay, this.cpFallbackColor, this.cpColorMode,
+        this.cpCmykEnabled, this.cpAlphaChannel, this.cpOutputFormat, this.cpDisableInput,
         this.cpIgnoredElements, this.cpSaveClickOutside, this.cpCloseClickOutside,
         this.cpUseRootViewContainer, this.cpPosition, this.cpPositionOffset,
         this.cpPositionRelativeToArrow, this.cpPresetLabel, this.cpPresetColors,
@@ -193,6 +197,10 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     }
   }
 
+  public cmykChanged(value: string): void {
+    this.cpCmykColorChange.emit(value);
+  }
+
   public stateChanged(state: boolean): void {
     this.cpToggleChange.emit(state);
 
@@ -209,12 +217,12 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     this.colorPickerChange.emit(value);
   }
 
-  public colorCanceled(): void {
-    this.colorPickerCancel.emit();
-  }
-
   public colorSelected(value: string): void {
     this.colorPickerSelect.emit(value);
+  }
+
+  public colorCanceled(): void {
+    this.colorPickerCancel.emit();
   }
 
   public inputFocus(): void {

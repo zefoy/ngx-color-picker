@@ -42,6 +42,8 @@ export class AppComponent {
   public color17: string = '#666666';
   public color18: string = '#ff0000';
 
+  public cmykValue: string = '';
+
   public cmykColor: Cmyk = new Cmyk(0, 0, 0, 0);
 
   constructor(public vcRef: ViewContainerRef, private cpService: ColorPickerService) {}

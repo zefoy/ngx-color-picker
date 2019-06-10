@@ -82,17 +82,25 @@ export class ColorPickerService {
     return new Rgba(r, g, b, a);
   }
 
+  public cmykToRgb(cmyk: Cmyk): Rgba {
+    const r = ( 1 - cmyk.c ) * (1 - cmyk.k);
+    const g = ( 1 - cmyk.m ) * (1 - cmyk.k);
+    const b = ( 1 - cmyk.y ) * (1 - cmyk.k);
+
+    return new Rgba(r, g, b, cmyk.a);
+  }
+
   public rgbaToCmyk(rgba: Rgba): Cmyk {
     const k: number = 1 - Math.max(rgba.r, rgba.g, rgba.b);
 
     if (k === 1) {
-      return new Cmyk(0, 0, 0, 1);
+      return new Cmyk(0, 0, 0, 1, rgba.a);
     } else {
       const c = (1 - rgba.r - k) / (1 - k);
       const m = (1 - rgba.g - k) / (1 - k);
       const y = (1 - rgba.b - k) / (1 - k);
 
-      return new Cmyk(c, m, y, k);
+      return new Cmyk(c, m, y, k, rgba.a);
     }
   }
 
@@ -141,6 +149,15 @@ export class ColorPickerService {
     /* tslint:enable:no-bitwise */
 
     return hex;
+  }
+
+  public normalizeCMYK(cmyk: Cmyk): Cmyk {
+    return new Cmyk(cmyk.c / 100, cmyk.m / 100, cmyk.y / 100, cmyk.k / 100, cmyk.a);
+  }
+
+  public denormalizeCMYK(cmyk: Cmyk): Cmyk {
+    return new Cmyk(Math.floor(cmyk.c * 100), Math.floor(cmyk.m * 100), Math.floor(cmyk.y * 100),
+      Math.floor(cmyk.k * 100), cmyk.a);
   }
 
   public denormalizeRGBA(rgba: Rgba): Rgba {

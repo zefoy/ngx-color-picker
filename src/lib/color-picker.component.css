@@ -204,6 +204,7 @@
   margin-right: 8px;
 }
 
+.color-picker .cmyk-text,
 .color-picker .hsla-text,
 .color-picker .rgba-text,
 .color-picker .value-text {
@@ -213,6 +214,7 @@
   font-size: 11px;
 }
 
+.color-picker .cmyk-text .box,
 .color-picker .hsla-text .box,
 .color-picker .rgba-text .box {
   padding: 0 24px 8px 8px;
@@ -222,6 +224,7 @@
   padding: 0 8px 8px;
 }
 
+.color-picker .cmyk-text .box div,
 .color-picker .hsla-text .box div,
 .color-picker .rgba-text .box div,
 .color-picker .value-text .box div {
@@ -235,12 +238,14 @@
   color: #555;
 }
 
+.color-picker .cmyk-text .box div:last-child,
 .color-picker .hsla-text .box div:last-child,
 .color-picker .rgba-text .box div:last-child,
 .color-picker .value-text .box div:last-child {
   margin-right: 0;
 }
 
+.color-picker .cmyk-text .box input,
 .color-picker .hsla-text .box input,
 .color-picker .rgba-text .box input,
 .color-picker .value-text .box input {
@@ -255,6 +260,7 @@
   border: #a9a9a9 solid 1px;
 }
 
+.color-picker .cmyk-text .box input:last-child,
 .color-picker .hsla-text .box input:last-child,
 .color-picker .rgba-text .box input:last-child,
 .color-picker .value-text .box input:last-child {

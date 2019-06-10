@@ -178,9 +178,11 @@
 
   <div class="row">
     <div class="col-md-5">
-      <input [style.background]="color10" [colorPicker]="color10" (colorPickerChange)="cmykColor=onChangeColorCmyk($event);color10=$event"/>
+      <input [style.background]="color10" [colorPicker]="color10" [cpCmykEnabled]="true" (cpCmykColorChange)="cmykValue=$event" (colorPickerChange)="cmykColor=onChangeColorCmyk($event);color10=$event"/>
 
       <div class="clearfix"></div>
+
+      <div>{{cmykValue}}</div>
 
       <div>
         <span class="cmyk-text" style="color: rgb(0,255,255);" [style.font-size.px]="100 * cmykColor.c">C</span>
@@ -204,6 +206,8 @@
       <pre>
 &lt;input [style.background]="color"
        [colorPicker]="color"
+       [cpCmykEnabled]="true"
+       (cpCmykColorChange)="cmykValue=$event"
        (colorPickerChange)="cmykColor=onChangeColorCmyk($event);color=$event"/&gt;
 
 &lt;span [style.font-size.px]="100 * cmykColor.c"/&gt;C&lt;/span/&gt;
@@ -548,6 +552,14 @@
           </tr>
 
           <tr>
+            <td>cpCmykEnabled</td>
+            <td>
+              <b>false</b>, true<br>
+              Enables CMYK color input and selected CMYK color event sending on color change.<br>
+            </td>
+          </tr>
+
+          <tr>
             <td>cpUseRootViewContainer</td>
             <td>
               <b>false</b>, true<br>
@@ -656,6 +668,13 @@
             <td>cpSliderChange</td>
             <td>
               Slider name and its value, send when user changes color through slider. <b>({{ '{' }}slider: string, value: Object{{ '}' }})</b>
+            </td>
+          </tr>
+
+          <tr>
+            <td>cpCmykColorChange</td>
+            <td>
+              CMYK color value, send when on color change if cpCmykEnabled is true. <b>(value: string)</b>
             </td>
           </tr>
 

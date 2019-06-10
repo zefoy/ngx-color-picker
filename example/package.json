@@ -3,7 +3,7 @@
   "description": "Example app for the ngx-color-picker",
   "private": true,
   "license": "MIT",
-  "version": "7.0.0",
+  "version": "8.0.0",
   "tslint": {
     "extends": "./tslint.json"
   },
@@ -14,7 +14,7 @@
     "start": "ng serve",
     "lint": "npm run lint:ts && npm run lint:css",
     "build": "ng build --configuration=production",
-    "deploy": "npm run clean && deploy-to-git",
+    "deploy": "rm -rf dist && deploy-to-git",
     "lint:ts": "tslint \"src/**/*.ts\"",
     "lint:css": "stylelint \"src/**/*.css\""
   },
@@ -23,7 +23,7 @@
       "repository": "git@github.com:zefoy/ngx-color-picker.git",
       "branch": "gh-pages",
       "folder": "dist",
-      "script": "npm run build",
+      "script": "npm run build -- --base-href=ngx-color-picker --delete-output-path=false",
       "commit": "Publishing $npm_package_version",
       "user": {
         "name": "ZEF Devel",
@@ -41,7 +41,7 @@
     "@angular/platform-browser": "^8.0.0",
     "@angular/platform-browser-dynamic": "^8.0.0",
     "core-js": "^3.1.0",
-    "ngx-color-picker": "^7.2.0",
+    "ngx-color-picker": "^8.0.0",
     "rxjs": "^6.5.0",
     "zone.js": "^0.9.0"
   },
@@ -52,13 +52,7 @@
     "@ngtools/webpack": "^8.0.0",
     "@types/node": "^12.0.0",
     "codelyzer": "^5.1.0",
-    "connect-history-api-fallback": "^1.6.0",
-    "copy-webpack-plugin": "^5.0.0",
     "deploy-to-git": "^0.1.0",
-    "html-webpack-plugin": "^3.2.0",
-    "lite-server": "^2.5.0",
-    "plugin-typescript": "^8.0.0",
-    "raw-loader": "^1.0.0",
     "stylelint": "^10.1.0",
     "stylelint-config-standard": "^18.3.0",
     "stylelint-order": "^3.0.0",

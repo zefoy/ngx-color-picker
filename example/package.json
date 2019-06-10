@@ -12,16 +12,11 @@
   },
   "scripts": {
     "start": "ng serve",
-    "clean": "rm -rf dist",
     "lint": "npm run lint:ts && npm run lint:css",
-    "build": "rm -rf dist/* && npm run build:aot",
+    "build": "ng build --configuration=production",
     "deploy": "npm run clean && deploy-to-git",
     "lint:ts": "tslint \"src/**/*.ts\"",
-    "lint:css": "stylelint \"src/**/*.css\"",
-    "build:aot": "webpack --config config/webpack-build-aot.config.js",
-    "build:jit": "webpack --config config/webpack-build-jit.config.js",
-    "serve:sjs": "lite-server -c config/lite-server-bs-config.js",
-    "serve:wds": "webpack-dev-server --open --inline --config config/webpack-server-jit.config.js"
+    "lint:css": "stylelint \"src/**/*.css\""
   },
   "config": {
     "deployToGit": {
@@ -67,11 +62,7 @@
     "stylelint": "^10.1.0",
     "stylelint-config-standard": "^18.3.0",
     "stylelint-order": "^3.0.0",
-    "systemjs": "^0.21.0",
     "tslint": "^5.17.0",
-    "typescript": "~3.4.0",
-    "webpack": "^4.33.0",
-    "webpack-cli": "^3.3.0",
-    "webpack-dev-server": "^3.7.0"
+    "typescript": "~3.4.0"
   }
 }

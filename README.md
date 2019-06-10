@@ -72,8 +72,11 @@ import { ColorPickerModule } from 'ngx-color-picker';
 
 [cpColorMode]                // Dialog color mode: 'color', 'grayscale', 'presets' ('color').
 
+[cpCmykEnabled]              // Enables CMYK input format and color change event (false).
+
 [cpOutputFormat]             // Output color format: 'auto', 'hex', 'rgba', 'hsla' ('auto').
 [cpAlphaChannel]             // Alpha mode: 'enabled', 'disabled', 'always', 'forced' ('enabled').
+
 [cpFallbackColor]            // Used when the color is not well-formed or is undefined ('#000').
 
 [cpPosition]                 // Dialog position: 'right', 'left', 'top', 'bottom' ('right').
@@ -132,6 +135,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
 (cpSliderDragEnd)            // Slider name and current color, send when slider dragging ends (mouseup,touchend)
 (cpSliderDragStart)          // Slider name and current color, send when slider dragging starts (mousedown,touchstart)
                              //   ({slider: string, value: number | string, color: string})
+
+(cpCmykColorChange)          // Outputs the color as CMYK string if CMYK is enabled (value: string).
 
 (cpPresetColorsChange)       // Preset colors, send when 'Add Color' button is pressed (value: array).
 ```

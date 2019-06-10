@@ -362,12 +362,12 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onAcceptColor(event: Event): void {
     event.stopPropagation();
 
-    if (this.cpDialogDisplay === 'popup') {
-      this.closeColorPicker();
-    }
-
     if (this.outputColor) {
       this.directiveInstance.colorSelected(this.outputColor);
+    }
+
+    if (this.cpDialogDisplay === 'popup') {
+      this.closeColorPicker();
     }
   }
 

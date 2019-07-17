@@ -329,6 +329,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.sliderH = this.hsva.h;
 
+      if (this.cpOutputFormat === 'hex' && this.cpAlphaChannel === 'disabled') {
+        this.hsva.a = 1;
+      }
+
       this.updateColorPicker(emit, update);
     }
   }

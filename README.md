@@ -79,7 +79,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
 
 [cpFallbackColor]            // Used when the color is not well-formed or is undefined ('#000').
 
-[cpPosition]                 // Dialog position: 'auto', 'right-top', 'left-top', 'left-bottom', 'right-bottom' ('auto').
+[cpPosition]                 // Dialog position: 'auto', 'top', 'bottom', 'left', 'right',
+                             //  'left-top', 'right-top', 'left-bottom', 'right-bottom' ('auto').
 [cpPositionOffset]           // Dialog offset percentage relative to the directive element (0%).
 [cpPositionRelativeToArrow]  // Dialog position is calculated relative to dialog arrow (false).
 

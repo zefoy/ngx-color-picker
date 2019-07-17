@@ -963,16 +963,18 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       let usePosition = this.cpPosition;
+
       if (this.cpPosition === 'auto') {
+        let usePositionX = 'right';
+        let usePositionY = 'bottom';
+
         const winWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         const winHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 
-        let usePositionX = 'right';
         if (this.left + this.cpWidth > winWidth) {
           usePositionX = 'left';
         }
 
-        let usePositionY = 'bottom';
         if (this.top + dialogHeight > winHeight) {
           usePositionY = 'top';
         }
@@ -982,17 +984,25 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.cpUsePosition = usePosition;
 
-      if (usePosition === 'right-top') {
-        this.top -= dialogHeight - boxDirective.height + boxDirective.height * this.cpPositionOffset / 100;
-        this.left += boxDirective.width + this.dialogArrowSize - 2;
+      if (this.cpPosition === 'top') {
+        this.arrowTop = dialogHeight - 1;
+
+        this.top -= dialogHeight + this.dialogArrowSize;
+        this.left += this.cpPositionOffset / 100 * boxDirective.width - this.dialogArrowOffset;
+      } else if (this.cpPosition === 'bottom') {
+        this.top += boxDirective.height + this.dialogArrowSize;
+        this.left += this.cpPositionOffset / 100 * boxDirective.width - this.dialogArrowOffset;
       } else if (usePosition === 'left-top') {
         this.top -= dialogHeight - boxDirective.height + boxDirective.height * this.cpPositionOffset / 100;
+        this.left -= this.cpWidth + this.dialogArrowSize - 2 - this.dialogArrowOffset;
+      } else if (usePosition === 'right-top') {
+        this.top -= dialogHeight - boxDirective.height + boxDirective.height * this.cpPositionOffset / 100;
+        this.left += boxDirective.width + this.dialogArrowSize - 2 - this.dialogArrowOffset;
+      } else if (this.cpPosition === 'left' || usePosition === 'left-bottom') {
+        this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
         this.left -= this.cpWidth + this.dialogArrowSize - 2;
-      } else if (usePosition === 'left-bottom') {
-        this.top += boxDirective.height * this.cpPositionOffset / 100;
-        this.left -= this.cpWidth + this.dialogArrowSize - 2;
-      } else if (usePosition === 'right-bottom') {
-        this.top += boxDirective.height * this.cpPositionOffset / 100;
+      } else { // Default + this.cpPosition === 'right' || usePosition === 'right-bottom'
+        this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
         this.left += boxDirective.width + this.dialogArrowSize - 2;
       }
     }

@@ -992,16 +992,16 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       } else if (this.cpPosition === 'bottom') {
         this.top += boxDirective.height + this.dialogArrowSize;
         this.left += this.cpPositionOffset / 100 * boxDirective.width - this.dialogArrowOffset;
-      } else if (usePosition === 'left-top') {
+      } else if (usePosition === 'top-left' || usePosition === 'left-top') {
         this.top -= dialogHeight - boxDirective.height + boxDirective.height * this.cpPositionOffset / 100;
         this.left -= this.cpWidth + this.dialogArrowSize - 2 - this.dialogArrowOffset;
-      } else if (usePosition === 'right-top') {
+      } else if (usePosition === 'top-right' || usePosition === 'right-top') {
         this.top -= dialogHeight - boxDirective.height + boxDirective.height * this.cpPositionOffset / 100;
         this.left += boxDirective.width + this.dialogArrowSize - 2 - this.dialogArrowOffset;
-      } else if (this.cpPosition === 'left' || usePosition === 'left-bottom') {
+      } else if (this.cpPosition === 'left' || usePosition === 'bottom-left' ||  usePosition === 'left-bottom') {
         this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
         this.left -= this.cpWidth + this.dialogArrowSize - 2;
-      } else { // Default + this.cpPosition === 'right' || usePosition === 'right-bottom'
+      } else { // this.cpPosition === 'right' || usePosition === 'bottom-right' || usePosition === 'right-bottom'
         this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
         this.left += boxDirective.width + this.dialogArrowSize - 2;
       }

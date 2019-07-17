@@ -84,7 +84,7 @@
 
   <div class="row" >
     <div class="col-md-5" >
-      <input [value]="color5" [style.background]="color5" [cpPosition]="'bottom'" [(colorPicker)]="color5"/>
+      <input [value]="color5" [style.background]="color5" [cpPosition]="'top-right'" [(colorPicker)]="color5"/>
     </div>
 
     <div class="col-md-7">
@@ -92,7 +92,7 @@
       <pre>
 &lt;input [value]="color"
        [style.background]="color"
-       [cpPosition]="'right-top'"
+       [cpPosition]="'top-right'"
        [(colorPicker)]="color"/&gt;
       </pre>
     </div>
@@ -102,14 +102,14 @@
 
   <div class="row" >
     <div class="col-md-5" >
-      <span class="change-me" [style.color]="color6" [cpPosition]="'right-top'" [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [(colorPicker)]="color6">Change me!</span>
+      <span class="change-me" [style.color]="color6" [cpPosition]="'bottom'" [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [(colorPicker)]="color6">Change me!</span>
     </div>
 
     <div class="col-md-7">
       <p>You can introduce a offset of the color picker relative to the html element:</p>
       <pre>
 &lt;span [style.color]="color"
-      [cpPosition]="'right-top'"
+      [cpPosition]="'bottom'"
       [cpPositionOffset]="'50%'"
       [cpPositionRelativeToArrow]="true"
       [(colorPicker)]="color"&gt;Change me!&lt;/span&gt;
@@ -395,7 +395,7 @@
           <tr>
             <td>cpPosition</td>
             <td>
-              <b>'auto'</b>, 'top', 'bottom', 'right-top', 'left-top', 'left-bottom', 'right-bottom'
+              <b>'auto'</b>, 'top', 'bottom', 'top-right', 'top-left', 'bottom-left', 'bottom-right'
             </td>
           </tr>
 

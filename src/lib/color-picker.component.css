@@ -74,6 +74,7 @@
   border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #777 rgba(0, 0, 0, 0);
 }
 
+.color-picker .arrow.arrow-top-left,
 .color-picker .arrow.arrow-left-top {
   right: -21px;
   bottom: 8px;
@@ -82,6 +83,7 @@
   border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #777;
 }
 
+.color-picker .arrow.arrow-top-right,
 .color-picker .arrow.arrow-right-top {
   bottom: 8px;
   left: -20px;
@@ -91,7 +93,8 @@
 }
 
 .color-picker .arrow.arrow-left,
-.color-picker .arrow.arrow-left-bottom {
+.color-picker .arrow.arrow-left-bottom,
+.color-picker .arrow.arrow-bottom-left {
   top: 8px;
   right: -21px;
 
@@ -100,7 +103,8 @@
 }
 
 .color-picker .arrow.arrow-right,
-.color-picker .arrow.arrow-right-bottom {
+.color-picker .arrow.arrow-right-bottom,
+.color-picker .arrow.arrow-bottom-right {
   top: 8px;
   left: -20px;
 

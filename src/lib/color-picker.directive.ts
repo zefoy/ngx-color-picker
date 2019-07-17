@@ -47,7 +47,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @Input() cpUseRootViewContainer: boolean = false;
 
-  @Input() cpPosition: string = 'right';
+  @Input() cpPosition: string = 'auto';
   @Input() cpPositionOffset: string = '0%';
   @Input() cpPositionRelativeToArrow: boolean = false;
 

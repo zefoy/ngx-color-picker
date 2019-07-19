@@ -1,4 +1,39 @@
-import { Directive, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
+import { Directive, Input, Output, EventEmitter, HostListener, ElementRef, Pipe, PipeTransform } from '@angular/core';
+
+export interface Point {
+  end: number;
+  color: string;
+}
+
+interface Gradient {
+  points: Point[];
+}
+
+export interface LinearGradient extends Gradient {
+  deg: number;
+}
+
+// tslint:disable-next-line:no-empty-interface
+export interface RadialGradient extends Gradient {
+}
+
+export enum EditModeState {
+  DEFAULT,
+  EDIT,
+  EDITING
+}
+
+export enum Palette {
+  TEMPLATE_COLORS = 'Template colors',
+  LAST_USED = 'Last used'
+}
+
+export enum GradientType {
+  LINEAR = 'Linear',
+  RADIAL = 'Radial',
+  SOLID = 'Solid',
+  IMAGE = 'Image',
+}
 
 export type ColorMode = 'color' | 'c' | '1' |
   'grayscale' | 'g' | '2' | 'presets' | 'p' | '3';
@@ -44,6 +79,15 @@ export class TextDirective {
 
       this.newValue.emit({ v: numeric, rg: this.rg });
     }
+  }
+}
+
+@Pipe({
+  name: 'enumToArray'
+})
+export class EnumToArrayPipe implements PipeTransform {
+  transform(data: Object) {
+    return Object.values(data);
   }
 }
 

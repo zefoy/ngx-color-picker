@@ -31,6 +31,9 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @Input() cpFallbackColor: string = '';
 
+  @Input() cpLinearGradientLine: string = '';
+  @Input() cpRadialGradientLine: string = '';
+
   @Input() cpColorMode: ColorMode = 'color';
 
   @Input() cpCmykEnabled: boolean = false;
@@ -169,9 +172,9 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
       this.cmpRef = vcRef.createComponent(compFactory, 0, injector, []);
 
-      this.cmpRef.instance.setupDialog(this, this.elRef, this.colorPicker,
-        this.cpWidth, this.cpHeight, this.cpDialogDisplay, this.cpFallbackColor, this.cpColorMode,
-        this.cpCmykEnabled, this.cpAlphaChannel, this.cpOutputFormat, this.cpDisableInput,
+      this.cmpRef.instance.setupDialog(this, this.elRef, this.colorPicker, this.cpLinearGradientLine,
+        this.cpRadialGradientLine, this.cpWidth, this.cpHeight, this.cpDialogDisplay, this.cpFallbackColor,
+        this.cpColorMode, this.cpCmykEnabled, this.cpAlphaChannel, this.cpOutputFormat, this.cpDisableInput,
         this.cpIgnoredElements, this.cpSaveClickOutside, this.cpCloseClickOutside,
         this.cpUseRootViewContainer, this.cpPosition, this.cpPositionOffset,
         this.cpPositionRelativeToArrow, this.cpPresetLabel, this.cpPresetColors,

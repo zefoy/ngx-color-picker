@@ -178,8 +178,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('hueSlider', { static: true }) hueSlider: ElementRef;
   @ViewChild('alphaSlider', { static: true }) alphaSlider: ElementRef;
 
-@ViewChild('points', {static: true}) points: ElementRef;
-@ViewChild('deletePointMenu', {static: true}) deletePointMenu: ElementRef;
+  @ViewChild('points', {static: true}) points: ElementRef;
+  @ViewChild('deletePointMenu', {static: true}) deletePointMenu: ElementRef;
 
 private dialogInputFields: ColorFormats[] = [
     ColorFormats.HEX,
@@ -240,28 +240,30 @@ constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
     }
   }
 
-  getLinearGradientLine(): string {
-    this.linearGradient.points = this.linearGradient.points.sort((point1, point2) => {
-      return point1.end - point2.end;
-    });
-    const buf: string[] = [];
-    this.linearGradient.points.forEach( (value) => {
-      const valuePercent: number = Math.floor(value.end * 100 / 213);
-      buf.push(value.color + ' ' + valuePercent + '%');
-    });
-    return this.cpLinearGradientLine = 'linear-gradient(' + this.currentDeg + 'deg, ' + buf.join(',') + ')';
+  getLinearGradientLine(): void {
+    this.cpLinearGradientLine = this.getGradient(this.linearGradient.points);
   }
 
-  getRadialGradientLine(): string {
-    this.radialGradient.points = this.radialGradient.points.sort((point1, point2) => {
-      return point1.end - point2.end;
+  getRadialGradientLine(): void {
+    this.cpRadialGradientLine = this.getGradient(this.radialGradient.points);
+  }
+
+  getGradient(points: Point[]): string {
+    points.sort((first, second) => {
+      return first.end - second.end;
     });
     const buf: string[] = [];
-    this.radialGradient.points.forEach((value) => {
+    points.forEach((value) => {
       const valuePercent: number = Math.floor(value.end * 100 / 213);
       buf.push(value.color + ' ' + valuePercent + '%');
     });
-    return this.cpRadialGradientLine = 'radial-gradient(circle, ' + buf.join(',') + ')';
+    switch (this.currentGradientType) {
+      case 0:
+        return 'linear-gradient(' + this.currentDeg + 'deg, ' + buf.join(',') + ')';
+      case 1:
+        return 'radial-gradient(circle, ' + buf.join(',') + ')';
+    }
+    return '';
   }
 
   changeTemplateColor(color: string): void {
@@ -314,7 +316,17 @@ constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
     this.listenerMouseDown = (event: any) => { this.onMouseDown(event); };
     this.listenerResize = () => { this.onResize(); };
 
-    this.openDialog(this.initialColor, false);
+    switch (this.currentGradientType) {
+      case 0:
+        this.openDialog(this.cpLinearGradientLine, false);
+        break;
+      case 1:
+        this.openDialog(this.cpRadialGradientLine, false);
+        break;
+      default:
+        this.openDialog(this.initialColor, false);
+        break;
+    }
 
     const storeTemplateColors = localStorage.getItem('storeTemplateColors');
     if (storeTemplateColors !== null) {
@@ -376,10 +388,9 @@ constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
     this.closeColorPicker();
   }
 
-public setupDialog(instance: any, elementRef: ElementRef, color: any, cpLinearGradientLine: string,
-   cpRadialGradientLine: string, cpWidth: string, cpHeight: string, cpDialogDisplay: string,
-   cpFallbackColor: string, cpColorMode: string, cpCmykEnabled: boolean, cpAlphaChannel: AlphaChannel,
-   cpOutputFormat: OutputFormat, cpDisableInput: boolean, cpIgnoredElements: any,
+public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: string, cpHeight: string,
+   cpDialogDisplay: string, cpFallbackColor: string, cpColorMode: string, cpCmykEnabled: boolean,
+   cpAlphaChannel: AlphaChannel, cpOutputFormat: OutputFormat, cpDisableInput: boolean, cpIgnoredElements: any,
    cpSaveClickOutside: boolean, cpCloseClickOutside: boolean, cpUseRootViewContainer: boolean,
    cpPosition: string, cpPositionOffset: string, cpPositionRelativeToArrow: boolean,
    cpPresetLabel: string, cpPresetColors: string[], cpMaxPresetColorsLength: number,
@@ -402,9 +413,6 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpLinearGr
     this.cpCmykEnabled = cpCmykEnabled;
     this.cpAlphaChannel = cpAlphaChannel;
     this.cpOutputFormat = cpOutputFormat;
-
-    this.cpLinearGradientLine = cpLinearGradientLine;
-    this.cpRadialGradientLine = cpRadialGradientLine;
 
     this.cpDialogDisplay = cpDialogDisplay;
 
@@ -548,7 +556,7 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpLinearGr
           this.directiveInstance.cmykChanged(this.cmykColor);
         }
 
-        this.directiveInstance.colorChanged(this.outputColor);
+        this.refreshColors();
       }
 
       if (this.cpCloseClickOutside) {
@@ -579,7 +587,7 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpLinearGr
         this.directiveInstance.cmykChanged(this.cmykColor);
       }
 
-      this.directiveInstance.colorChanged(this.outputColor, true);
+      this.refreshColors();
 
       this.closeColorPicker();
     }
@@ -589,11 +597,13 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpLinearGr
 
   public onGradientTypeChange(event: any): void {
     this.currentGradientType = Number(event.target.value);
+    this.refreshColors();
     localStorage.setItem('currentGradientType', JSON.stringify(this.currentGradientType));
   }
 
   public onDegChange(event: any): void {
     this.currentDeg = Number(event.target.value);
+    this.refreshColors();
     localStorage.setItem('currentDeg', JSON.stringify(this.currentDeg));
   }
 
@@ -603,6 +613,22 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpLinearGr
 
   public onPaletteChange(element: any): void {
     this.currentPalette = Number(element.value);
+  }
+
+  public refreshColors(): void {
+    switch (this.currentGradientType) {
+      case 0:
+        this.getLinearGradientLine();
+        this.directiveInstance.colorChanged(this.cpLinearGradientLine);
+        break;
+      case 1:
+        this.getRadialGradientLine();
+        this.directiveInstance.colorChanged(this.cpRadialGradientLine);
+        break;
+      default:
+        this.directiveInstance.colorChanged(this.outputColor);
+        break;
+    }
   }
 
   public editTemplateColor(id: any): void {
@@ -630,6 +656,7 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpLinearGr
           this.onAlphaChange({rgX: 1, v: hsva.a});
       }
     }
+    this.refreshColors();
   }
 
   public editLastUsedColor(id: any): void {
@@ -650,6 +677,7 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpLinearGr
         this.onAlphaChange({rgX: 1, v: hsva.a});
       }
     }
+    this.refreshColors();
   }
 
   public onGradientPointChange(id: number): void {
@@ -665,6 +693,10 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpLinearGr
     }
     const slider = this.points.nativeElement;
     const selectedGradientPoint = slider.children[id];
+    Array.from(slider.children).map((item: any) => {
+      item.classList.remove('active');
+    });
+    selectedGradientPoint.classList.add('active');
     this.hueSliderColor = this.currentGradientPoint.color;
 
     const hsva = this.service.stringToHsva(this.currentGradientPoint.color);
@@ -699,6 +731,8 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpLinearGr
 
                 selectedGradientPoint.style.left = Math.floor(newLeft) + 'px';
                 this.currentGradientPoint.end = parseFloat(selectedGradientPoint.style.left);
+
+                this.refreshColors();
             };
 
             window.addEventListener('mouseup', () => {
@@ -719,16 +753,6 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpLinearGr
           left: box.left + pageXOffset
       };
     };
-  }
-
-  public toggleActiveClass(id: number): boolean {
-    if (this.currentGradientType === 0) {
-        return this.currentGradientPoint === this.linearGradient.points[id];
-    }
-    if (this.currentGradientType === 1) {
-      return this.currentGradientPoint === this.radialGradient.points[id];
-    }
-    return false;
   }
 
   public onAddLastUsedColor(): void {
@@ -1291,8 +1315,7 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpLinearGr
         if (this.cpCmykEnabled) {
           this.directiveInstance.cmykChanged(this.cmykColor);
         }
-
-        this.directiveInstance.colorChanged(this.outputColor);
+        this.refreshColors();
       }
     }
   }

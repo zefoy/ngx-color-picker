@@ -172,11 +172,10 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
       this.cmpRef = vcRef.createComponent(compFactory, 0, injector, []);
 
-      this.cmpRef.instance.setupDialog(this, this.elRef, this.colorPicker, this.cpLinearGradientLine,
-        this.cpRadialGradientLine, this.cpWidth, this.cpHeight, this.cpDialogDisplay, this.cpFallbackColor,
-        this.cpColorMode, this.cpCmykEnabled, this.cpAlphaChannel, this.cpOutputFormat, this.cpDisableInput,
-        this.cpIgnoredElements, this.cpSaveClickOutside, this.cpCloseClickOutside,
-        this.cpUseRootViewContainer, this.cpPosition, this.cpPositionOffset,
+      this.cmpRef.instance.setupDialog(this, this.elRef, this.colorPicker, this.cpWidth, this.cpHeight,
+        this.cpDialogDisplay, this.cpFallbackColor, this.cpColorMode, this.cpCmykEnabled, this.cpAlphaChannel,
+        this.cpOutputFormat, this.cpDisableInput, this.cpIgnoredElements, this.cpSaveClickOutside,
+        this.cpCloseClickOutside, this.cpUseRootViewContainer, this.cpPosition, this.cpPositionOffset,
         this.cpPositionRelativeToArrow, this.cpPresetLabel, this.cpPresetColors,
         this.cpMaxPresetColorsLength, this.cpPresetEmptyMessage, this.cpPresetEmptyMessageClass,
         this.cpOKButton, this.cpOKButtonClass, this.cpOKButtonText,

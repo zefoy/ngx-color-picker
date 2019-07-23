@@ -359,6 +359,7 @@
 }
 
 .color-picker .point-color-box.active {
+  z-index: 2;
   border: 1px solid #0652FD;
   border-bottom: none;
   background: rgb(220, 231, 253)
@@ -481,12 +482,19 @@
   width: 164px;
   padding: 9px 5px;
   color: #243447;
-  border-radius: 2px 0 0 2px;
+  border-radius: 2px;
+}
+
+.color-picker .light-border {
+  border: 1px solid #C5D0EA;
+  border-right: 1px solid #F2F4F8;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .color-picker .select-deg {
   width: 65px;
-  padding: 9px;
+  padding: 9px 5px;
   border-left: 0;
   border-radius: 0 2px 2px 0;
   cursor: pointer;

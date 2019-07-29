@@ -1,20 +1,15 @@
 import { Directive, Input, Output, EventEmitter, HostListener, ElementRef, Pipe, PipeTransform } from '@angular/core';
 
-export interface Point {
-  end: number;
+export interface Color {
   color: string;
 }
+export interface Point extends Color {
+  end: number;
+}
 
-interface Gradient {
+export interface Gradient {
+  deg?: number | null;
   points: Point[];
-}
-
-export interface LinearGradient extends Gradient {
-  deg: number;
-}
-
-// tslint:disable-next-line:no-empty-interface
-export interface RadialGradient extends Gradient {
 }
 
 export enum EditModeState {
@@ -32,7 +27,7 @@ export enum GradientType {
   LINEAR = 'Linear',
   RADIAL = 'Radial',
   SOLID = 'Solid',
-  IMAGE = 'Image',
+  // IMAGE = 'Image',
 }
 
 export type ColorMode = 'color' | 'c' | '1' |

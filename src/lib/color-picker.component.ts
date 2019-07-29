@@ -8,18 +8,21 @@ import {
     ViewEncapsulation,
     ElementRef,
     ChangeDetectorRef,
+    Renderer2,
 } from '@angular/core';
 
 import {
-    detectIE,
-    EditModeState,
-    AlphaChannel,
-    OutputFormat,
-    SliderDimension,
-    SliderPosition,
-    Point,
-    LinearGradient,
-    RadialGradient, GradientType, Palette,
+  detectIE,
+  EditModeState,
+  AlphaChannel,
+  OutputFormat,
+  SliderDimension,
+  SliderPosition,
+  Point,
+  GradientType,
+  Palette,
+  Gradient,
+  Color,
 } from './helpers';
 
 import { ColorFormats, Cmyk, Hsla, Hsva, Rgba } from './formats';
@@ -77,35 +80,39 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       225,
       270,
       315,
-      359
   ];
 
-  public linearGradient: LinearGradient = {
-      deg: 180,
-      points: [
-          {end: 20, color: 'rgb(0,0,0)'},
-          {end: 200, color: 'rgb(255,255,255)'},
-      ],
+  public baseGradient: Gradient = {
+    deg: 90,
+    points: [
+      {end: 0, color: '#020024'},
+      {end: 35, color: '#090979'},
+      {end: 100, color: '#00d4ff'},
+    ],
   };
-
-  public radialGradient: RadialGradient = {
-      points: [
-          {end: 20, color: 'rgb(0,0,0)'},
-          {end: 200, color: 'rgb(255,255,255)'},
-      ],
-  };
-
-  public currentDeg: number = this.linearGradient.deg;
 
   public templateColors = [
       {color: 'rgb(255,0,28)'},
       {color: 'rgb(0,150,20)'},
       {color: 'rgb(0,40,235)'},
   ];
-  public lastUsedColors = [
-      {color: 'rgb(255,255,255)'},
-      {color: 'rgb(0,0,0)'},
-  ];
+
+  public lastUsedColors = {
+    linear: [
+      {color: 'linear-gradient(45deg, rgb(78, 177, 168) 9%, rgb(231, 231, 231) 79%)'},
+      {color: 'linear-gradient(90deg, rgb(78, 0, 168) 0%, rgb(231, 231, 231) 30%)'},
+    ],
+    radial: [
+      {color: 'radial-gradient(circle, rgba(255, 0, 0, 0.85) 38%, rgba(100, 231, 19, 0.55) 79%)'},
+      {color: 'radial-gradient(circle, rgba(255, 0, 0, 0.45) 10%, rgba(100, 0, 19, 0.95) 90%)'},
+    ],
+    solid: [
+      {color: '#123456'},
+      {color: 'rgb(255,0,28)'},
+      {color: 'rgba(255,0,28,0.5)'},
+    ],
+  };
+
   public currentTemplateColor: any = {};
   public currentLastUsedColor: any = {};
   public currentGradientPoint: any = {};
@@ -167,9 +174,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public cpAddColorButtonText: string;
   public cpAddColorButtonClass: string;
   public cpRemoveColorButtonClass: string;
+  public cpTemplateColors: any;
 
   public cpLinearGradientLine: string;
-  public cpRadialGradientLine: string;
+  public gradientLine: string;
   public cpEditMode: EditModeState = EditModeState.DEFAULT;
   public modeState = EditModeState;
 
@@ -177,6 +185,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('hueSlider', { static: true }) hueSlider: ElementRef;
   @ViewChild('alphaSlider', { static: true }) alphaSlider: ElementRef;
+  @ViewChild('gradient', { static: true }) gradient: ElementRef;
 
   @ViewChild('points', {static: true}) points: ElementRef;
   @ViewChild('deletePointMenu', {static: true}) deletePointMenu: ElementRef;
@@ -190,7 +199,7 @@ private dialogInputFields: ColorFormats[] = [
 private useRootViewContainer: boolean = false;
 
 constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
-            private service: ColorPickerService) {
+            private service: ColorPickerService, private renderer: Renderer2) {
 }
 
   @HostListener('document:keyup.esc', ['$event']) handleEsc(event: any): void {
@@ -208,73 +217,9 @@ constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
   @HostListener('document:keyup', ['$event'])
     handleDeleteKeyboardEvent(event: KeyboardEvent) {
       if (event.key === 'Delete') {
-        const id: number = this.linearGradient.points.indexOf(this.currentGradientPoint);
+        const id: number = this.baseGradient.points.indexOf(this.currentGradientPoint);
         this.removeItem(id);
    }
-  }
-
-  removeItem(id: number): any {
-    if (id !== -1 && this.linearGradient.points.length > 2) {
-      this.linearGradient.points.splice(id, 1);
-      localStorage.setItem('storeGradientPoints', JSON.stringify(this.linearGradient.points));
-    }
-  }
-
-  removePoint(): void {
-    const id: number = this.linearGradient.points.indexOf(this.currentGradientPoint);
-    this.removeItem(id);
-    this.deletePointMenu.nativeElement.style.display = 'none';
-  }
-
-  onRightClick(id: number, e): void {
-    e.preventDefault();
-    let points: Point[] = [];
-    if (this.currentGradientType === 0) {
-        points = this.linearGradient.points;
-    }
-    if (this.currentGradientType === 1) {
-        points = this.radialGradient.points;
-    }
-    if (points.length > 0 && points[id] === this.currentGradientPoint) {
-        this.deletePointMenu.nativeElement.style.display = 'flex';
-    }
-  }
-
-  getLinearGradientLine(): void {
-    this.cpLinearGradientLine = this.getGradient(this.linearGradient.points);
-  }
-
-  getRadialGradientLine(): void {
-    this.cpRadialGradientLine = this.getGradient(this.radialGradient.points);
-  }
-
-  getGradient(points: Point[]): string {
-    points.sort((first, second) => {
-      return first.end - second.end;
-    });
-    const buf: string[] = [];
-    points.forEach((value) => {
-      const valuePercent: number = Math.floor(value.end * 100 / 213);
-      buf.push(value.color + ' ' + valuePercent + '%');
-    });
-    switch (this.currentGradientType) {
-      case 0:
-        return 'linear-gradient(' + this.currentDeg + 'deg, ' + buf.join(',') + ')';
-      case 1:
-        return 'radial-gradient(circle, ' + buf.join(',') + ')';
-    }
-    return '';
-  }
-
-  changeTemplateColor(color: string): void {
-    if (this.cpEditMode === EditModeState.EDITING) {
-      if (this.currentPalette === 0) {
-        this.currentTemplateColor.color = color;
-      }
-      if (this.currentPalette === 1) {
-        this.currentLastUsedColor.color = color;
-      }
-    }
   }
 
   ngOnInit(): void {
@@ -287,17 +232,20 @@ constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
       this.dialogInputFormats.push({id: ColorFormats.CMYK, name: 'CMYK'});
     }
     this.slider = new SliderPosition(0, 0, 0, 0);
-
-    const storeGradientPoints = localStorage.getItem('storeGradientPoints');
+    const storeGradientPoints = localStorage.getItem('storeGradient');
     if (storeGradientPoints !== null) {
-      this.linearGradient.points = this.radialGradient.points = JSON.parse(storeGradientPoints);
+      this.baseGradient = JSON.parse(storeGradientPoints);
+      if (this.baseGradient.points !== null) {
+        this.baseGradient.points.sort((point1, point2) => {
+          return point1.end - point2.end;
+        });
+      }
+      if (this.baseGradient.deg !== null) {
+        this.baseGradient.deg = Number(this.baseGradient.deg);
+      }
     }
-    this.linearGradient.points = this.linearGradient.points.sort((point1, point2) => {
-      return point1.end - point2.end;
-    });
-    this.radialGradient.points = this.radialGradient.points.sort((point1, point2) => {
-      return point1.end - point2.end;
-    });
+
+    this.cpTemplateColors = this.templateColors;
 
     const hueWidth = this.hueSlider.nativeElement.offsetHeight || 230;
     const alphaWidth = this.alphaSlider.nativeElement.offsetHeight || 230;
@@ -318,10 +266,9 @@ constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
 
     switch (this.currentGradientType) {
       case 0:
-        this.openDialog(this.cpLinearGradientLine, false);
-        break;
       case 1:
-        this.openDialog(this.cpRadialGradientLine, false);
+        this.openDialog(this.cpLinearGradientLine, false);
+        this.refreshColors();
         break;
       default:
         this.openDialog(this.initialColor, false);
@@ -338,16 +285,11 @@ constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
       this.lastUsedColors = JSON.parse(storeLastUsedColors);
     }
 
-    const storeCurrentDeg = localStorage.getItem('currentDeg');
-    if (storeCurrentDeg !== null) {
-      this.currentDeg = Number(storeCurrentDeg);
-    }
-
     const storeCurrentGradientType = localStorage.getItem('currentGradientType');
     if (storeCurrentGradientType !== null) {
       this.currentGradientType = Number(storeCurrentGradientType);
     }
-}
+  }
 
   ngOnDestroy(): void {
     this.closeDialog();
@@ -363,6 +305,96 @@ constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
       this.updateColorPicker(false);
 
       this.cdRef.detectChanges();
+    }
+  }
+
+  getLastUsedColorById(id: number): Color {
+    switch (this.currentGradientType) {
+      case 0:
+        return this.lastUsedColors.linear[id];
+      case 1:
+        return this.lastUsedColors.radial[id];
+      case 2:
+        return this.lastUsedColors.solid[id];
+      default:
+        console.error('Undefined color type');
+    }
+    return {color: ''};
+  }
+
+  getLastUsedColors(): Color[] {
+    switch (this.currentGradientType) {
+      case 0:
+        return this.lastUsedColors.linear;
+      case 1:
+        return this.lastUsedColors.radial;
+      case 2:
+        return this.lastUsedColors.solid;
+      default:
+        console.error('Undefined color type');
+    }
+    return [];
+  }
+
+
+  removeItem(id: number): any {
+    if (id !== -1 && this.baseGradient.points.length > 2) {
+      this.baseGradient.points.splice(id, 1);
+      localStorage.setItem('storeGradient', JSON.stringify(this.baseGradient));
+      this.refreshColors();
+    }
+  }
+
+  removePoint(): void {
+    const id: number = this.baseGradient.points.indexOf(this.currentGradientPoint);
+    this.removeItem(id);
+    this.deletePointMenu.nativeElement.style.display = 'none';
+  }
+
+  onRightClick(id: number, e): void {
+    e.preventDefault();
+    let points: Point[] = [];
+    if (this.currentGradientType === 0) {
+        points = this.baseGradient.points;
+    }
+    if (this.currentGradientType === 1) {
+        points = this.baseGradient.points;
+    }
+    if (points.length > 0 && points[id] === this.currentGradientPoint) {
+        this.deletePointMenu.nativeElement.style.display = 'flex';
+    }
+  }
+
+  getGradient(gradient: Gradient): string {
+    gradient.points.sort((first, second) => {
+      return first.end - second.end;
+    });
+    const gradientLineWidth = 209;
+    const buf: string[] = [];
+    gradient.points.forEach((value) => {
+      const valuePercent: number = Math.floor(value.end * 100 / gradientLineWidth);
+      buf.push(value.color + ' ' + valuePercent + '%');
+    });
+    console.log(this.currentGradientType, gradient);
+    switch (this.currentGradientType) {
+      case 0:
+        this.gradientLine = 'linear-gradient(' + gradient.deg + 'deg, ' + buf.join(',') + ')';
+        return this.gradientLine;
+      case 1:
+        this.gradientLine = 'linear-gradient(90deg, ' + buf.join(',') + ')';
+        return 'radial-gradient(circle, ' + buf.join(',') + ')';
+    }
+    return '';
+  }
+
+  changeTemplateColor(color: string): void {
+    if (this.cpEditMode === EditModeState.EDITING) {
+      if (this.currentPalette === 0) {
+        this.currentTemplateColor.color = color;
+      }
+      if (this.currentPalette === 1) {
+        this.currentLastUsedColor.color = color;
+      }
     }
   }
 
@@ -539,6 +571,10 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
     this.directiveInstance.sliderDragStart({ slider: slider, color: this.outputColor });
   }
 
+  public onTemplateColorsChange(): void {
+    console.log(this.cpTemplateColors);
+  }
+
   public onMouseDown(event: MouseEvent): void {
     if (this.show &&
         !this.isIE10 && this.cpDialogDisplay === 'popup' &&
@@ -549,13 +585,14 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
     {
       if (this.cpSaveClickOutside) {
         this.directiveInstance.colorSelected(this.outputColor);
+        this.onAddLastUsedColor();
+        this.currentGradientPoint = {};
       } else {
         this.setColorFromString(this.initialColor, false);
 
         if (this.cpCmykEnabled) {
           this.directiveInstance.cmykChanged(this.cmykColor);
         }
-
         this.refreshColors();
       }
 
@@ -602,9 +639,9 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
   }
 
   public onDegChange(event: any): void {
-    this.currentDeg = Number(event.target.value);
+    this.baseGradient.deg = Number(event.target.value);
     this.refreshColors();
-    localStorage.setItem('currentDeg', JSON.stringify(this.currentDeg));
+    localStorage.setItem('storeGradient', JSON.stringify(this.baseGradient));
   }
 
   public onFormatChange(event: any): void {
@@ -613,21 +650,25 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
 
   public onPaletteChange(element: any): void {
     this.currentPalette = Number(element.value);
+    this.cpEditMode = EditModeState.DEFAULT;
   }
 
   public refreshColors(): void {
     switch (this.currentGradientType) {
       case 0:
-        this.getLinearGradientLine();
+        if ( this.baseGradient.deg === null) {
+          this.baseGradient.deg = 90;
+        }
+        this.cpLinearGradientLine = this.getGradient(this.baseGradient);
         this.directiveInstance.colorChanged(this.cpLinearGradientLine);
         break;
       case 1:
-        this.getRadialGradientLine();
-        this.directiveInstance.colorChanged(this.cpRadialGradientLine);
+        this.baseGradient.deg = null;
+        this.cpLinearGradientLine = this.getGradient(this.baseGradient);
+        this.directiveInstance.colorChanged(this.cpLinearGradientLine);
         break;
       default:
         this.directiveInstance.colorChanged(this.outputColor);
-        break;
     }
   }
 
@@ -635,7 +676,7 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
     if (this.cpEditMode === EditModeState.DEFAULT) {
       this.currentGradientPoint.color = this.templateColors[id].color;
       this.hueSliderColor = this.currentGradientPoint.color;
-      localStorage.setItem('storeGradientPoints', JSON.stringify(this.linearGradient.points));
+      localStorage.setItem('storeGradient', JSON.stringify(this.baseGradient));
       const hsva = this.service.stringToHsva(this.currentGradientPoint.color);
       if (hsva !== null) {
           this.onHueChange({rgX: 1, rgY: 1, v: hsva.h});
@@ -659,36 +700,89 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
     this.refreshColors();
   }
 
-  public editLastUsedColor(id: any): void {
-    if (this.cpEditMode === EditModeState.DEFAULT) {
-      this.currentGradientPoint.color = this.lastUsedColors[id].color;
-      this.hueSliderColor = this.currentGradientPoint.color;
-      localStorage.setItem('storeGradientPoints', JSON.stringify(this.linearGradient.points));
+  public setLastUsedColor(id: any): void {
+    const lastUsedColor = this.getLastUsedColorById(id).color;
+
+    if (lastUsedColor.includes('linear-gradient')
+        || lastUsedColor.includes('radial-gradient')
+      ) {
+        this.parseColors(lastUsedColor);
+      } else {
+        this.hueSliderColor = lastUsedColor;
+        const hsva = this.service.stringToHsva(this.hueSliderColor);
+        if (hsva !== null) {
+          this.onHueChange({rgX: 1, rgY: 1, v: hsva.h});
+          this.onColorChange({rgY: 1, s: hsva.s, rgX: 1, v: hsva.v});
+          this.onValueChange({rgX: 1, v: hsva.v});
+          this.onAlphaChange({rgX: 1, v: hsva.a});
+          this.currentGradientType = 2;
+        }
+        this.refreshColors();
+      }
+  }
+
+  private convertColorType(item: any): Point {
+    const gradientLineWidth = 209;
+    const obj: Point = {
+      end: Math.floor(item.length.value * gradientLineWidth / 100),
+      color: '',
+    };
+    switch (item.type) {
+      case 'rgb':
+      case 'rgba':
+        obj.color = item.type + '(' + item.value.join(',') + ')';
+        break;
+      case 'hex':
+        obj.color = '#' + item.value;
+        break;
+      default:
+        console.log('Color error!', item);
     }
-    if (this.cpEditMode === EditModeState.EDIT) {
-      this.currentLastUsedColor = this.lastUsedColors[id];
-      this.cpEditMode = EditModeState.EDITING;
-      this.hueSliderColor = this.currentLastUsedColor.color;
-      const hsva = this.service.stringToHsva(this.currentLastUsedColor.color);
-      if (hsva !== null) {
-        this.onHueChange({rgX: 1, rgY: 1, v: hsva.h});
-        this.onColorChange({rgY: 1, s: hsva.s, rgX: 1, v: hsva.v});
-        this.onValueChange({rgX: 1, v: hsva.v});
-        this.onAlphaChange({rgX: 1, v: hsva.a});
+    return obj;
+  }
+
+  public parseColors(color: string): void {
+    const gradient = require('gradient-parser');
+    const obj = gradient.parse(color);
+    this.baseGradient.points = [];
+    const points: Gradient = {
+      points: [],
+    };
+
+    switch (obj[0].type) {
+      case 'linear-gradient': {
+        this.currentGradientType = 0;
+        points.deg = obj[0].orientation.value;
+        break;
+      }
+      case 'radial-gradient': {
+        this.currentGradientType = 1;
+        break;
+      }
+      default: {
+        console.log('DEFAULT parseColors');
       }
     }
+    obj[0].colorStops.forEach((item: any) => {
+      points.points.push(this.convertColorType(item));
+    });
+
+    this.baseGradient = points;
+    this.cpLinearGradientLine = color;
+    localStorage.setItem('storeGradient', JSON.stringify(this.baseGradient));
     this.refreshColors();
+    return obj;
   }
 
   public onGradientPointChange(id: number): void {
     this.deletePointMenu.nativeElement.style.display = 'none';
     let points: Point[] = [];
     if (this.currentGradientType === 0) {
-      points = this.linearGradient.points;
+      points = this.baseGradient.points;
       this.currentGradientPoint = points[id];
     }
     if (this.currentGradientType === 1) {
-      points = this.radialGradient.points;
+      points = this.baseGradient.points;
       this.currentGradientPoint = points[id];
     }
     const slider = this.points.nativeElement;
@@ -755,20 +849,34 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
     };
   }
 
-  public onAddLastUsedColor(): void {
-    if (this.currentPalette === 1
-      && this.currentGradientPoint.color !== this.lastUsedColors[0].color) {
-      if (this.lastUsedColors.length >= 32) {
-          this.lastUsedColors.pop();
-          this.lastUsedColors.unshift({color: this.currentGradientPoint.color});
-          localStorage.setItem('storeLastUsedColors', JSON.stringify(this.lastUsedColors));
+  private addColors(): void {
+    const colors = this.getLastUsedColors();
+    const first = this.getLastUsedColorById(0);
+    switch (this.currentGradientType) {
+      case 0:
+      case 1:
+        if (first.color !== this.cpLinearGradientLine) {
+          colors.unshift({color: this.cpLinearGradientLine});
         }
-        if (this.lastUsedColors.length < 32) {
-          this.lastUsedColors.unshift({color: this.currentGradientPoint.color});
-          localStorage.setItem('storeLastUsedColors', JSON.stringify(this.lastUsedColors));
-      }
+        break;
+      case 2:
+        if (first.color !== this.outputColor) {
+          colors.unshift({color: this.outputColor});
+        }
+        break;
+      default:
+        console.error('Undefined color type');
     }
   }
+
+  public onAddLastUsedColor(): void {
+  const colors = this.getLastUsedColors();
+    if (colors.length >= 32) {
+      colors.pop();
+    }
+    this.addColors();
+    localStorage.setItem('storeLastUsedColors', JSON.stringify(this.lastUsedColors));
+    }
 
   public onColorChange(value: { s: number, v: number, rgX: number, rgY: number }): void {
     this.hsva.s = value.s / value.rgX;
@@ -804,10 +912,23 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
 
   public createNewPoint(event: any): void {
     const x = event.offsetX === undefined ? event.layerX : event.offsetX;
+    this.currentGradientPoint = {end: x, color: this.selectedColor};
+    this.baseGradient.points.push(this.currentGradientPoint);
+    localStorage.setItem('storeGradient', JSON.stringify(this.baseGradient));
+    this.refreshColors();
 
-    this.linearGradient.points.push({end: (x), color: this.selectedColor});
-    this.currentGradientPoint = this.linearGradient.points[this.linearGradient.points.length - 1];
-    localStorage.setItem('storeGradientPoints', JSON.stringify(this.linearGradient.points));
+    const idx = this.baseGradient.points.findIndex(item => {
+      return item === this.currentGradientPoint;
+    });
+
+    setTimeout(() => {
+      const slider = this.points.nativeElement;
+      const selectedGradientPoint = slider.children[idx];
+      Array.from(slider.children).map((item: any) => {
+        item.classList.remove('active');
+      });
+      this.renderer.addClass(selectedGradientPoint, 'active');
+    }, 5);
   }
 
   public onValueChange(value: { v: number, rgX: number }): void {
@@ -1135,11 +1256,12 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
   takeColor(): void {
     console.log('take Color works!');
   }
-
+  // TODO: backend
   saveCurrentColor(color: any): void {
     if (this.currentPalette === 0 && this.templateColors.length < 32) {
         this.templateColors.unshift({color: color});
         localStorage.setItem('storeTemplateColors', JSON.stringify(this.templateColors));
+        this.cpTemplateColors = this.templateColors;
     }
   }
 
@@ -1155,30 +1277,21 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
             this.cpEditMode = EditModeState.DEFAULT;
     }
   }
-
+  // TODO: backend
   closeColorSwatchBox(): void {
     localStorage.setItem('storeTemplateColors', JSON.stringify(this.templateColors));
-    localStorage.setItem('storeLastUsedColors', JSON.stringify(this.lastUsedColors));
+    this.cpTemplateColors = this.templateColors;
     this.cpEditMode = EditModeState.DEFAULT;
   }
-
+  // TODO: backend
   deleteColor(): void {
-    if (this.currentPalette === 0) {
         const index: number = this.templateColors.indexOf(this.currentTemplateColor);
         if (index !== -1) {
             this.templateColors.splice(index, 1);
             localStorage.setItem('storeTemplateColors', JSON.stringify(this.templateColors));
+            this.cpTemplateColors = this.templateColors;
         }
         this.cpEditMode = EditModeState.DEFAULT;
-    }
-    if (this.currentPalette === 1) {
-        const index: number = this.lastUsedColors.indexOf(this.currentLastUsedColor);
-        if (index !== -1) {
-            this.lastUsedColors.splice(index, 1);
-            localStorage.setItem('storeLastUsedColors', JSON.stringify(this.lastUsedColors));
-        }
-        this.cpEditMode = EditModeState.DEFAULT;
-    }
   }
 
   private openColorPicker(): void {
@@ -1288,7 +1401,7 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
       this.changeTemplateColor(this.selectedColor);
 
       this.currentGradientPoint.color = this.selectedColor;
-      localStorage.setItem('storeGradientPoints', JSON.stringify(this.linearGradient.points));
+      localStorage.setItem('storeGradient', JSON.stringify(this.baseGradient));
 
       if (this.format !== ColorFormats.CMYK) {
         this.cmykColor = '';

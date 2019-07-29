@@ -31,9 +31,6 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @Input() cpFallbackColor: string = '';
 
-  @Input() cpLinearGradientLine: string = '';
-  @Input() cpRadialGradientLine: string = '';
-
   @Input() cpColorMode: ColorMode = 'color';
 
   @Input() cpCmykEnabled: boolean = false;

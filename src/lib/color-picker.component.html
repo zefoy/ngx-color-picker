@@ -12,13 +12,10 @@
               [value]="id">{{ gradient }}
       </option>
     </select>
-    <select (change)="onDegChange($event)"
-            *ngIf="currentGradientType === 0"
-            class="form-control select-deg"
-            id="deg"
-            name="deg">
+    <select (change)="onDegChange($event)" *ngIf="currentGradientType === 0"
+            class="form-control select-deg" id="deg" name="deg">
       <option *ngFor="let deg of degs;"
-              [selected]="deg === currentDeg"
+              [selected]="deg === baseGradient.deg"
               [value]="deg">{{ deg }}&deg;
       </option>
     </select>
@@ -27,29 +24,27 @@
 
   <div *ngIf="currentGradientType === 0 || currentGradientType === 1" class="gradient-box">
     <div #points class="points">
-      <div (click)="onGradientPointChange(id); onAddLastUsedColor()"
+      <div (click)="onGradientPointChange(id)"
            (contextmenu)="onRightClick(id, $event)"
-           *ngFor="let gradientPoint of linearGradient.points; let id = index"
+           *ngFor="let gradientPoint of baseGradient.points; let id = index"
            [style.left.px]="gradientPoint.end"
            class="point-color-box">
         <div [style.background-color]="gradientPoint.color" class="point-color"></div>
       </div>
     </div>
 
-    <div #deletePointMenu (click)="removePoint()" [style.left.px]="currentGradientPoint.end"
+    <div #deletePointMenu (click)="removePoint()"
+         [style.left.px]="currentGradientPoint.end"
          class="delete-point-menu">
       <span>Delete Color</span>
       <span>Del</span>
     </div>
 
-    <div
-            (click)="createNewPoint($event)" *ngIf="currentGradientType === 0 "
-            [ngStyle]="{'background': cpLinearGradientLine}" class="gradient">
+    <div #gradient (click)="createNewPoint($event)"
+         [ngStyle]="{'background': gradientLine}"
+         class="gradient">
     </div>
-    <div
-            (click)="createNewPoint($event)" *ngIf="currentGradientType === 1 "
-            [ngStyle]="{'background': cpRadialGradientLine}" class="gradient">
-    </div>
+
   </div>
 
   <div *ngIf="cpDialogDisplay=='popup'" [style.top.px]="arrowTop" class="arrow arrow-{{cpPosition}}"></div>
@@ -58,7 +53,6 @@
     <div (dragEnd)="onDragEnd('saturation-lightness')" (dragStart)="onDragStart('saturation-lightness')"
          (newValue)="onColorChange($event)" *ngIf="(cpColorMode || 1) === 1" [rgX]="1"
          [rgY]="1" [slider] [style.background-color]="hueSliderColor" class="saturation-lightness">
-
       <div [style.left.px]="slider?.s" [style.top.px]="slider?.v" class="cursor"></div>
     </div>
 
@@ -115,15 +109,15 @@
       </div>
     </div>
 
-    <div *ngIf="currentFormat === 0 && !cpDisableInput && (cpColorMode || 1) === 1"
-         [class.hex-alpha]="cpAlphaChannel==='forced'" class="hex-text">
+    <div *ngIf="currentFormat === 0 && !cpDisableInput && (cpColorMode || 1) === 1" [class.hex-alpha]="cpAlphaChannel==='forced'"
+         class="hex-text">
       <div class="box format">
         <input (blur)="onHexInput(null)" (keyup.enter)="onAcceptColor($event)" (newValue)="onHexInput($event)"
                [text] [value]="hexText"/>
         <div class="input-icon input-icon-right">
           <input (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" [rg]="1" [text]
                  [value]="hexAlpha" max="100" maxlength="3" min="0" pattern="^[0-9]{0,2}?$|^100$"
-                 step="1" type="text"/>
+                 step="1" type="number"/>
           <i>%</i>
         </div>
       </div>
@@ -156,7 +150,10 @@
                pattern="^[0-9]{0,2}?$|^100$" step="1" type="number"/>
       </div>
     </div>
-    <div (click)="saveCurrentColor(selectedColor)" class="btn-icon btn-save"></div>
+
+    <div (click)="saveCurrentColor(selectedColor); onTemplateColorsChange()"
+         class="btn-icon btn-save" *ngIf="currentPalette === 0">
+    </div>
   </div>
 
   <div *ngIf="cpPresetColors?.length || cpAddColorButton" class="preset-area">
@@ -166,10 +163,9 @@
 
     <div *ngIf="cpPresetColors?.length">
       <div (click)="setColorFromString(color)" *ngFor="let color of cpPresetColors"
-           [style.backgroundColor]="color"
-           class="preset-color">
-                <span (click)="onRemovePresetColor($event, color)" *ngIf="cpAddColorButton"
-                      class="{{cpRemoveColorButtonClass}}"></span>
+           [style.backgroundColor]="color" class="preset-color">
+        <span (click)="onRemovePresetColor($event, color)" *ngIf="cpAddColorButton"
+              class="{{cpRemoveColorButtonClass}}"></span>
       </div>
     </div>
 
@@ -191,12 +187,13 @@
       <option *ngFor="let palette of palettes | enumToArray; let id = index;" [selected]="currentPalette"
               [value]="id">{{palette}}</option>
     </select>
-    <div (click)="toggleEditModeState()" [ngClass]="{'btn-pencil-opacity': cpEditMode === modeState.EDIT}"
+    <div (click)="toggleEditModeState()" *ngIf="currentPalette === 0"
+         [ngClass]="{'btn-pencil-opacity': cpEditMode === modeState.EDIT}"
          class="btn-icon btn-pencil"></div>
   </div>
 
-  <div *ngIf="cpEditMode !== modeState.EDITING" class="box option-box">
-    <div *ngIf="currentPalette === 0" class="templates">
+  <div class="box option-box">
+    <div *ngIf="currentPalette === 0 && cpEditMode !== modeState.EDITING" class="templates">
       <div (click)="editTemplateColor(id)"
            *ngFor="let templateColor of templateColors; let id = index;"
            [ngClass]="{'template-opacity': cpEditMode === modeState.EDIT}"
@@ -205,11 +202,9 @@
       </div>
     </div>
     <div *ngIf="currentPalette === 1" class="last-used-colors">
-      <div (click)="editLastUsedColor(id)"
-           *ngFor="let lastUsedColor of lastUsedColors; let id = index;"
-           [ngClass]="{'last-used-color-opacity': cpEditMode === modeState.EDIT}"
-           [style.backgroundColor]="lastUsedColor.color" class="last-used-color">
-        <div [ngClass]="{'edit': cpEditMode === modeState.EDIT}"></div>
+      <div (click)="setLastUsedColor(id)"
+           *ngFor="let lastUsedColor of getLastUsedColors(); let id = index;"
+           [ngStyle]="{'background': lastUsedColor.color}" class="last-used-color">
       </div>
     </div>
   </div>
@@ -218,9 +213,10 @@
     <p>Edit Color</p>
     <div (click)="closeColorSwatchBox()" class="btn-icon btn-close"></div>
 
-    <div [style.backgroundColor]="currentPalette === 0 ? currentTemplateColor.color : currentLastUsedColor.color"
+    <div [ngStyle]="{'background': currentTemplateColor.color}"
          class="color-swatch" id="colorSwatch">
     </div>
+
     <div (click)="deleteColor()" class="delete-color-btn">
       <div class="btn-trash"></div>
       <span>Delete Color</span>

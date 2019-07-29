@@ -34,7 +34,9 @@
     "type": "git",
     "url": "https://github.com/zefoy/ngx-color-picker.git"
   },
-  "dependencies": {},
+  "dependencies": {
+    "gradient-parser": "^0.1.5"
+  },
   "devDependencies": {
     "@angular/cli": "^8.0.0",
     "@angular/common": "^8.0.0",

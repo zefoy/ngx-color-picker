@@ -375,7 +375,6 @@ constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
       const valuePercent: number = Math.floor(value.end * 100 / gradientLineWidth);
       buf.push(value.color + ' ' + valuePercent + '%');
     });
-    console.log(this.currentGradientType, gradient);
     switch (this.currentGradientType) {
       case 0:
         this.gradientLine = 'linear-gradient(' + gradient.deg + 'deg, ' + buf.join(',') + ')';
@@ -430,7 +429,7 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
    cpOKButtonClass: string, cpOKButtonText: string, cpCancelButton: boolean,
    cpCancelButtonClass: string, cpCancelButtonText: string, cpAddColorButton: boolean,
    cpAddColorButtonClass: string, cpAddColorButtonText: string,
-   cpRemoveColorButtonClass: string): void {
+   cpRemoveColorButtonClass: string, cpTemplateColors): void {
     this.setInitialColor(color);
 
     this.setColorMode(cpColorMode);
@@ -481,6 +480,8 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
     this.cpAddColorButtonText = cpAddColorButtonText;
     this.cpAddColorButtonClass = cpAddColorButtonClass;
     this.cpRemoveColorButtonClass = cpRemoveColorButtonClass;
+
+    this.cpTemplateColors = cpTemplateColors;
 
     if (!cpPositionRelativeToArrow) {
       this.dialogArrowOffset = 0;
@@ -572,7 +573,7 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
   }
 
   public onTemplateColorsChange(): void {
-    console.log(this.cpTemplateColors);
+    // console.log(this.cpTemplateColors);
   }
 
   public onMouseDown(event: MouseEvent): void {

@@ -385,10 +385,14 @@
   opacity: 0.98;
   border-radius: 2px;
   color: #F9FAFC;
-  padding: 8px 10px;
+  padding: 8px;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+}
+
+.color-picker .delete-point-menu > span {
+  margin-top: 2px;
 }
 
 .color-picker .delete-point-menu span:last-child {

@@ -38,7 +38,7 @@ npm link ngx-color-picker
 ### Installing and usage
 
 ```bash
-npm install ngx-color-picker --save
+npm i @livereach/lr-ngx-color-picker --save
 ```
 
 ##### Load the module for your app:

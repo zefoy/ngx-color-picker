@@ -4,7 +4,9 @@ import sourcemaps from 'rollup-plugin-sourcemaps';
 
 const pkg = require('../package.json');
 
-const name = pkg.name.replace(/-([a-z])/g, (g) => {
+const names = pkg.name.match(/([a-z-]+)/g);
+const name = names[names.length -1];
+const upperName = name.replace(/-([a-z])/g, (g) => {
   return g[1].toUpperCase();
 });
 
@@ -31,7 +33,7 @@ export default {
   output: {
     file: `${pkg.main}`,
     format: 'umd',
-    name: `zef.${name}`,
+    name: `zef.${upperName}`,
     globals: globals,
     sourcemap: true,
     exports: 'named'

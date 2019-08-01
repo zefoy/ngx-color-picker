@@ -32,13 +32,13 @@ npm start
 ```bash
 npm link
 cd example
-npm link ngx-color-picker
+npm link @livereach/ngx-color-picker
 ```
 
 ### Installing and usage
 
 ```bash
-npm i @livereach/lr-ngx-color-picker --save
+npm i @livereach/ngx-color-picker --save
 ```
 
 ##### Load the module for your app:

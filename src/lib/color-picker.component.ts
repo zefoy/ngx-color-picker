@@ -588,6 +588,12 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
         this.directiveInstance.colorSelected(this.outputColor);
         this.onAddLastUsedColor();
         this.currentGradientPoint = {};
+
+        const slider = this.points.nativeElement;
+        Array.from(slider.children).map((item: any) => {
+          item.classList.remove('active');
+        });
+
       } else {
         this.setColorFromString(this.initialColor, false);
 

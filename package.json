@@ -1,12 +1,14 @@
 {
-  "name": "@livereach/lr-ngx-color-picker",
+  "name": "@livereach/ngx-color-picker",
   "description": "Color picker widget for Angular",
-  "bugs": "https://github.com/zefoy/ngx-color-picker/issues",
+  "bugs": {
+    "url": "https://github.com/zefoy/ngx-color-picker/issues"
+  },
   "license": "MIT",
-  "version": "9.0.2",
-  "main": "./bundles/lr-ngx-color-picker.umd.js",
-  "module": "./dist/lr-ngx-color-picker.es5.js",
-  "typings": "./dist/lr-ngx-color-picker.d.ts",
+  "version": "9.0.6",
+  "main": "./bundles/ngx-color-picker.umd.js",
+  "module": "./dist/ngx-color-picker.es5.js",
+  "typings": "./dist/ngx-color-picker.d.ts",
   "tslint": {
     "extends": "./tslint.json"
   },
@@ -28,37 +30,37 @@
     "build:html": "cpx src/lib/color-picker.component.html dist/lib/",
     "bundle:es5": "rollup -c config/rollup-es5.config.js --silent",
     "bundle:umd": "rollup -c config/rollup-umd.config.js --silent",
-    "minify:umd": "terser bundles/lr-ngx-color-picker.umd.js -o bundles/lr-ngx-color-picker.umd.min.js --source-map=\"filename=bundles/lr-ngx-color-picker.umd.min.js.map\""
+    "minify:umd": "terser bundles/ngx-color-picker.umd.js -o bundles/ngx-color-picker.umd.min.js --source-map=\"filename=bundles/ngx-color-picker.umd.min.js.map\""
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/livereach/ngx-color-picker.git"
+    "url": "git+https://github.com/livereach/ngx-color-picker.git"
   },
   "dependencies": {
     "gradient-parser": "^0.1.5"
   },
   "devDependencies": {
-    "@angular/cli": "^8.0.0",
-    "@angular/common": "^8.0.0",
-    "@angular/compiler": "^8.0.0",
-    "@angular/compiler-cli": "^8.0.0",
-    "@angular/core": "^8.0.0",
-    "@angular/platform-browser": "^8.0.0",
-    "@angular-devkit/build-angular": "^0.800.0",
-    "@types/node": "^12.0.0",
+    "@angular/cli": "^8.1.0",
+    "@angular/common": "^8.1.0",
+    "@angular/compiler": "^8.1.0",
+    "@angular/compiler-cli": "^8.1.0",
+    "@angular/core": "^8.1.0",
+    "@angular/platform-browser": "^8.1.0",
+    "@angular-devkit/build-angular": "^0.801.0",
+    "@types/node": "^12.6.0",
     "codelyzer": "^5.1.0",
     "core-js": "^3.1.0",
     "cpx": "^1.5.0",
-    "rollup": "^1.14.0",
-    "rollup-plugin-node-resolve": "^5.0.0",
+    "rollup": "^1.16.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sourcemaps": "^0.4.0",
     "rxjs": "^6.5.0",
     "stylelint": "^10.1.0",
     "stylelint-config-standard": "^18.3.0",
     "stylelint-order": "^3.0.0",
-    "terser": "^4.0.0",
-    "tsickle": "^0.35.0",
-    "tslint": "^5.17.0",
+    "terser": "^4.1.0",
+    "tsickle": "~0.34.0",
+    "tslint": "^5.18.0",
     "typescript": "~3.4.0",
     "watch": "^1.0.0",
     "zone.js": "^0.9.0"
@@ -66,5 +68,10 @@
   "peerDependencies": {
     "@angular/common": ">=5.0.0",
     "@angular/core": ">=5.0.0"
-  }
+  },
+  "homepage": "https://github.com/livereach/ngx-color-picker#readme",
+  "directories": {
+    "example": "example"
+  },
+  "author": ""
 }

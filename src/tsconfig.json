@@ -10,7 +10,7 @@
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "enableResourceInlining": true,
-    "flatModuleId": "ngx-color-picker",
+    "flatModuleId": "@livereach/ngx-color-picker",
     "flatModuleOutFile": "ngx-color-picker.js",
     "fullTemplateTypeCheck": true,
     "skipTemplateCodegen": true,

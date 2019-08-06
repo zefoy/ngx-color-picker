@@ -401,6 +401,7 @@ constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
     this.setInitialColor(color);
 
     this.setColorFromString(color, emit);
+    this.parseColorFromString(color);
 
     this.openColorPicker();
   }
@@ -577,12 +578,15 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
       if (this.cpSaveClickOutside) {
         this.directiveInstance.colorSelected(this.outputColor);
         this.onAddLastUsedColor();
-        this.currentGradientPoint = {};
 
-        const slider = this.points.nativeElement;
-        Array.from(slider.children).map((item: any) => {
-          item.classList.remove('active');
-        });
+        if (this.currentGradientType === 0 || this.currentGradientType === 1) {
+          this.currentGradientPoint = {};
+
+          const slider = this.points.nativeElement;
+          Array.from(slider.children).map((item: any) => {
+            item.classList.remove('active');
+          });
+        }
 
       } else {
         this.setColorFromString(this.initialColor, false);

@@ -232,24 +232,14 @@ constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
       this.dialogInputFormats.push({id: ColorFormats.CMYK, name: 'CMYK'});
     }
     this.slider = new SliderPosition(0, 0, 0, 0);
-    const storeGradientPoints = localStorage.getItem('storeGradient');
-    if (storeGradientPoints !== null) {
-      this.baseGradient = JSON.parse(storeGradientPoints);
-      if (this.baseGradient.points !== null) {
-        this.baseGradient.points.sort((point1, point2) => {
-          return point1.end - point2.end;
-        });
-      }
-      if (this.baseGradient.deg !== null) {
-        this.baseGradient.deg = Number(this.baseGradient.deg);
-      }
-    }
 
     this.cpTemplateColors = this.templateColors;
 
     const hueWidth = this.hueSlider.nativeElement.offsetHeight || 230;
     const alphaWidth = this.alphaSlider.nativeElement.offsetHeight || 230;
     this.sliderDimMax = new SliderDimension(hueWidth, this.cpWidth, 230, alphaWidth);
+
+    this.parseColorFromString(this.initialColor);
 
     if (this.cpCmykEnabled) {
       this.format = ColorFormats.CMYK;
@@ -372,7 +362,7 @@ constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
     const gradientLineWidth = 209;
     const buf: string[] = [];
     gradient.points.forEach((value) => {
-      const valuePercent: number = Math.floor(value.end * 100 / gradientLineWidth);
+      const valuePercent: number = Math.round(value.end * 100 / gradientLineWidth);
       buf.push(value.color + ' ' + valuePercent + '%');
     });
     switch (this.currentGradientType) {
@@ -639,6 +629,16 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
     this.directiveInstance.colorCanceled();
   }
 
+  public setCursor(color): void {
+    const hsva = this.service.stringToHsva(color);
+    if (hsva !== null) {
+      this.onHueChange({rgX: 1, rgY: 1, v: hsva.h});
+      this.onColorChange({rgY: 1, s: hsva.s, rgX: 1, v: hsva.v});
+      this.onValueChange({rgX: 1, v: hsva.v});
+      this.onAlphaChange({rgX: 1, v: hsva.a});
+    }
+  }
+
   public onGradientTypeChange(event: any): void {
     this.currentGradientType = Number(event.target.value);
     this.refreshColors();
@@ -683,55 +683,43 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
     if (this.cpEditMode === EditModeState.DEFAULT) {
       this.currentGradientPoint.color = this.templateColors[id].color;
       this.hueSliderColor = this.currentGradientPoint.color;
-      localStorage.setItem('storeGradient', JSON.stringify(this.baseGradient));
-      const hsva = this.service.stringToHsva(this.currentGradientPoint.color);
-      if (hsva !== null) {
-          this.onHueChange({rgX: 1, rgY: 1, v: hsva.h});
-          this.onColorChange({rgY: 1, s: hsva.s, rgX: 1, v: hsva.v});
-          this.onValueChange({rgX: 1, v: hsva.v});
-          this.onAlphaChange({rgX: 1, v: hsva.a});
-      }
+      this.setCursor(this.currentGradientPoint.color);
     }
     if (this.cpEditMode === EditModeState.EDIT) {
       this.currentTemplateColor = this.templateColors[id];
       this.cpEditMode = EditModeState.EDITING;
-      this.hueSliderColor = this.currentTemplateColor.color;
-      const hsva = this.service.stringToHsva(this.currentTemplateColor.color);
-    if (hsva !== null) {
-          this.onHueChange({rgX: 1, rgY: 1, v: hsva.h});
-          this.onColorChange({rgY: 1, s: hsva.s, rgX: 1, v: hsva.v});
-          this.onValueChange({rgX: 1, v: hsva.v});
-          this.onAlphaChange({rgX: 1, v: hsva.a});
-      }
+
+      this.hueSliderColor = this.currentGradientPoint.color;
+      this.setCursor(this.currentTemplateColor.color);
     }
+    this.refreshColors();
+  }
+
+  public parseColorFromString(color: string) {
+    if (color.includes('linear-gradient')
+        || color.includes('radial-gradient')
+    ) {
+      this.parseColors(color);
+    } else {
+      this.currentGradientType = 2;
+      this.outputColor = color;
+      this.hueSliderColor = color;
+    }
+
     this.refreshColors();
   }
 
   public setLastUsedColor(id: any): void {
     const lastUsedColor = this.getLastUsedColorById(id).color;
 
-    if (lastUsedColor.includes('linear-gradient')
-        || lastUsedColor.includes('radial-gradient')
-      ) {
-        this.parseColors(lastUsedColor);
-      } else {
-        this.hueSliderColor = lastUsedColor;
-        const hsva = this.service.stringToHsva(this.hueSliderColor);
-        if (hsva !== null) {
-          this.onHueChange({rgX: 1, rgY: 1, v: hsva.h});
-          this.onColorChange({rgY: 1, s: hsva.s, rgX: 1, v: hsva.v});
-          this.onValueChange({rgX: 1, v: hsva.v});
-          this.onAlphaChange({rgX: 1, v: hsva.a});
-          this.currentGradientType = 2;
-        }
-        this.refreshColors();
-      }
+    this.parseColorFromString(lastUsedColor);
+    this.setCursor(lastUsedColor);
   }
 
   private convertColorType(item: any): Point {
     const gradientLineWidth = 209;
     const obj: Point = {
-      end: Math.floor(item.length.value * gradientLineWidth / 100),
+      end: Math.round(item.length.value * gradientLineWidth / 100),
       color: '',
     };
     switch (item.type) {
@@ -751,15 +739,13 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
   public parseColors(color: string): void {
     const gradient = require('gradient-parser');
     const obj = gradient.parse(color);
-    this.baseGradient.points = [];
-    const points: Gradient = {
+    this.baseGradient = {
       points: [],
     };
-
-    switch (obj[0].type) {
+      switch (obj[0].type) {
       case 'linear-gradient': {
         this.currentGradientType = 0;
-        points.deg = obj[0].orientation.value;
+        this.baseGradient.deg = Number(obj[0].orientation.value);
         break;
       }
       case 'radial-gradient': {
@@ -771,10 +757,8 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
       }
     }
     obj[0].colorStops.forEach((item: any) => {
-      points.points.push(this.convertColorType(item));
+        this.baseGradient.points.push(this.convertColorType(item));
     });
-
-    this.baseGradient = points;
     this.cpLinearGradientLine = color;
     localStorage.setItem('storeGradient', JSON.stringify(this.baseGradient));
     this.refreshColors();
@@ -798,15 +782,9 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
       item.classList.remove('active');
     });
     selectedGradientPoint.classList.add('active');
-    this.hueSliderColor = this.currentGradientPoint.color;
 
-    const hsva = this.service.stringToHsva(this.currentGradientPoint.color);
-    if (hsva !== null) {
-        this.onHueChange({rgX: 1, rgY: 1, v: hsva.h});
-        this.onColorChange({rgY: 1, s: hsva.s, rgX: 1, v: hsva.v});
-        this.onValueChange({rgX: 1, v: hsva.v});
-        this.onAlphaChange({rgX: 1, v: hsva.a});
-    }
+    this.hueSliderColor = this.currentGradientPoint.color;
+    this.setCursor(this.currentGradientPoint.color);
 
     selectedGradientPoint.onmousedown = (e) => {
         e.stopPropagation();
@@ -830,7 +808,7 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
                     newLeft = (rightEdge);
                 }
 
-                selectedGradientPoint.style.left = Math.floor(newLeft) + 'px';
+                selectedGradientPoint.style.left = Math.round(newLeft) + 'px';
                 this.currentGradientPoint.end = parseFloat(selectedGradientPoint.style.left);
 
                 this.refreshColors();

@@ -8,7 +8,7 @@
             class="form-control select-gradient-type"
             id="gradient-type" name="gradient-type">
       <option *ngFor="let gradient of gradientTypes | enumToArray; let id = index;"
-              [selected]="id == currentGradientType"
+              [selected]="id === currentGradientType"
               [value]="id">{{ gradient }}
       </option>
     </select>

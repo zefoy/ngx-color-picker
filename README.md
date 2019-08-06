@@ -44,7 +44,7 @@ npm i @livereach/ngx-color-picker --save
 ##### Load the module for your app:
 
 ```javascript
-import { ColorPickerModule } from 'ngx-color-picker';
+import { ColorPickerModule } from '@livereach/ngx-color-picker';
 
 @NgModule({
   ...

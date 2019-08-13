@@ -79,6 +79,8 @@ import { ColorPickerModule } from '@livereach/ngx-color-picker';
 
 [cpFallbackColor]            // Used when the color is not well-formed or is undefined ('#000').
 
+[cpTemplateColors]           // The templates color to show in the color picker dialog.
+
 [cpPosition]                 // Dialog position: 'right', 'left', 'top', 'bottom' ('right').
 [cpPositionOffset]           // Dialog offset percentage relative to the directive element (0%).
 [cpPositionRelativeToArrow]  // Dialog position is calculated relative to dialog arrow (false).
@@ -139,6 +141,8 @@ import { ColorPickerModule } from '@livereach/ngx-color-picker';
 (cpCmykColorChange)          // Outputs the color as CMYK string if CMYK is enabled (value: string).
 
 (cpPresetColorsChange)       // Preset colors, send when 'Add Color' button is pressed (value: array).
+
+(cpTemplateColorsChange)     // Changed template colors value, send when template colors are changed 
 ```
 
 ##### Available control / helper functions (provided by the directive):

@@ -72,7 +72,11 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @Input() cpRemoveColorButtonClass: string = 'cp-remove-color-button-class';
 
-  @Input() cpTemplateColors: any;
+  @Input() cpTemplateColors: any = [
+    {color: 'rgb(255,0,28)'},
+    {color: 'rgb(39,147,250)'},
+    {color: 'rgb(235,193,0)'},
+  ];
 
   @Output() cpTemplateColorsChange = new EventEmitter<any>(true);
 
@@ -274,7 +278,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     this.cpPresetColorsChange.emit(value);
   }
 
-  public getTemplateColors(value: any[]): void {
+  public templateColorsChanged(value: any[]): void {
     this.cpTemplateColorsChange.emit(value);
   }
 }

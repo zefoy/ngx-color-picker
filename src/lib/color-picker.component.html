@@ -92,20 +92,20 @@
       <div class="box format">
         <input (keyup.enter)="onAcceptColor($event)" (newValue)="onCyanInput($event)" [rg]="100" [text]
                [value]="cmykText?.c" max="100" min="0"
-               pattern="[0-9]*" type="number"/>
+               pattern="[0-9]*" type="text"/>
         <input (keyup.enter)="onAcceptColor($event)" (newValue)="onMagentaInput($event)" [rg]="100" [text]
                [value]="cmykText?.m" max="100" min="0"
-               pattern="[0-9]*" type="number"/>
+               pattern="[0-9]*" type="text"/>
         <input (keyup.enter)="onAcceptColor($event)" (newValue)="onYellowInput($event)" [rg]="100" [text]
                [value]="cmykText?.y" max="100" min="0"
-               pattern="[0-9]*" type="number"/>
+               pattern="[0-9]*" type="text"/>
         <input (keyup.enter)="onAcceptColor($event)" (newValue)="onBlackInput($event)" [rg]="100" [text]
                [value]="cmykText?.k" max="100" min="0"
-               pattern="[0-9]*" type="number"/>
+               pattern="[0-9]*" type="text"/>
         <input (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)"
                *ngIf="cpAlphaChannel!=='disabled'" [rg]="100"
                [text] [value]="cmykText?.a" max="100" min="0" pattern="^[0-9]{0,2}?$|^100$" step="1"
-               type="number"/>
+               type="text"/>
       </div>
     </div>
 
@@ -117,7 +117,7 @@
         <div class="input-icon input-icon-right">
           <input (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" [rg]="1" [text]
                  [value]="hexAlpha" max="100" maxlength="3" min="0" pattern="^[0-9]{0,2}?$|^100$"
-                 step="1" type="number"/>
+                 step="1" type="text"/>
           <i>%</i>
         </div>
       </div>
@@ -126,32 +126,32 @@
     <div *ngIf="currentFormat == 1 && !cpDisableInput && (cpColorMode || 1) === 1 " class="rgba-text">
       <div class="box format">
         <input (keyup.enter)="onAcceptColor($event)" (newValue)="onRedInput($event)" [rg]="255" [text]
-               [value]="rgbaText?.r" max="255" min="0" pattern="[0-9]*" type="number"/>
+               [value]="rgbaText?.r" max="255" min="0" pattern="[0-9]*" type="text"/>
         <input (keyup.enter)="onAcceptColor($event)" (newValue)="onGreenInput($event)" [rg]="255" [text]
-               [value]="rgbaText?.g" max="255" min="0" pattern="[0-9]*" type="number"/>
+               [value]="rgbaText?.g" max="255" min="0" pattern="[0-9]*" type="text"/>
         <input (keyup.enter)="onAcceptColor($event)" (newValue)="onBlueInput($event)" [rg]="255" [text]
-               [value]="rgbaText?.b" max="255" min="0" pattern="[0-9]*" type="number"/>
+               [value]="rgbaText?.b" max="255" min="0" pattern="[0-9]*" type="text"/>
         <input (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)"
                *ngIf="cpAlphaChannel!=='disabled'" [rg]="100" [text] [value]="rgbaText?.a" max="100" min="0"
-               pattern="^[0-9]{0,2}?$|^100$" step="1" type="number"/>
+               pattern="^[0-9]{0,2}?$|^100$" step="1" type="text"/>
       </div>
     </div>
 
     <div *ngIf="currentFormat === 2 && !cpDisableInput && (cpColorMode || 1) === 1 " class="hsla-text">
       <div class="box format">
         <input (keyup.enter)="onAcceptColor($event)" (newValue)="onHueInput($event)" [rg]="360" [text]
-               [value]="hslaText?.h" max="360" min="0" pattern="[0-9]*" type="number"/>
+               [value]="hslaText?.h" max="360" min="0" pattern="[0-9]*" type="text"/>
         <input (keyup.enter)="onAcceptColor($event)" (newValue)="onSaturationInput($event)" [rg]="100"
-               [text] [value]="hslaText?.s" max="100" min="0" pattern="[0-9]*" type="number"/>
+               [text] [value]="hslaText?.s" max="100" min="0" pattern="[0-9]*" type="text"/>
         <input (keyup.enter)="onAcceptColor($event)" (newValue)="onLightnessInput($event)" [rg]="100" [text]
-               [value]="hslaText?.l" max="100" min="0" pattern="[0-9]*" type="number"/>
+               [value]="hslaText?.l" max="100" min="0" pattern="[0-9]*" type="text"/>
         <input (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)"
                *ngIf="cpAlphaChannel!=='disabled'" [rg]="100" [text] [value]="hslaText?.a" max="100" min="0"
-               pattern="^[0-9]{0,2}?$|^100$" step="1" type="number"/>
+               pattern="^[0-9]{0,2}?$|^100$" step="1" type="text"/>
       </div>
     </div>
 
-    <div (click)="saveCurrentColor(selectedColor); onTemplateColorsChange()"
+    <div (click)="saveCurrentColor(selectedColor)"
          class="btn-icon btn-save" *ngIf="currentPalette === 0">
     </div>
   </div>

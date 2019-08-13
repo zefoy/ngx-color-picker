@@ -12,7 +12,7 @@ import { ColorPickerDirective } from './color-picker.directive';
   exports: [ ColorPickerDirective ],
   providers: [ ColorPickerService ],
   declarations: [
-      ColorPickerComponent,
+    ColorPickerComponent,
     ColorPickerDirective,
     TextDirective,
     SliderDirective,

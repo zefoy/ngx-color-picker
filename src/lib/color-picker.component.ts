@@ -233,8 +233,6 @@ constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
     }
     this.slider = new SliderPosition(0, 0, 0, 0);
 
-    this.cpTemplateColors = this.templateColors;
-
     const hueWidth = this.hueSlider.nativeElement.offsetHeight || 230;
     const alphaWidth = this.alphaSlider.nativeElement.offsetHeight || 230;
     this.sliderDimMax = new SliderDimension(hueWidth, this.cpWidth, 230, alphaWidth);
@@ -265,19 +263,9 @@ constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
         break;
     }
 
-    const storeTemplateColors = localStorage.getItem('storeTemplateColors');
-    if (storeTemplateColors !== null) {
-      this.templateColors = JSON.parse(storeTemplateColors);
-    }
-
     const storeLastUsedColors = localStorage.getItem('storeLastUsedColors');
     if (storeLastUsedColors !== null) {
       this.lastUsedColors = JSON.parse(storeLastUsedColors);
-    }
-
-    const storeCurrentGradientType = localStorage.getItem('currentGradientType');
-    if (storeCurrentGradientType !== null) {
-      this.currentGradientType = Number(storeCurrentGradientType);
     }
   }
 
@@ -295,6 +283,21 @@ constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
       this.updateColorPicker(false);
 
       this.cdRef.detectChanges();
+    }
+  }
+
+  public initColor() {
+    const storeGradientPoints = localStorage.getItem('storeGradient');
+    if (storeGradientPoints !== null) {
+      this.baseGradient = JSON.parse(storeGradientPoints);
+      if (this.baseGradient.points !== null) {
+        this.baseGradient.points.sort((point1, point2) => {
+          return point1.end - point2.end;
+        });
+      }
+      if (this.baseGradient.deg !== null) {
+        this.baseGradient.deg = Number(this.baseGradient.deg);
+      }
     }
   }
 
@@ -330,7 +333,6 @@ constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef,
   removeItem(id: number): any {
     if (id !== -1 && this.baseGradient.points.length > 2) {
       this.baseGradient.points.splice(id, 1);
-      localStorage.setItem('storeGradient', JSON.stringify(this.baseGradient));
       this.refreshColors();
     }
   }
@@ -420,8 +422,15 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
    cpOKButtonClass: string, cpOKButtonText: string, cpCancelButton: boolean,
    cpCancelButtonClass: string, cpCancelButtonText: string, cpAddColorButton: boolean,
    cpAddColorButtonClass: string, cpAddColorButtonText: string,
-   cpRemoveColorButtonClass: string, cpTemplateColors): void {
+   cpRemoveColorButtonClass: string, cpTemplateColors: any): void {
     this.setInitialColor(color);
+
+    if (!cpTemplateColors) {
+      this.cpTemplateColors = this.templateColors;
+    }
+    if (cpTemplateColors) {
+      this.setTemplateColors(cpTemplateColors);
+    }
 
     this.setColorMode(cpColorMode);
 
@@ -547,6 +556,16 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
     }
   }
 
+  public setTemplateColors(cpTemplateColors: any): void {
+    if (!cpTemplateColors) {
+      this.cpTemplateColors = this.templateColors;
+    }
+    if (cpTemplateColors) {
+      this.cpTemplateColors = cpTemplateColors;
+      this.templateColors = cpTemplateColors;
+    }
+  }
+
   public onResize(): void {
     if (this.position === 'fixed') {
       this.setDialogPosition();
@@ -563,9 +582,6 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
     this.directiveInstance.sliderDragStart({ slider: slider, color: this.outputColor });
   }
 
-  public onTemplateColorsChange(): void {
-    // console.log(this.cpTemplateColors);
-  }
 
   public onMouseDown(event: MouseEvent): void {
     if (this.show &&
@@ -652,7 +668,6 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
   public onDegChange(event: any): void {
     this.baseGradient.deg = Number(event.target.value);
     this.refreshColors();
-    localStorage.setItem('storeGradient', JSON.stringify(this.baseGradient));
   }
 
   public onFormatChange(event: any): void {
@@ -764,7 +779,6 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
         this.baseGradient.points.push(this.convertColorType(item));
     });
     this.cpLinearGradientLine = color;
-    localStorage.setItem('storeGradient', JSON.stringify(this.baseGradient));
     this.refreshColors();
     return obj;
   }
@@ -903,7 +917,6 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
     const x = event.offsetX === undefined ? event.layerX : event.offsetX;
     this.currentGradientPoint = {end: x, color: this.selectedColor};
     this.baseGradient.points.push(this.currentGradientPoint);
-    localStorage.setItem('storeGradient', JSON.stringify(this.baseGradient));
     this.refreshColors();
 
     const idx = this.baseGradient.points.findIndex(item => {
@@ -1243,14 +1256,14 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
   // Private helper functions for the color picker dialog status
 
   takeColor(): void {
-    console.log('take Color works!');
+    // console.log('take Color works!');
   }
-  // TODO: backend
+
   saveCurrentColor(color: any): void {
     if (this.currentPalette === 0 && this.templateColors.length < 32) {
         this.templateColors.unshift({color: color});
-        localStorage.setItem('storeTemplateColors', JSON.stringify(this.templateColors));
         this.cpTemplateColors = this.templateColors;
+        this.directiveInstance.templateColorsChanged(this.cpTemplateColors);
     }
   }
 
@@ -1266,19 +1279,19 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
             this.cpEditMode = EditModeState.DEFAULT;
     }
   }
-  // TODO: backend
+
   closeColorSwatchBox(): void {
-    localStorage.setItem('storeTemplateColors', JSON.stringify(this.templateColors));
     this.cpTemplateColors = this.templateColors;
+    this.directiveInstance.templateColorsChanged(this.cpTemplateColors);
     this.cpEditMode = EditModeState.DEFAULT;
   }
-  // TODO: backend
+
   deleteColor(): void {
         const index: number = this.templateColors.indexOf(this.currentTemplateColor);
         if (index !== -1) {
             this.templateColors.splice(index, 1);
-            localStorage.setItem('storeTemplateColors', JSON.stringify(this.templateColors));
             this.cpTemplateColors = this.templateColors;
+            this.directiveInstance.templateColorsChanged(this.cpTemplateColors);
         }
         this.cpEditMode = EditModeState.DEFAULT;
   }
@@ -1390,7 +1403,6 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
       this.changeTemplateColor(this.selectedColor);
 
       this.currentGradientPoint.color = this.selectedColor;
-      localStorage.setItem('storeGradient', JSON.stringify(this.baseGradient));
 
       if (this.format !== ColorFormats.CMYK) {
         this.cmykColor = '';

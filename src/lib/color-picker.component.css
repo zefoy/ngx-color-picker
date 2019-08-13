@@ -480,6 +480,7 @@
   margin-right: 10px;
   font-size: 13px;
   color: #243447;
+  cursor: pointer;
 }
 
 .color-picker .select-gradient-type {
@@ -487,6 +488,7 @@
   padding: 9px 5px;
   color: #243447;
   border-radius: 2px;
+  cursor: pointer;
 }
 
 .color-picker .light-border {

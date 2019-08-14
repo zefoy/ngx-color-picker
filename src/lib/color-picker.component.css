@@ -212,17 +212,19 @@
 }
 
 .color-picker .hex-text .box {
+  width: 150px;
+  height: 35px;
   display: flex;
   padding: 0;
 }
 
 .color-picker .hex-text .box > input {
-  width: 84px;
+  width: 85px;
   border: #c5d0ea solid 1px;
   border-right: 1px solid #F2F4F8;
   border-radius: 2px 0 0 2px;
   text-align: left;
-  padding-left: 7px;
+  padding: 1px 1px 1px 7px;
   text-transform: uppercase;
 }
 
@@ -242,12 +244,11 @@
 }
 
 .color-picker .hex-text .box .input-icon-right > input {
-  height: 34px;
   border: 1px solid #C5D0EA;
   border-left: none;
   border-radius: 0 2px 2px 0;
   width: 65px;
-  padding: 0 19px 0 0;
+  padding: 1px 19px 1px 0;
   text-align: right;
 }
 

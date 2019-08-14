@@ -785,17 +785,11 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
 
   public onGradientPointChange(id: number): void {
     this.deletePointMenu.nativeElement.style.display = 'none';
-    let points: Point[] = [];
-    if (this.currentGradientType === 0) {
-      points = this.baseGradient.points;
-      this.currentGradientPoint = points[id];
-    }
-    if (this.currentGradientType === 1) {
-      points = this.baseGradient.points;
-      this.currentGradientPoint = points[id];
-    }
+    this.currentGradientPoint = this.baseGradient.points[id];
+
     const slider = this.points.nativeElement;
     const selectedGradientPoint = slider.children[id];
+
     Array.from(slider.children).map((item: any) => {
       item.classList.remove('active');
     });
@@ -930,7 +924,7 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
         item.classList.remove('active');
       });
       this.renderer.addClass(selectedGradientPoint, 'active');
-    }, 5);
+    }, 0);
   }
 
   public onValueChange(value: { v: number, rgX: number }): void {

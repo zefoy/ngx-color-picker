@@ -804,7 +804,7 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
     this.hueSliderColor = this.currentGradientPoint.color;
     this.setCursor(this.currentGradientPoint.color);
 
-    selectedGradientPoint.onmousedown = (e) => {
+    selectedGradientPoint.onmousemove = (e) => {
         e.stopPropagation();
         if (e.which !== 1) {
             return;

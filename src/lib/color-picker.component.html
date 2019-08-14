@@ -24,7 +24,7 @@
 
   <div *ngIf="currentGradientType === 0 || currentGradientType === 1" class="gradient-box">
     <div #points class="points">
-      <div (click)="onGradientPointChange(id)"
+      <div (mousedown)="onGradientPointChange(id)"
            (contextmenu)="onRightClick(id, $event)"
            *ngFor="let gradientPoint of baseGradient.points; let id = index"
            [style.left.px]="gradientPoint.end"

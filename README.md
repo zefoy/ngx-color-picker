@@ -133,9 +133,11 @@ import { ColorPickerModule } from 'ngx-color-picker';
                              //   ({input: string, value: number | string, color: string})
 
 (cpSliderChange)             // Slider name and its value, send when user changes color through slider
-(cpSliderDragEnd)            // Slider name and current color, send when slider dragging ends (mouseup,touchend)
+                             //   ({slider: string, value: number | string, color: string}
 (cpSliderDragStart)          // Slider name and current color, send when slider dragging starts (mousedown,touchstart)
-                             //   ({slider: string, value: number | string, color: string})
+                             //   ({slider: string, color: string})
+(cpSliderDragEnd)            // Slider name and current color, send when slider dragging ends (mouseup,touchend)
+                             //   ({slider: string, color: string})
 
 (cpCmykColorChange)          // Outputs the color as CMYK string if CMYK is enabled (value: string).
 

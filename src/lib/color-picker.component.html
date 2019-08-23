@@ -107,7 +107,7 @@
 
     <div class="preset-label">{{cpPresetLabel}}</div>
 
-    <div *ngIf="cpPresetColors?.length">
+    <div *ngIf="cpPresetColors?.length" class="{{cpPresetClass}}">
       <div *ngFor="let color of cpPresetColors" class="preset-color" [style.backgroundColor]="color" (click)="setColorFromString(color)">
         <span *ngIf="cpAddColorButton" class="{{cpRemoveColorButtonClass}}" (click)="onRemovePresetColor($event, color)"></span>
       </div>

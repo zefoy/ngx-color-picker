@@ -5,7 +5,7 @@ import { Directive, OnChanges, OnDestroy, Input, Output, EventEmitter,
 import { ColorPickerService } from './color-picker.service';
 import { ColorPickerComponent } from './color-picker.component';
 
-import { AlphaChannel, ColorMode, OutputFormat } from './helpers';
+import { AlphaChannel, ColorMode, OutputFormat, Color } from './helpers';
 
 @Directive({
   selector: '[colorPicker]',
@@ -29,7 +29,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @Input() cpIgnoredElements: any = [];
 
-  @Input() cpFallbackColor: string = '';
+  @Input() cpFallbackColor: string = '#fff';
 
   @Input() cpColorMode: ColorMode = 'color';
 
@@ -72,10 +72,10 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @Input() cpRemoveColorButtonClass: string = 'cp-remove-color-button-class';
 
-  @Input() cpTemplateColors: any = [
-    {color: 'rgb(255,0,28)'},
-    {color: 'rgb(39,147,250)'},
-    {color: 'rgb(235,193,0)'},
+  @Input() cpTemplateColors: Color[] = [
+    {color: '#ff7f83'},
+    {color: '#999fad'},
+    {color: '#fff385'},
   ];
 
   @Output() cpTemplateColorsChange = new EventEmitter<any>(true);
@@ -144,6 +144,12 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
       }
 
       this.ignoreChanges = false;
+    }
+
+    if (changes.cpTemplateColors) {
+      if (this.dialog) {
+        this.dialog.setTemplateColors(this.cpTemplateColors);
+      }
     }
 
     if (changes.cpPresetLabel || changes.cpPresetColors) {

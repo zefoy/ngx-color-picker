@@ -85,16 +85,15 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public baseGradient: Gradient = {
     deg: 90,
     points: [
-      {end: 0, color: '#020024'},
-      {end: 35, color: '#090979'},
-      {end: 100, color: '#00d4ff'},
+      {end: 80, color: 'rgba(153,159,173,0.5)'},
+      {end: 200, color: 'rgb(6,82,253)'},
     ],
   };
 
-  public templateColors = [
-      {color: 'rgb(255,0,28)'},
-      {color: 'rgb(0,150,20)'},
-      {color: 'rgb(0,40,235)'},
+  public templateColors: Color[] = [
+      {color: 'rgb(255,127,131)'},
+      {color: 'rgb(153,159,173)'},
+      {color: 'rgb(255,243,133)'},
   ];
 
   public lastUsedColors = {
@@ -107,9 +106,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       {color: 'radial-gradient(circle, rgba(255, 0, 0, 0.45) 10%, rgba(100, 0, 19, 0.95) 90%)'},
     ],
     solid: [
-      {color: '#123456'},
-      {color: 'rgb(255,0,28)'},
-      {color: 'rgba(255,0,28,0.5)'},
+      {color: 'rgb(6,82,253)'},
+      {color: 'rgb(153,159,173)'},
+      {color: 'rgb(255,243,133)'},
     ],
   };
 
@@ -174,7 +173,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public cpAddColorButtonText: string;
   public cpAddColorButtonClass: string;
   public cpRemoveColorButtonClass: string;
-  public cpTemplateColors: any;
+  public cpTemplateColors: Color[];
 
   public cpLinearGradientLine: string;
   public gradientLine: string;
@@ -714,18 +713,20 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
     this.refreshColors();
   }
 
-  public parseColorFromString(color: string) {
-    if (color.includes('linear-gradient')
-        || color.includes('radial-gradient')
-    ) {
-      this.parseColors(color);
-    } else {
-      this.currentGradientType = 2;
-      this.outputColor = color;
-      this.hueSliderColor = color;
-    }
+  public parseColorFromString(color: string): void {
+    if (color) {
+      if (color.includes('linear-gradient')
+          || color.includes('radial-gradient')
+      ) {
+        this.parseColors(color);
+      } else {
+        this.currentGradientType = 2;
+        this.outputColor = color;
+        this.hueSliderColor = color;
+      }
 
-    this.refreshColors();
+      this.refreshColors();
+    }
   }
 
   public setLastUsedColor(id: any): void {

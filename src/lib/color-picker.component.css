@@ -244,6 +244,7 @@
 }
 
 .color-picker .hex-text .box .input-icon-right > input {
+  height: 34px;
   border: 1px solid #C5D0EA;
   border-left: none;
   border-radius: 0 2px 2px 0;
@@ -509,7 +510,7 @@
 
 .color-picker .select-palette {
   width: 230px;
-  padding: 9px;
+  padding: 7px;
   border-radius: 2px;
   cursor: pointer;
 }

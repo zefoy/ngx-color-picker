@@ -151,7 +151,7 @@
       </div>
     </div>
 
-    <div (click)="saveCurrentColor(selectedColor)"
+    <div (click)="onAddTemplateColors()"
          class="btn-icon btn-save" *ngIf="currentPalette === 0">
     </div>
   </div>
@@ -195,9 +195,9 @@
   <div class="box option-box">
     <div *ngIf="currentPalette === 0 && cpEditMode !== modeState.EDITING" class="templates">
       <div (click)="editTemplateColor(id)"
-           *ngFor="let templateColor of templateColors; let id = index;"
+           *ngFor="let templateColor of getTemplateColors(); let id = index;"
            [ngClass]="{'template-opacity': cpEditMode === modeState.EDIT}"
-           [style.backgroundColor]="templateColor.color" class="template">
+           [ngStyle]="{'background': templateColor.color}" class="template">
         <div [ngClass]="{'edit': cpEditMode === modeState.EDIT}"></div>
       </div>
     </div>

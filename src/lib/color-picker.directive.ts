@@ -5,7 +5,7 @@ import { Directive, OnChanges, OnDestroy, Input, Output, EventEmitter,
 import { ColorPickerService } from './color-picker.service';
 import { ColorPickerComponent } from './color-picker.component';
 
-import { AlphaChannel, ColorMode, OutputFormat, Color } from './helpers';
+import { AlphaChannel, ColorMode, OutputFormat, TemplateColors } from './helpers';
 
 @Directive({
   selector: '[colorPicker]',
@@ -72,11 +72,21 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @Input() cpRemoveColorButtonClass: string = 'cp-remove-color-button-class';
 
-  @Input() cpTemplateColors: Color[] = [
-    {color: '#ff7f83'},
-    {color: '#999fad'},
-    {color: '#fff385'},
-  ];
+  @Input() cpTemplateColors: TemplateColors = {
+    linear: [
+      {color: 'linear-gradient(45deg, rgb(20, 177, 20) 9%, rgb(100, 100, 231) 79%)'},
+      {color: 'linear-gradient(90deg, rgb(78, 0, 168) 0%, rgb(231, 231, 231) 30%)'},
+    ],
+    radial: [
+      {color: 'radial-gradient(circle, rgba(200, 100, 0, 0.4) 40%, rgba(100, 100, 19, 0.2) 79%)'},
+      {color: 'radial-gradient(circle, rgba(200, 0, 100, 0.1) 10%, rgba(100, 0, 19, 0.95) 90%)'},
+    ],
+    solid: [
+      {color: 'rgba(6,82,253,0.5)'},
+      {color: 'rgb(153,159,173)'},
+      {color: 'rgb(255,243,133)'},
+    ],
+  };
 
   @Output() cpTemplateColorsChange = new EventEmitter<any>(true);
 

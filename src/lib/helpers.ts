@@ -3,6 +3,13 @@ import { Directive, Input, Output, EventEmitter, HostListener, ElementRef, Pipe,
 export interface Color {
   color: string;
 }
+
+export interface TemplateColors {
+  solid?: Color[];
+  linear?: Color[];
+  radial?: Color[];
+}
+
 export interface Point extends Color {
   end: number;
 }

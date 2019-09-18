@@ -72,13 +72,13 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @Input() cpRemoveColorButtonClass: string = 'cp-remove-color-button-class';
 
-  @Output() cpInputChange = new EventEmitter<any>(true);
+  @Output() cpInputChange = new EventEmitter<{input: string, value: number | string, color: string}>(true);
 
   @Output() cpToggleChange = new EventEmitter<boolean>(true);
 
-  @Output() cpSliderChange = new EventEmitter<any>(true);
-  @Output() cpSliderDragEnd = new EventEmitter<string>(true);
-  @Output() cpSliderDragStart = new EventEmitter<string>(true);
+  @Output() cpSliderChange = new EventEmitter<{slider: string, value: string | number, color: string}>(true);
+  @Output() cpSliderDragEnd = new EventEmitter<{slider: string, color: string}>(true);
+  @Output() cpSliderDragStart = new EventEmitter<{slider: string, color: string}>(true);
 
   @Output() colorPickerOpen = new EventEmitter<string>(true);
   @Output() colorPickerClose = new EventEmitter<string>(true);
@@ -259,11 +259,11 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     this.cpSliderChange.emit(event);
   }
 
-  public sliderDragEnd(event: any): void {
+  public sliderDragEnd(event: { slider: string, color: string}): void {
     this.cpSliderDragEnd.emit(event);
   }
 
-  public sliderDragStart(event: any): void {
+  public sliderDragStart(event: { slider: string, color: string}): void {
     this.cpSliderDragStart.emit(event);
   }
 

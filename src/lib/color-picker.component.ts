@@ -983,17 +983,17 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
           usePositionY = 'top';
         }
 
-        usePosition =  usePositionX + '-' + usePositionY;
+        usePosition = usePositionX + '-' + usePositionY;
       }
 
       this.cpUsePosition = usePosition;
 
-      if (this.cpPosition === 'top') {
+      if (usePosition === 'top') {
         this.arrowTop = dialogHeight - 1;
 
         this.top -= dialogHeight + this.dialogArrowSize;
         this.left += this.cpPositionOffset / 100 * boxDirective.width - this.dialogArrowOffset;
-      } else if (this.cpPosition === 'bottom') {
+      } else if (usePosition === 'bottom') {
         this.top += boxDirective.height + this.dialogArrowSize;
         this.left += this.cpPositionOffset / 100 * boxDirective.width - this.dialogArrowOffset;
       } else if (usePosition === 'top-left' || usePosition === 'left-top') {
@@ -1002,10 +1002,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       } else if (usePosition === 'top-right' || usePosition === 'right-top') {
         this.top -= dialogHeight - boxDirective.height + boxDirective.height * this.cpPositionOffset / 100;
         this.left += boxDirective.width + this.dialogArrowSize - 2 - this.dialogArrowOffset;
-      } else if (this.cpPosition === 'left' || usePosition === 'bottom-left' ||  usePosition === 'left-bottom') {
+      } else if (usePosition === 'left' || usePosition === 'bottom-left' ||  usePosition === 'left-bottom') {
         this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
         this.left -= this.cpWidth + this.dialogArrowSize - 2;
-      } else { // this.cpPosition === 'right' || usePosition === 'bottom-right' || usePosition === 'right-bottom'
+      } else { // usePosition === 'right' || usePosition === 'bottom-right' || usePosition === 'right-bottom'
         this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
         this.left += boxDirective.width + this.dialogArrowSize - 2;
       }

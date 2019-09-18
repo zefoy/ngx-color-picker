@@ -61,6 +61,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @Input() cpPresetLabel: string = 'Preset colors';
   @Input() cpPresetColors: string[];
+  @Input() cpPresetColorsClass: string = 'cp-preset-colors-class';
   @Input() cpMaxPresetColorsLength: number = 6;
 
   @Input() cpPresetEmptyMessage: string = 'No colors added';
@@ -175,11 +176,11 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
         this.cpIgnoredElements, this.cpSaveClickOutside, this.cpCloseClickOutside,
         this.cpUseRootViewContainer, this.cpPosition, this.cpPositionOffset,
         this.cpPositionRelativeToArrow, this.cpPresetLabel, this.cpPresetColors,
-        this.cpMaxPresetColorsLength, this.cpPresetEmptyMessage, this.cpPresetEmptyMessageClass,
-        this.cpOKButton, this.cpOKButtonClass, this.cpOKButtonText,
-        this.cpCancelButton, this.cpCancelButtonClass, this.cpCancelButtonText,
-        this.cpAddColorButton, this.cpAddColorButtonClass, this.cpAddColorButtonText,
-        this.cpRemoveColorButtonClass);
+        this.cpPresetColorsClass, this.cpMaxPresetColorsLength, this.cpPresetEmptyMessage,
+        this.cpPresetEmptyMessageClass, this.cpOKButton, this.cpOKButtonClass,
+        this.cpOKButtonText, this.cpCancelButton, this.cpCancelButtonClass,
+        this.cpCancelButtonText, this.cpAddColorButton, this.cpAddColorButtonClass,
+        this.cpAddColorButtonText, this.cpRemoveColorButtonClass);
 
       this.dialog = this.cmpRef.instance;
 
@@ -259,11 +260,11 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     this.cpSliderChange.emit(event);
   }
 
-  public sliderDragEnd(event: { slider: string, color: string}): void {
+  public sliderDragEnd(event: { slider: string, color: string }): void {
     this.cpSliderDragEnd.emit(event);
   }
 
-  public sliderDragStart(event: { slider: string, color: string}): void {
+  public sliderDragStart(event: { slider: string, color: string }): void {
     this.cpSliderDragStart.emit(event);
   }
 

@@ -112,6 +112,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
 
 [cpRemoveColorButtonClass]   // Additional class for customizing the Remove Color button ('').
 
+[cpPresetColorsClass]        // Additional class for customizing the Preset Colors container ('').
+
 [cpMaxPresetColorsLength]    // Use this option to set the max colors allowed in presets (null).
 
 [cpPresetEmptyMessage]       // Message for empty colors if any provided used ('No colors added').
@@ -130,10 +132,10 @@ import { ColorPickerModule } from 'ngx-color-picker';
 (cpToggleChange)             // Status of the dialog, send when dialog is opened / closed (open: boolean).
 
 (cpInputChange)              // Input name and its value, send when user changes color through inputs
-                             //   ({input: string, value: number | string, color: string})
+                             // ({input: string, value: number | string, color: string})
 
 (cpSliderChange)             // Slider name and its value, send when user changes color through slider
-                             //   ({slider: string, value: number | string, color: string}
+                             //   ({slider: string, value: number | string, color: string})
 (cpSliderDragStart)          // Slider name and current color, send when slider dragging starts (mousedown,touchstart)
                              //   ({slider: string, color: string})
 (cpSliderDragEnd)            // Slider name and current color, send when slider dragging ends (mouseup,touchend)

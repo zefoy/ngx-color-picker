@@ -105,8 +105,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public cpPresetLabel: string;
   public cpPresetColors: string[];
+  public cpPresetColorsClass: string;
   public cpMaxPresetColorsLength: number;
-  public cpPresetClass: string;
 
   public cpPresetEmptyMessage: string;
   public cpPresetEmptyMessageClass: string;
@@ -204,11 +204,12 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     cpOutputFormat: OutputFormat, cpDisableInput: boolean, cpIgnoredElements: any,
     cpSaveClickOutside: boolean, cpCloseClickOutside: boolean, cpUseRootViewContainer: boolean,
     cpPosition: string, cpPositionOffset: string, cpPositionRelativeToArrow: boolean,
-    cpPresetLabel: string, cpPresetColors: string[], cpMaxPresetColorsLength: number, cpPresetClass: string,
-    cpPresetEmptyMessage: string, cpPresetEmptyMessageClass: string, cpOKButton: boolean,
-    cpOKButtonClass: string, cpOKButtonText: string, cpCancelButton: boolean,
-    cpCancelButtonClass: string, cpCancelButtonText: string, cpAddColorButton: boolean,
-    cpAddColorButtonClass: string, cpAddColorButtonText: string, cpRemoveColorButtonClass: string): void
+    cpPresetLabel: string, cpPresetColors: string[], cpPresetColorsClass: string,
+    cpMaxPresetColorsLength: number, cpPresetEmptyMessage: string,
+    cpPresetEmptyMessageClass: string, cpOKButton: boolean, cpOKButtonClass: string,
+    cpOKButtonText: string, cpCancelButton: boolean, cpCancelButtonClass: string,
+    cpCancelButtonText: string, cpAddColorButton: boolean, cpAddColorButtonClass: string,
+    cpAddColorButtonText: string, cpRemoveColorButtonClass: string): void
   {
     this.setInitialColor(color);
 
@@ -251,8 +252,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.fallbackColor = cpFallbackColor || '#fff';
 
     this.setPresetConfig(cpPresetLabel, cpPresetColors);
-    this.cpPresetClass = cpPresetClass;
 
+    this.cpPresetColorsClass = cpPresetColorsClass;
     this.cpMaxPresetColorsLength = cpMaxPresetColorsLength;
     this.cpPresetEmptyMessage = cpPresetEmptyMessage;
     this.cpPresetEmptyMessageClass = cpPresetEmptyMessageClass;

@@ -106,6 +106,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public cpPresetLabel: string;
   public cpPresetColors: string[];
   public cpMaxPresetColorsLength: number;
+  public cpPresetClass: string;
 
   public cpPresetEmptyMessage: string;
   public cpPresetEmptyMessageClass: string;
@@ -203,7 +204,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     cpOutputFormat: OutputFormat, cpDisableInput: boolean, cpIgnoredElements: any,
     cpSaveClickOutside: boolean, cpCloseClickOutside: boolean, cpUseRootViewContainer: boolean,
     cpPosition: string, cpPositionOffset: string, cpPositionRelativeToArrow: boolean,
-    cpPresetLabel: string, cpPresetColors: string[], cpMaxPresetColorsLength: number,
+    cpPresetLabel: string, cpPresetColors: string[], cpMaxPresetColorsLength: number, cpPresetClass: string,
     cpPresetEmptyMessage: string, cpPresetEmptyMessageClass: string, cpOKButton: boolean,
     cpOKButtonClass: string, cpOKButtonText: string, cpCancelButton: boolean,
     cpCancelButtonClass: string, cpCancelButtonText: string, cpAddColorButton: boolean,
@@ -250,6 +251,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.fallbackColor = cpFallbackColor || '#fff';
 
     this.setPresetConfig(cpPresetLabel, cpPresetColors);
+    this.cpPresetClass = cpPresetClass;
 
     this.cpMaxPresetColorsLength = cpMaxPresetColorsLength;
     this.cpPresetEmptyMessage = cpPresetEmptyMessage;

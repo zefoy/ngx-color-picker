@@ -1,6 +1,6 @@
 # Angular Color Picker
 
-<a href="https://badge.fury.io/js/ngx-color-picker"><img src="https://badge.fury.io/js/ngx-color-picker.svg" align="right" alt="npm version" height="18"></a>
+[![npm version](https://badge.fury.io/js/%40livereach%2Fngx-color-picker.svg)](https://badge.fury.io/js/%40livereach%2Fngx-color-picker)
 
 This is a simple color picker based on the cool angular2-color-picker by Alberplz.
 

@@ -194,10 +194,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('hueSlider', { static: true }) hueSlider: ElementRef;
   @ViewChild('alphaSlider', { static: true }) alphaSlider: ElementRef;
-  @ViewChild('gradient', { static: true }) gradient: ElementRef;
+  @ViewChild('gradient', { static: false }) gradient: ElementRef;
 
-  @ViewChild('points', {static: true}) points: ElementRef;
-  @ViewChild('deletePointMenu', {static: true}) deletePointMenu: ElementRef;
+  @ViewChild('points', {static: false}) points: ElementRef;
+  @ViewChild('deletePointMenu', {static: false}) deletePointMenu: ElementRef;
 
 private dialogInputFields: ColorFormats[] = [
     ColorFormats.HEX,

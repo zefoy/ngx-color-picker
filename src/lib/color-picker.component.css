@@ -102,7 +102,7 @@
   box-shadow: 0 0 2px rgba(36, 52, 71, 0.5);
   border-radius: 50%;
 
-  cursor: default;
+  cursor: pointer;
 }
 
 .color-picker .box {
@@ -122,6 +122,7 @@
 }
 
 .color-picker .btn-dropper {
+  cursor: auto;
   width: 16px;
   height: 16px;
   background-size: cover;

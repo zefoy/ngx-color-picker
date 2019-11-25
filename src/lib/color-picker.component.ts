@@ -1603,7 +1603,7 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
         this.top += boxDirective.height + this.dialogArrowSize;
         this.left += this.cpPositionOffset / 100 * boxDirective.width - this.dialogArrowOffset;
       } else {
-        this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
+        this.top += boxDirective.height * this.cpPositionOffset - this.dialogArrowOffset;
         this.left += boxDirective.width + this.dialogArrowSize - 2;
       }
     }

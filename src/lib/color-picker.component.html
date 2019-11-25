@@ -47,8 +47,6 @@
 
   </div>
 
-  <div *ngIf="cpDialogDisplay=='popup'" [style.top.px]="arrowTop" class="arrow arrow-{{cpPosition}}"></div>
-
   <div class="box">
     <div (dragEnd)="onDragEnd('saturation-lightness')" (dragStart)="onDragStart('saturation-lightness')"
          (newValue)="onColorChange($event)" *ngIf="(cpColorMode || 1) === 1" [rgX]="1"

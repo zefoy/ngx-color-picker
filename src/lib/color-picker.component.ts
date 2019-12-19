@@ -1592,19 +1592,26 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
       }
 
       if (this.cpPosition === 'left') {
-        this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
-        this.left -= this.cpWidth + this.dialogArrowSize - 2;
+        this.top += boxDirective.height * this.cpPositionOffset - this.dialogArrowOffset;
+        if (this.top < 0) {
+          this.top = 50;
+        }
+        const modalWidth = 294;
+        this.left = -modalWidth;
       } else if (this.cpPosition === 'top') {
         this.arrowTop = dialogHeight - 1;
 
         this.top -= dialogHeight + this.dialogArrowSize;
-        this.left += this.cpPositionOffset / 100 * boxDirective.width - this.dialogArrowOffset;
+        this.left += this.cpPositionOffset * boxDirective.width - this.dialogArrowOffset;
       } else if (this.cpPosition === 'bottom') {
         this.top += boxDirective.height + this.dialogArrowSize;
-        this.left += this.cpPositionOffset / 100 * boxDirective.width - this.dialogArrowOffset;
+        this.left += this.cpPositionOffset * boxDirective.width - this.dialogArrowOffset;
       } else {
         this.top += boxDirective.height * this.cpPositionOffset - this.dialogArrowOffset;
         this.left += boxDirective.width + this.dialogArrowSize - 2;
+      }
+      if (this.top > 200) {
+        this.top = 180;
       }
     }
   }

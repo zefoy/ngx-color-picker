@@ -661,3 +661,7 @@
   color: #0652FD;
   font-size: 13px;
 }
+
+hr {
+  margin: 0 !important;
+}

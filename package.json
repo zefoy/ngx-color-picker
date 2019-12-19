@@ -5,7 +5,7 @@
     "url": "https://github.com/zefoy/ngx-color-picker/issues"
   },
   "license": "MIT",
-  "version": "9.0.18",
+  "version": "9.0.19",
   "main": "./bundles/ngx-color-picker.umd.js",
   "module": "./dist/ngx-color-picker.es5.js",
   "typings": "./dist/ngx-color-picker.d.ts",

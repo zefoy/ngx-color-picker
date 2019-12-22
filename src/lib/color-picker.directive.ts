@@ -1,6 +1,6 @@
 import { Directive, OnChanges, OnDestroy, Input, Output, EventEmitter,
   HostListener, ApplicationRef, ComponentRef, ElementRef, ViewContainerRef,
-  Injector, ReflectiveInjector, ComponentFactoryResolver } from '@angular/core';
+  Injector, ReflectiveInjector, ComponentFactoryResolver, EmbeddedViewRef } from '@angular/core';
 
 import { ColorPickerService } from './color-picker.service';
 import { ColorPickerComponent } from './color-picker.component';
@@ -18,6 +18,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   private ignoreChanges: boolean = false;
 
   private cmpRef: ComponentRef<ColorPickerComponent>;
+  private viewAttachedToAppRef: boolean = false;
 
   @Input() colorPicker: string;
 
@@ -110,6 +111,10 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.cmpRef !== undefined) {
+      if (this.viewAttachedToAppRef) {
+        this.appRef.detachView(this.cmpRef.hostView);
+      }
+
       this.cmpRef.destroy();
     }
   }
@@ -151,24 +156,38 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
       let vcRef = this.vcRef;
 
       this.dialogCreated = true;
+      this.viewAttachedToAppRef = false;
 
       if (this.cpUseRootViewContainer && this.cpDialogDisplay !== 'inline') {
         const classOfRootComponent = this.appRef.componentTypes[0];
-        const appInstance = this.injector.get(classOfRootComponent);
+        const appInstance = this.injector.get(classOfRootComponent, Injector.NULL);
 
-        vcRef = appInstance.vcRef || appInstance.viewContainerRef || this.vcRef;
+        if (appInstance !== Injector.NULL) {
+          vcRef = appInstance.vcRef || appInstance.viewContainerRef || this.vcRef;
 
-        if (vcRef === this.vcRef) {
-          console.warn('You are using cpUseRootViewContainer, ' +
-            'but the root component is not exposing viewContainerRef!' +
-            'Please expose it by adding \'public vcRef: ViewContainerRef\' to the constructor.');
+          if (vcRef === this.vcRef) {
+            console.warn('You are using cpUseRootViewContainer, ' +
+              'but the root component is not exposing viewContainerRef!' +
+              'Please expose it by adding \'public vcRef: ViewContainerRef\' to the constructor.');
+          }
+        }
+        else {
+          this.viewAttachedToAppRef = true;
         }
       }
 
       const compFactory = this.cfr.resolveComponentFactory(ColorPickerComponent);
-      const injector = ReflectiveInjector.fromResolvedProviders([], vcRef.parentInjector);
 
-      this.cmpRef = vcRef.createComponent(compFactory, 0, injector, []);
+      if (this.viewAttachedToAppRef) {
+        this.cmpRef = compFactory.create(this.injector);
+        this.appRef.attachView(this.cmpRef.hostView);        
+        document.body.appendChild((this.cmpRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement);
+      }
+      else {
+        const injector = ReflectiveInjector.fromResolvedProviders([], vcRef.parentInjector);
+
+        this.cmpRef = vcRef.createComponent(compFactory, 0, injector, []);
+      }
 
       this.cmpRef.instance.setupDialog(this, this.elRef, this.colorPicker,
         this.cpWidth, this.cpHeight, this.cpDialogDisplay, this.cpFallbackColor, this.cpColorMode,

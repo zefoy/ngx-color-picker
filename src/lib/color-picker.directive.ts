@@ -170,8 +170,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
               'but the root component is not exposing viewContainerRef!' +
               'Please expose it by adding \'public vcRef: ViewContainerRef\' to the constructor.');
           }
-        }
-        else {
+        } else {
           this.viewAttachedToAppRef = true;
         }
       }
@@ -180,10 +179,9 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
       if (this.viewAttachedToAppRef) {
         this.cmpRef = compFactory.create(this.injector);
-        this.appRef.attachView(this.cmpRef.hostView);        
+        this.appRef.attachView(this.cmpRef.hostView);
         document.body.appendChild((this.cmpRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement);
-      }
-      else {
+      } else {
         const injector = ReflectiveInjector.fromResolvedProviders([], vcRef.parentInjector);
 
         this.cmpRef = vcRef.createComponent(compFactory, 0, injector, []);

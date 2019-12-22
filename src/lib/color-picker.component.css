@@ -1,6 +1,6 @@
 .color-picker {
   position: absolute;
-  z-index: 100000;
+  z-index: 1000;
 
   width: 230px;
   height: auto;

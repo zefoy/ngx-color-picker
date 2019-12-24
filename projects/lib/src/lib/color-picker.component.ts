@@ -11,8 +11,8 @@ import { ColorPickerService } from './color-picker.service';
 
 @Component({
   selector: 'color-picker',
-  templateUrl: '../../dist/lib/color-picker.component.html',
-  styleUrls: [ '../../dist/lib/color-picker.component.css' ],
+  templateUrl: './color-picker.component.html',
+  styleUrls: [ './color-picker.component.css' ],
   encapsulation: ViewEncapsulation.None
 })
 export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {

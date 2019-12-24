@@ -56,9 +56,9 @@
     </style>
 
     <script>window.module = 'aot';</script>
-  </head>
+  <link rel="stylesheet" href="styles.css"></head>
 
   <body>
     <my-app><div class="loading"></div></my-app>
-  <script src="runtime.js"></script><script src="polyfills-es5.js" nomodule></script><script src="polyfills.js"></script><script src="vendor.js"></script><script src="main.js"></script></body>
+  <script src="runtime-es2015.js" type="module"></script><script src="runtime-es5.js" nomodule defer></script><script src="polyfills-es5.js" nomodule defer></script><script src="polyfills-es2015.js" type="module"></script><script src="main-es2015.js" type="module"></script><script src="main-es5.js" nomodule defer></script></body>
 </html>

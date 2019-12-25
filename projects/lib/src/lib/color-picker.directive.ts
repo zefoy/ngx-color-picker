@@ -110,12 +110,15 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     private _service: ColorPickerService) {}
 
   ngOnDestroy(): void {
-    if (this.cmpRef !== undefined) {
+    if (this.cmpRef != null) {
       if (this.viewAttachedToAppRef) {
         this.appRef.detachView(this.cmpRef.hostView);
       }
 
       this.cmpRef.destroy();
+
+      this.cmpRef = null;
+      this.dialog = null;
     }
   }
 

@@ -149,6 +149,10 @@
   text-align: right;
 }
 
+.color-picker .button-area button {
+  margin-left: 8px;
+}
+
 .color-picker .preset-area {
   padding: 4px 15px;
 }

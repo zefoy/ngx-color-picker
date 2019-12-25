@@ -52,6 +52,10 @@ export class AppComponent {
     console.log(event, data);
   }
 
+  public onChangeColor(color: string): void {
+    console.log('Color changed:', color);
+  }
+
   public onChangeColorCmyk(color: string): Cmyk {
     const hsva = this.cpService.stringToHsva(color);
 

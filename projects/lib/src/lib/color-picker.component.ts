@@ -367,13 +367,17 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.cpSaveClickOutside) {
         this.directiveInstance.colorSelected(this.outputColor);
       } else {
+        this.hsva = null;
+
         this.setColorFromString(this.initialColor, false);
 
         if (this.cpCmykEnabled) {
           this.directiveInstance.cmykChanged(this.cmykColor);
         }
 
-        this.directiveInstance.colorChanged(this.outputColor);
+        this.directiveInstance.colorChanged(this.initialColor);
+
+        this.directiveInstance.colorCanceled();
       }
 
       if (this.cpCloseClickOutside) {
@@ -395,6 +399,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onCancelColor(event: Event): void {
+    this.hsva = null;
+
     event.stopPropagation();
 
     this.setColorFromString(this.initialColor, true);
@@ -404,7 +410,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.directiveInstance.cmykChanged(this.cmykColor);
       }
 
-      this.directiveInstance.colorChanged(this.outputColor, true);
+      this.directiveInstance.colorChanged(this.initialColor, true);
 
       this.closeColorPicker();
     }

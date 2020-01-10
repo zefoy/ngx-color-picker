@@ -1593,7 +1593,7 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
 
       if (this.cpPosition === 'left') {
         this.top += boxDirective.height * this.cpPositionOffset - this.dialogArrowOffset;
-        if (this.top < 0) {
+        if (this.top < 50) {
           this.top = 50;
         }
         const modalWidth = 294;
@@ -1609,9 +1609,9 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
       } else {
         this.top += boxDirective.height * this.cpPositionOffset - this.dialogArrowOffset;
         this.left += boxDirective.width + this.dialogArrowSize - 2;
-      }
-      if (this.top > 200) {
-        this.top = 180;
+        if (this.top > 180) {
+          this.top = 180;
+        }
       }
     }
   }

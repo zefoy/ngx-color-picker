@@ -1596,8 +1596,14 @@ public setupDialog(instance: any, elementRef: ElementRef, color: any, cpWidth: s
         if (this.top < 50) {
           this.top = 50;
         }
-        const modalWidth = 294;
-        this.left = -modalWidth;
+        if (boxDirective.width <= 20) {
+          this.left -= this.cpWidth + boxDirective.width * 4 + this.dialogArrowOffset;
+        } else if (boxDirective.width <= 35) {
+          this.left -= this.cpWidth + boxDirective.width * 2;
+        } else {
+          this.left -= this.cpWidth + boxDirective.width / 2 + this.dialogArrowOffset;
+        }
+
       } else if (this.cpPosition === 'top') {
         this.arrowTop = dialogHeight - 1;
 

@@ -403,6 +403,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     event.stopPropagation();
 
+    this.directiveInstance.colorCanceled();
+
     this.setColorFromString(this.initialColor, true);
 
     if (this.cpDialogDisplay === 'popup') {
@@ -414,8 +416,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.closeColorPicker();
     }
-
-    this.directiveInstance.colorCanceled();
   }
 
   public onFormatToggle(change: number): void {

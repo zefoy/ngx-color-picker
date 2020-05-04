@@ -151,3 +151,10 @@ import { ColorPickerModule } from '@livereach/ngx-color-picker';
 openDialog()                 // Opens the color picker dialog if not already open.
 closeDialog()                // Closes the color picker dialog if not already closed.
 ```
+
+### Publishing
+```
+npm version [patch|minor|major]
+git push --follow-tags
+npm publish --access=public
+```

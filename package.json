@@ -5,7 +5,7 @@
     "url": "https://github.com/zefoy/ngx-color-picker/issues"
   },
   "license": "MIT",
-  "version": "9.0.22",
+  "version": "9.0.23",
   "main": "./bundles/ngx-color-picker.umd.js",
   "module": "./dist/ngx-color-picker.es5.js",
   "typings": "./dist/ngx-color-picker.d.ts",
@@ -37,38 +37,35 @@
     "url": "git+https://github.com/livereach/ngx-color-picker.git"
   },
   "dependencies": {
-    "gradient-parser": "^0.1.5"
+    "gradient-parser": "0.1.5"
   },
   "devDependencies": {
-    "@angular/cli": "^8.1.0",
-    "@angular/common": "^8.1.0",
-    "@angular/compiler": "^8.1.0",
-    "@angular/compiler-cli": "^8.1.0",
-    "@angular/core": "^8.1.0",
-    "@angular/platform-browser": "^8.1.0",
-    "@angular-devkit/build-angular": "^0.801.0",
+    "@angular/cli": "^9.1.4",
+    "@angular/common": "^9.1.4",
+    "@angular/compiler": "^9.1.4",
+    "@angular/compiler-cli": "^9.1.4",
+    "@angular/core": "^9.1.4",
+    "@angular/platform-browser": "^9.1.4",
+    "@angular-devkit/build-angular": "^0.901.4",
     "@types/node": "^12.6.0",
     "codelyzer": "^5.1.0",
-    "core-js": "^3.1.0",
+    "core-js": "^3.6.5",
     "cpx": "^1.5.0",
     "rollup": "^1.16.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sourcemaps": "^0.4.0",
-    "rxjs": "^6.5.0",
+    "rxjs": "^6.5.5",
     "stylelint": "^10.1.0",
     "stylelint-config-standard": "^18.3.0",
     "stylelint-order": "^3.0.0",
     "terser": "^4.1.0",
     "tsickle": "~0.34.0",
     "tslint": "^5.18.0",
-    "typescript": "~3.4.0",
+    "typescript": "~3.8.3",
     "watch": "^1.0.0",
-    "zone.js": "^0.9.0"
+    "zone.js": "^0.10.3"
   },
-  "peerDependencies": {
-    "@angular/common": ">=5.0.0",
-    "@angular/core": ">=5.0.0"
-  },
+  "peerDependencies": {},
   "homepage": "https://github.com/livereach/ngx-color-picker#readme",
   "directories": {
     "example": "example"

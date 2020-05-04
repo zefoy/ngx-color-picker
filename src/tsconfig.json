@@ -15,6 +15,7 @@
     "fullTemplateTypeCheck": true,
     "skipTemplateCodegen": true,
     "strictInjectionParameters": true,
-    "strictMetadataEmit": true
+    "strictMetadataEmit": true,
+    "enableIvy": false
   }
 }

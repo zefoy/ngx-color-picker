@@ -138,11 +138,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.slider = new SliderPosition(0, 0, 0, 0);
 
-    const hueWidth = this.hueSlider.nativeElement.offsetWidth || 140;
-    const alphaWidth = this.alphaSlider.nativeElement.offsetWidth || 140;
-
-    this.sliderDimMax = new SliderDimension(hueWidth, this.cpWidth, 130, alphaWidth);
-
     if (this.cpCmykEnabled) {
       this.format = ColorFormats.CMYK;
     } else if (this.cpOutputFormat === 'rgba') {
@@ -164,6 +159,12 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+
+    const hueWidth = this.hueSlider.nativeElement.offsetWidth || 140;
+    const alphaWidth = this.alphaSlider.nativeElement.offsetWidth || 140;
+
+    this.sliderDimMax = new SliderDimension(hueWidth, this.cpWidth, 130, alphaWidth);
+
     if (this.cpWidth !== 230 || this.cpDialogDisplay === 'inline') {
       const hueWidth = this.hueSlider.nativeElement.offsetWidth || 140;
       const alphaWidth = this.alphaSlider.nativeElement.offsetWidth || 140;

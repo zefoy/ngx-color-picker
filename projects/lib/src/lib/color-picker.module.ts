@@ -10,7 +10,6 @@ import { ColorPickerDirective } from './color-picker.directive';
 @NgModule({
   imports: [ CommonModule ],
   exports: [ ColorPickerDirective ],
-  providers: [ ColorPickerService ],
   declarations: [ ColorPickerComponent, ColorPickerDirective, TextDirective, SliderDirective ],
   entryComponents: [ ColorPickerComponent ]
 })

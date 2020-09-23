@@ -980,16 +980,27 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.cpPosition === 'auto') {
         let usePositionX = 'right';
         let usePositionY = 'bottom';
+   
+        const bounds = this.dialogElement.nativeElement.getBoundingClientRect();
 
-        const winWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        const winHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-
-        if (this.left + this.cpWidth > winWidth) {
-          usePositionX = 'left';
+        // Top is out of viewport
+        if (bounds.top < 0) {
+          usePositionY = 'bottom';
         }
-
-        if (this.top + dialogHeight > winHeight) {
+        
+        // Left side is out of viewoprt
+        if (bounds.left < 0) {
+          usePositionX = 'right';
+        }
+        
+        // Bottom is out of viewport
+        if (bounds.bottom > (window.innerHeight || document.documentElement.clientHeight)) {
           usePositionY = 'top';
+        }
+        
+        // Right side is out of viewport
+        if (bounds.right > (window.innerWidth || document.documentElement.clientWidth)) {
+          usePositionX = 'left';
         }
 
         usePosition = usePositionX + '-' + usePositionY;

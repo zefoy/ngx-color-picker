@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit,
   ViewChild, HostListener, ViewEncapsulation,
   ElementRef, ChangeDetectorRef } from '@angular/core';
 
-import { detectIE } from './helpers';
+import { detectIE, calculateAutoPositioning } from './helpers';
 
 import { ColorFormats, Cmyk, Hsla, Hsva, Rgba } from './formats';
 import { AlphaChannel, OutputFormat, SliderDimension, SliderPosition } from './helpers';
@@ -978,35 +978,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       let usePosition = this.cpPosition;
 
       if (this.cpPosition === 'auto') {
-        let usePositionX = 'right';
-        let usePositionY = 'bottom';
-   
-        const bounds = this.dialogElement.nativeElement.getBoundingClientRect();
-
-        // Top is out of viewport
-        if (bounds.top < 0) {
-          usePositionY = 'bottom';
-        }
-        
-        // Left side is out of viewoprt
-        if (bounds.left < 0) {
-          usePositionX = 'right';
-        }
-        
-        // Bottom is out of viewport
-        if (bounds.bottom > (window.innerHeight || document.documentElement.clientHeight)) {
-          usePositionY = 'top';
-        }
-        
-        // Right side is out of viewport
-        if (bounds.right > (window.innerWidth || document.documentElement.clientWidth)) {
-          usePositionX = 'left';
-        }
-
-        usePosition = usePositionX + '-' + usePositionY;
+        const dialogBounds = this.dialogElement.nativeElement.getBoundingClientRect();
+        usePosition = calculateAutoPositioning(dialogBounds);
       }
-
-      this.cpUsePosition = usePosition;
 
       if (usePosition === 'top') {
         this.arrowTop = dialogHeight - 1;

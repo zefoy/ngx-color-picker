@@ -288,6 +288,24 @@
 
   <div class="row">
     <div class="col-md-5">
+      <input cpPosition="auto" [value]="color18" [style.background]="color18" [(colorPicker)]="color18" />
+    </div>
+
+    <div class="col-md-7">
+      <p>Auto positioning:</p>
+      <pre>
+&lt;input [value]="color"
+       [style.background]="color"
+       cpPosition="auto"
+       [(colorPicker)]="color"/&gt;
+      </pre>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-md-5">
       <input [value]="color14" [style.background]="color14" [cpAlphaChannel]="'always'" [cpOutputFormat]="'rgba'" [(colorPicker)]="color14"/>
 
       <br>

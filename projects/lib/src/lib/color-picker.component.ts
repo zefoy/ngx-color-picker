@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, AfterViewInit,
   ViewChild, HostListener, ViewEncapsulation,
   ElementRef, ChangeDetectorRef } from '@angular/core';
 
-import { detectIE } from './helpers';
+import { detectIE, calculateAutoPositioning } from './helpers';
 
 import { ColorFormats, Cmyk, Hsla, Hsva, Rgba } from './formats';
 import { AlphaChannel, OutputFormat, SliderDimension, SliderPosition } from './helpers';
@@ -978,24 +978,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       let usePosition = this.cpPosition;
 
       if (this.cpPosition === 'auto') {
-        let usePositionX = 'right';
-        let usePositionY = 'bottom';
-
-        const winWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        const winHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-
-        if (this.left + this.cpWidth > winWidth) {
-          usePositionX = 'left';
-        }
-
-        if (this.top + dialogHeight > winHeight) {
-          usePositionY = 'top';
-        }
-
-        usePosition = usePositionX + '-' + usePositionY;
+        const dialogBounds = this.dialogElement.nativeElement.getBoundingClientRect();
+        usePosition = calculateAutoPositioning(dialogBounds);
       }
-
-      this.cpUsePosition = usePosition;
 
       if (usePosition === 'top') {
         this.arrowTop = dialogHeight - 1;

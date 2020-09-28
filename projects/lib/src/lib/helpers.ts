@@ -5,7 +5,68 @@ export type ColorMode = 'color' | 'c' | '1' |
 
 export type AlphaChannel = 'enabled' | 'disabled' | 'always' | 'forced';
 
+export type BoundingRectangle = {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+  height: number;
+  width: number;
+}
+
 export type OutputFormat = 'auto' | 'hex' | 'rgba' | 'hsla';
+
+export function calculateAutoPositioning(elBounds: BoundingRectangle): string {
+  // Defaults
+  let usePositionX = 'right';
+  let usePositionY = 'bottom';
+
+  // Calculate collisions
+  const { height, width, top, bottom, left, right } = elBounds;
+  const collisionTop = top - height < 0;
+  const collisionBottom = bottom + height > (window.innerHeight || document.documentElement.clientHeight);
+  const collisionLeft = left - width < 0;
+  const collisionRight = right + width > (window.innerWidth || document.documentElement.clientWidth);
+  const collisionAll = collisionTop && collisionBottom && collisionLeft && collisionRight;
+
+  // Generate X & Y position values
+  if (collisionBottom) {
+    usePositionY = 'top';
+  }
+
+  if (collisionTop) {
+    usePositionY = 'bottom';
+  }
+
+  if (collisionLeft) {
+    usePositionX = 'right';
+  }
+  
+  if (collisionRight) {
+    usePositionX = 'left';
+  }
+
+
+  // Choose the largest gap available
+  if (collisionAll) {
+    const postions = ['left', 'right', 'top', 'bottom'];
+    return postions.reduce((prev, next) => elBounds[prev] > elBounds[next] ? prev : next);
+  }
+
+  if ((collisionLeft && collisionRight)) {
+    if (collisionTop) return 'bottom';
+    if (collisionBottom) return 'top';
+    return top > bottom ? 'top' : 'bottom';
+  }
+
+  if ((collisionTop && collisionBottom)) {
+    if (collisionLeft) return 'right';
+    if (collisionRight) return 'left';
+    return left > right ? 'left' : 'right';
+  }
+
+  return `${usePositionY}-${usePositionX}`;
+}
 
 export function detectIE(): boolean | number {
   let ua = '';

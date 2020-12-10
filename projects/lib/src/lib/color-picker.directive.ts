@@ -200,7 +200,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
         this.cpPresetEmptyMessageClass, this.cpOKButton, this.cpOKButtonClass,
         this.cpOKButtonText, this.cpCancelButton, this.cpCancelButtonClass,
         this.cpCancelButtonText, this.cpAddColorButton, this.cpAddColorButtonClass,
-        this.cpAddColorButtonText, this.cpRemoveColorButtonClass);
+        this.cpAddColorButtonText, this.cpRemoveColorButtonClass, this.elRef);
 
       this.dialog = this.cmpRef.instance;
 

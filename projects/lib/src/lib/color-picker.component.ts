@@ -115,6 +115,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public cpAddColorButtonText: string;
   public cpAddColorButtonClass: string;
   public cpRemoveColorButtonClass: string;
+  public cpTriggerElement: ElementRef;
 
   @ViewChild('dialogPopup', { static: true }) dialogElement: ElementRef;
 
@@ -209,7 +210,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     cpPresetEmptyMessageClass: string, cpOKButton: boolean, cpOKButtonClass: string,
     cpOKButtonText: string, cpCancelButton: boolean, cpCancelButtonClass: string,
     cpCancelButtonText: string, cpAddColorButton: boolean, cpAddColorButtonClass: string,
-    cpAddColorButtonText: string, cpRemoveColorButtonClass: string): void
+    cpAddColorButtonText: string, cpRemoveColorButtonClass: string, cpTriggerElement: ElementRef): void
   {
     this.setInitialColor(color);
 
@@ -262,6 +263,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cpAddColorButtonText = cpAddColorButtonText;
     this.cpAddColorButtonClass = cpAddColorButtonClass;
     this.cpRemoveColorButtonClass = cpRemoveColorButtonClass;
+    this.cpTriggerElement = cpTriggerElement;
 
     if (!cpPositionRelativeToArrow) {
       this.dialogArrowOffset = 0;
@@ -979,7 +981,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (this.cpPosition === 'auto') {
         const dialogBounds = this.dialogElement.nativeElement.getBoundingClientRect();
-        usePosition = calculateAutoPositioning(dialogBounds);
+        const triggerBounds = this.cpTriggerElement.nativeElement.getBoundingClientRect();
+        usePosition = calculateAutoPositioning(dialogBounds, triggerBounds);
       }
 
       if (usePosition === 'top') {

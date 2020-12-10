@@ -390,6 +390,50 @@
     </div>
   </div>
 
+    <hr>
+
+  <div class="row">
+        <div class="col-md-5">
+            <input (colorPickerClose)="onEventLog('colorPickerClose', $event)"
+                   (colorPickerOpen)="onEventLog('colorPickerOpen', $event)"
+                   (cpInputChange)="onEventLog('cpInputChange', $event)"
+                   (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"
+                   (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)"
+                   [colorPicker]="color18"
+                   [cpExtraTemplate]="customTemplate"
+                   [style.background]="color18"
+                   (keyup)="onEventLog('cpInputChange', $event)"
+                   cpAlphaChannel='disabled'
+            />
+
+            <ng-template #customTemplate>
+                <div class="">
+                    <h3>Custom template.</h3>
+                </div>
+            </ng-template>
+        </div>
+
+        <div class="col-md-7">
+            <p>Custom template: </p>
+            <pre>
+&lt;input (colorPickerClose)="onEventLog('colorPickerClose', $event)"
+       (colorPickerOpen)="onEventLog('colorPickerOpen', $event)"
+       (cpInputChange)="onEventLog('cpInputChange', $event)"
+       (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"
+       (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)"
+       [cpExtraTemplate]="templateTest"
+       [style.background]="color"
+/&gt;
+
+&lt;ng-template #customTemplate&gt;
+    &lt;div class=""&gt;
+        &lt;h3&gt;Custom template.&lt;/h3&gt;
+    &lt;/div&gt;
+&lt;/ng-template&gt;
+            </pre>
+        </div>
+</div>
+
   <hr><br>
 
   <div class="row">
@@ -641,6 +685,13 @@
             <td>cpPresetEmptyMessageClass</td>
             <td>
               Class to customize the empty colors message.
+            </td>
+          </tr>
+
+          <tr>
+            <td>cpExtraTemplate</td>
+            <td>
+              Use this option to passe a custom template element to the color picker.
             </td>
           </tr>
         </tbody>

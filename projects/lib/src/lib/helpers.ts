@@ -12,17 +12,20 @@ export type BoundingRectangle = {
   right: number;
   height: number;
   width: number;
-}
+};
 
 export type OutputFormat = 'auto' | 'hex' | 'rgba' | 'hsla';
 
-export function calculateAutoPositioning(elBounds: BoundingRectangle): string {
+export function calculateAutoPositioning(elBounds: BoundingRectangle, triggerElBounds: BoundingRectangle): string {
   // Defaults
   let usePositionX = 'right';
   let usePositionY = 'bottom';
-
   // Calculate collisions
-  const { height, width, top, bottom, left, right } = elBounds;
+  const { height, width } = elBounds;
+  const { top, left } = triggerElBounds;
+  const bottom = top + triggerElBounds.height;
+  const right = left + triggerElBounds.width;
+
   const collisionTop = top - height < 0;
   const collisionBottom = bottom + height > (window.innerHeight || document.documentElement.clientHeight);
   const collisionLeft = left - width < 0;
@@ -41,7 +44,7 @@ export function calculateAutoPositioning(elBounds: BoundingRectangle): string {
   if (collisionLeft) {
     usePositionX = 'right';
   }
-  
+
   if (collisionRight) {
     usePositionX = 'left';
   }
@@ -54,14 +57,14 @@ export function calculateAutoPositioning(elBounds: BoundingRectangle): string {
   }
 
   if ((collisionLeft && collisionRight)) {
-    if (collisionTop) return 'bottom';
-    if (collisionBottom) return 'top';
+    if (collisionTop) { return 'bottom'; }
+    if (collisionBottom) { return 'top'; }
     return top > bottom ? 'top' : 'bottom';
   }
 
   if ((collisionTop && collisionBottom)) {
-    if (collisionLeft) return 'right';
-    if (collisionRight) return 'left';
+    if (collisionLeft) { return 'right'; }
+    if (collisionRight) { return 'left'; }
     return left > right ? 'left' : 'right';
   }
 

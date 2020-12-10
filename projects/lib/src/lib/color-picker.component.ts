@@ -1,11 +1,26 @@
-import { Component, OnInit, OnDestroy, AfterViewInit,
-  ViewChild, HostListener, ViewEncapsulation,
-  ElementRef, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  ViewChild,
+  HostListener,
+  ViewEncapsulation,
+  ElementRef,
+  ChangeDetectorRef,
+  TemplateRef
+} from '@angular/core';
 
-import { detectIE, calculateAutoPositioning } from './helpers';
+import {
+  detectIE,
+  calculateAutoPositioning,
+  AlphaChannel,
+  OutputFormat,
+  SliderDimension,
+  SliderPosition
+} from './helpers';
 
 import { ColorFormats, Cmyk, Hsla, Hsva, Rgba } from './formats';
-import { AlphaChannel, OutputFormat, SliderDimension, SliderPosition } from './helpers';
 
 import { ColorPickerService } from './color-picker.service';
 
@@ -115,6 +130,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public cpAddColorButtonText: string;
   public cpAddColorButtonClass: string;
   public cpRemoveColorButtonClass: string;
+  public cpTriggerElement: ElementRef;
+
+  public cpExtraTemplate: TemplateRef<any>;
 
   @ViewChild('dialogPopup', { static: true }) dialogElement: ElementRef;
 
@@ -209,7 +227,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     cpPresetEmptyMessageClass: string, cpOKButton: boolean, cpOKButtonClass: string,
     cpOKButtonText: string, cpCancelButton: boolean, cpCancelButtonClass: string,
     cpCancelButtonText: string, cpAddColorButton: boolean, cpAddColorButtonClass: string,
-    cpAddColorButtonText: string, cpRemoveColorButtonClass: string): void
+    cpAddColorButtonText: string, cpRemoveColorButtonClass: string, cpTriggerElement: ElementRef,
+    cpExtraTemplate: TemplateRef<any>,
+  ): void
   {
     this.setInitialColor(color);
 
@@ -262,6 +282,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cpAddColorButtonText = cpAddColorButtonText;
     this.cpAddColorButtonClass = cpAddColorButtonClass;
     this.cpRemoveColorButtonClass = cpRemoveColorButtonClass;
+
+    this.cpTriggerElement = cpTriggerElement;
+    this.cpExtraTemplate = cpExtraTemplate;
 
     if (!cpPositionRelativeToArrow) {
       this.dialogArrowOffset = 0;
@@ -979,7 +1002,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (this.cpPosition === 'auto') {
         const dialogBounds = this.dialogElement.nativeElement.getBoundingClientRect();
-        usePosition = calculateAutoPositioning(dialogBounds);
+        const triggerBounds = this.cpTriggerElement.nativeElement.getBoundingClientRect();
+        usePosition = calculateAutoPositioning(dialogBounds, triggerBounds);
       }
 
       if (usePosition === 'top') {
@@ -1003,6 +1027,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
         this.left += boxDirective.width + this.dialogArrowSize - 2;
       }
+
+      this.cpUsePosition = usePosition;
     }
   }
 

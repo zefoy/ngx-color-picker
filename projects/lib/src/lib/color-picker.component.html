@@ -121,4 +121,8 @@
 
     <button *ngIf="cpOKButton" type="button" class="{{cpOKButtonClass}}" (click)="onAcceptColor($event)">{{cpOKButtonText}}</button>
   </div>
+
+  <div class="extra-template" *ngIf="cpExtraTemplate">
+    <ng-container *ngTemplateOutlet="cpExtraTemplate"></ng-container>
+  </div>
 </div>

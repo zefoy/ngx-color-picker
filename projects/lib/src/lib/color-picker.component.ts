@@ -115,7 +115,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public cpAddColorButtonText: string;
   public cpAddColorButtonClass: string;
   public cpRemoveColorButtonClass: string;
-  
+
   public cpTriggerElement: ElementRef;
 
   @ViewChild('dialogPopup', { static: true }) dialogElement: ElementRef;
@@ -264,7 +264,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cpAddColorButtonText = cpAddColorButtonText;
     this.cpAddColorButtonClass = cpAddColorButtonClass;
     this.cpRemoveColorButtonClass = cpRemoveColorButtonClass;
-    
+
     this.cpTriggerElement = cpTriggerElement;
 
     if (!cpPositionRelativeToArrow) {
@@ -1008,6 +1008,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
         this.left += boxDirective.width + this.dialogArrowSize - 2;
       }
+
+      this.cpUsePosition = usePosition;
     }
   }
 

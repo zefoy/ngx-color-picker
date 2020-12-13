@@ -264,6 +264,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cpAddColorButtonText = cpAddColorButtonText;
     this.cpAddColorButtonClass = cpAddColorButtonClass;
     this.cpRemoveColorButtonClass = cpRemoveColorButtonClass;
+    
     this.cpTriggerElement = cpTriggerElement;
 
     if (!cpPositionRelativeToArrow) {

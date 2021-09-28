@@ -1,6 +1,6 @@
 import { Directive, OnChanges, OnDestroy, Input, Output, EventEmitter,
   HostListener, ApplicationRef, ComponentRef, ElementRef, ViewContainerRef,
-  Injector, ReflectiveInjector, ComponentFactoryResolver, EmbeddedViewRef } from '@angular/core';
+  Injector, ReflectiveInjector, ComponentFactoryResolver, EmbeddedViewRef, TemplateRef } from '@angular/core';
 
 import { ColorPickerService } from './color-picker.service';
 import { ColorPickerComponent } from './color-picker.component';
@@ -73,6 +73,8 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   @Input() cpAddColorButtonClass: string = 'cp-add-color-button-class';
 
   @Input() cpRemoveColorButtonClass: string = 'cp-remove-color-button-class';
+
+  @Input() cpExtraTemplate: TemplateRef<any>;
 
   @Output() cpInputChange = new EventEmitter<{input: string, value: number | string, color: string}>(true);
 
@@ -200,7 +202,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
         this.cpPresetEmptyMessageClass, this.cpOKButton, this.cpOKButtonClass,
         this.cpOKButtonText, this.cpCancelButton, this.cpCancelButtonClass,
         this.cpCancelButtonText, this.cpAddColorButton, this.cpAddColorButtonClass,
-        this.cpAddColorButtonText, this.cpRemoveColorButtonClass, this.elRef);
+        this.cpAddColorButtonText, this.cpRemoveColorButtonClass, this.elRef, this.cpExtraTemplate);
 
       this.dialog = this.cmpRef.instance;
 

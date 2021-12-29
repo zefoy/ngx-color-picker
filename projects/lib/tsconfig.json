@@ -14,7 +14,6 @@
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
-    "enableIvy": false,
     "enableResourceInlining": true
   },
   "exclude": [

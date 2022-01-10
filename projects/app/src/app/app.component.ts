@@ -41,6 +41,7 @@ export class AppComponent {
   public color16: string = '#a51ad633';
   public color17: string = '#666666';
   public color18: string = '#fa8072';
+  public color19: string = '#f88888';
 
   public cmykValue: string = '';
 

@@ -103,6 +103,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public cpCancelButtonText: string;
   public cpCancelButtonClass: string;
 
+  public eyeDropperSupported: boolean;
+  public cpEyeDropper: boolean;
+
   public cpPresetLabel: string;
   public cpPresetColors: string[];
   public cpPresetColorsClass: string;
@@ -158,6 +161,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.listenerMouseDown = (event: any) => { this.onMouseDown(event); };
     this.listenerResize = () => { this.onResize(); };
 
+    this.eyeDropperSupported = 'EyeDropper' in window;
+
     this.openDialog(this.initialColor, false);
   }
 
@@ -211,7 +216,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     cpPresetEmptyMessageClass: string, cpOKButton: boolean, cpOKButtonClass: string,
     cpOKButtonText: string, cpCancelButton: boolean, cpCancelButtonClass: string,
     cpCancelButtonText: string, cpAddColorButton: boolean, cpAddColorButtonClass: string,
-    cpAddColorButtonText: string, cpRemoveColorButtonClass: string, cpTriggerElement: ElementRef): void
+    cpAddColorButtonText: string, cpRemoveColorButtonClass: string, cpEyeDropper: boolean, cpTriggerElement: ElementRef): void
   {
     this.setInitialColor(color);
 
@@ -250,6 +255,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cpCancelButton = cpCancelButton;
     this.cpCancelButtonText = cpCancelButtonText;
     this.cpCancelButtonClass = cpCancelButtonClass;
+
+    this.cpEyeDropper = cpEyeDropper;
 
     this.fallbackColor = cpFallbackColor || '#fff';
 
@@ -420,6 +427,16 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.closeColorPicker();
     }
+  }
+
+  public onEyeDropper(event: Event): void {
+    if (!this.eyeDropperSupported) return;
+    const eyeDropper = new (window as any).EyeDropper();
+    eyeDropper.open().then((eyeDropperResult: {
+      sRGBHex: string;
+    }) => {
+      this.setColorFromString(eyeDropperResult.sRGBHex, true);
+    });
   }
 
   public onFormatToggle(change: number): void {

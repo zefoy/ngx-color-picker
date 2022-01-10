@@ -60,6 +60,8 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   @Input() cpCancelButtonText: string = 'Cancel';
   @Input() cpCancelButtonClass: string = 'cp-cancel-button-class';
 
+  @Input() cpEyeDropper: boolean = false;
+
   @Input() cpPresetLabel: string = 'Preset colors';
   @Input() cpPresetColors: string[];
   @Input() cpPresetColorsClass: string = 'cp-preset-colors-class';
@@ -200,7 +202,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
         this.cpPresetEmptyMessageClass, this.cpOKButton, this.cpOKButtonClass,
         this.cpOKButtonText, this.cpCancelButton, this.cpCancelButtonClass,
         this.cpCancelButtonText, this.cpAddColorButton, this.cpAddColorButtonClass,
-        this.cpAddColorButtonText, this.cpRemoveColorButtonClass, this.elRef);
+        this.cpAddColorButtonText, this.cpRemoveColorButtonClass, this.cpEyeDropper, this.elRef);
 
       this.dialog = this.cmpRef.instance;
 

@@ -1,6 +1,8 @@
-import { Component, OnInit, OnDestroy, AfterViewInit,
+import {
+  Component, OnInit, OnDestroy, AfterViewInit,
   ViewChild, HostListener, ViewEncapsulation,
-  ElementRef, ChangeDetectorRef } from '@angular/core';
+  ElementRef, ChangeDetectorRef
+} from '@angular/core';
 
 import { detectIE, calculateAutoPositioning } from './helpers';
 
@@ -12,7 +14,7 @@ import { ColorPickerService } from './color-picker.service';
 @Component({
   selector: 'color-picker',
   templateUrl: './color-picker.component.html',
-  styleUrls: [ './color-picker.component.css' ],
+  styleUrls: ['./color-picker.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
@@ -135,7 +137,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef, private service: ColorPickerService) {}
+  constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef, private service: ColorPickerService) { }
 
   ngOnInit(): void {
     this.slider = new SliderPosition(0, 0, 0, 0);
@@ -166,7 +168,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.cpWidth !== 230 || this.cpDialogDisplay === 'inline') {
+    if (this.cpWidth !== 230 || this.cpDialogDisplay === 'inline') {
       const hueWidth = this.hueSlider.nativeElement.offsetWidth || 140;
       const alphaWidth = this.alphaSlider.nativeElement.offsetWidth || 140;
 
@@ -211,8 +213,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     cpPresetEmptyMessageClass: string, cpOKButton: boolean, cpOKButtonClass: string,
     cpOKButtonText: string, cpCancelButton: boolean, cpCancelButtonClass: string,
     cpCancelButtonText: string, cpAddColorButton: boolean, cpAddColorButtonClass: string,
-    cpAddColorButtonText: string, cpRemoveColorButtonClass: string, cpTriggerElement: ElementRef): void
-  {
+    cpAddColorButtonText: string, cpRemoveColorButtonClass: string, cpTriggerElement: ElementRef): void {
     this.setInitialColor(color);
 
     this.setColorMode(cpColorMode);
@@ -277,8 +278,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     if (cpOutputFormat === 'hex' &&
-        cpAlphaChannel !== 'always' && cpAlphaChannel !== 'forced')
-    {
+      cpAlphaChannel !== 'always' && cpAlphaChannel !== 'forced') {
       this.cpAlphaChannel = 'disabled';
     }
   }
@@ -362,12 +362,11 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public onMouseDown(event: MouseEvent): void {
     if (this.show &&
-        !this.isIE10 && this.cpDialogDisplay === 'popup' &&
-        event.target !== this.directiveElementRef.nativeElement &&
-        !this.isDescendant(this.elRef.nativeElement, event.target) &&
-        !this.isDescendant(this.directiveElementRef.nativeElement, event.target) &&
-        this.cpIgnoredElements.filter((item: any) => item === event.target).length === 0)
-    {
+      !this.isIE10 && this.cpDialogDisplay === 'popup' &&
+      event.target !== this.directiveElementRef.nativeElement &&
+      !this.isDescendant(this.elRef.nativeElement, event.target) &&
+      !this.isDescendant(this.directiveElementRef.nativeElement, event.target) &&
+      this.cpIgnoredElements.filter((item: any) => item === event.target).length === 0) {
       if (this.cpSaveClickOutside) {
         this.directiveInstance.colorSelected(this.outputColor);
       } else {
@@ -697,15 +696,15 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onCyanInput(value: { v: number, rg: number }): void {
-     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-     if (valid) {
+    if (valid) {
       this.cmyk.c = value.v;
 
       this.updateColorPicker(false, true, true);
     }
 
-     this.directiveInstance.inputChanged({
+    this.directiveInstance.inputChanged({
       input: 'cyan',
       valid: true,
       value: this.cmyk.c,
@@ -713,16 +712,16 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-   public onMagentaInput(value: { v: number, rg: number }): void {
+  public onMagentaInput(value: { v: number, rg: number }): void {
     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-     if (valid) {
+    if (valid) {
       this.cmyk.m = value.v;
 
       this.updateColorPicker(false, true, true);
     }
 
-     this.directiveInstance.inputChanged({
+    this.directiveInstance.inputChanged({
       input: 'magenta',
       valid: true,
       value: this.cmyk.m,
@@ -731,15 +730,15 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onYellowInput(value: { v: number, rg: number }): void {
-     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-     if (valid) {
+    if (valid) {
       this.cmyk.y = value.v;
 
       this.updateColorPicker(false, true, true);
     }
 
-     this.directiveInstance.inputChanged({
+    this.directiveInstance.inputChanged({
       input: 'yellow',
       valid: true,
       value: this.cmyk.y,
@@ -747,16 +746,16 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-   public onBlackInput(value: { v: number, rg: number }): void {
-     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
+  public onBlackInput(value: { v: number, rg: number }): void {
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-     if (valid) {
+    if (valid) {
       this.cmyk.k = value.v;
 
       this.updateColorPicker(false, true, true);
     }
 
-     this.directiveInstance.inputChanged({
+    this.directiveInstance.inputChanged({
       input: 'black',
       valid: true,
       value: this.cmyk.k,
@@ -877,7 +876,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       if (this.cpOutputFormat === 'auto') {
-        if (this.format !== ColorFormats.RGBA && this.format !== ColorFormats.CMYK) {
+        if (this.format !== ColorFormats.RGBA && this.format !== ColorFormats.CMYK && this.format !== ColorFormats.HSLA) {
           if (this.hsva.a < 1) {
             this.format = this.hsva.a < 1 ? ColorFormats.RGBA : ColorFormats.HEX;
           }
@@ -894,8 +893,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.cmykColor = '';
       } else {
         if (this.cpAlphaChannel === 'always' || this.cpAlphaChannel === 'enabled' ||
-          this.cpAlphaChannel === 'forced')
-        {
+          this.cpAlphaChannel === 'forced') {
           const alpha = Math.round(this.cmyk.a * 100) / 100;
 
           this.cmykColor = `cmyka(${this.cmyk.c},${this.cmyk.m},${this.cmyk.y},${this.cmyk.k},${alpha})`;
@@ -960,8 +958,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       const boxDirective = this.createDialogBox(this.directiveElementRef.nativeElement, (position !== 'fixed'));
 
       if (this.useRootViewContainer || (position === 'fixed' &&
-         (!parentNode || parentNode instanceof HTMLUnknownElement)))
-      {
+        (!parentNode || parentNode instanceof HTMLUnknownElement))) {
         this.top = boxDirective.top;
         this.left = boxDirective.left;
       } else {
@@ -1001,7 +998,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       } else if (usePosition === 'top-right' || usePosition === 'right-top') {
         this.top -= dialogHeight - boxDirective.height + boxDirective.height * this.cpPositionOffset / 100;
         this.left += boxDirective.width + this.dialogArrowSize - 2 - this.dialogArrowOffset;
-      } else if (usePosition === 'left' || usePosition === 'bottom-left' ||  usePosition === 'left-bottom') {
+      } else if (usePosition === 'left' || usePosition === 'bottom-left' || usePosition === 'left-bottom') {
         this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
         this.left -= this.cpWidth + this.dialogArrowSize - 2;
       } else { // usePosition === 'right' || usePosition === 'bottom-right' || usePosition === 'right-bottom'

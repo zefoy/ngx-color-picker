@@ -5,6 +5,7 @@
     "target": "es2015",
     "declaration": true,
     "inlineSources": true,
+    "stripInternal": true,
     "types": [],
     "lib": [
       "dom",
@@ -14,8 +15,8 @@
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
-    "enableIvy": false,
-    "enableResourceInlining": true
+    "enableResourceInlining": true,
+    "compilationMode": "partial"
   },
   "exclude": [
     "src/test.ts",

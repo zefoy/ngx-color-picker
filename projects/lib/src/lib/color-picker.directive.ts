@@ -1,11 +1,18 @@
 import { Directive, OnChanges, OnDestroy, Input, Output, EventEmitter,
   HostListener, ApplicationRef, ComponentRef, ElementRef, ViewContainerRef,
-  Injector, ReflectiveInjector, ComponentFactoryResolver, EmbeddedViewRef } from '@angular/core';
+  Injector, ComponentFactoryResolver, EmbeddedViewRef, TemplateRef } from '@angular/core';
 
 import { ColorPickerService } from './color-picker.service';
 import { ColorPickerComponent } from './color-picker.component';
 
 import { AlphaChannel, ColorMode, OutputFormat } from './helpers';
+
+// Caretaker note: we have still left the `typeof` condition in order to avoid
+// creating a breaking change for projects that still use the View Engine.
+// The `ngDevMode` is always available when Ivy is enabled.
+// This will be evaluated during compilation into `const NG_DEV_MODE = false`,
+// thus Terser will be able to tree-shake `console.warn` calls.
+const NG_DEV_MODE = typeof ngDevMode === 'undefined' || !!ngDevMode;
 
 @Directive({
   selector: '[colorPicker]',
@@ -75,6 +82,8 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   @Input() cpAddColorButtonClass: string = 'cp-add-color-button-class';
 
   @Input() cpRemoveColorButtonClass: string = 'cp-remove-color-button-class';
+
+  @Input() cpExtraTemplate: TemplateRef<any>;
 
   @Output() cpInputChange = new EventEmitter<{input: string, value: number | string, color: string}>(true);
 
@@ -170,7 +179,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
         if (appInstance !== Injector.NULL) {
           vcRef = appInstance.vcRef || appInstance.viewContainerRef || this.vcRef;
 
-          if (vcRef === this.vcRef) {
+          if (NG_DEV_MODE && vcRef === this.vcRef) {
             console.warn('You are using cpUseRootViewContainer, ' +
               'but the root component is not exposing viewContainerRef!' +
               'Please expose it by adding \'public vcRef: ViewContainerRef\' to the constructor.');
@@ -187,7 +196,12 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
         this.appRef.attachView(this.cmpRef.hostView);
         document.body.appendChild((this.cmpRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement);
       } else {
-        const injector = ReflectiveInjector.fromResolvedProviders([], vcRef.parentInjector);
+        const injector = Injector.create({
+          providers: [],
+          // We shouldn't use `vcRef.parentInjector` since it's been deprecated long time ago and might be removed
+          // in newer Angular versions: https://github.com/angular/angular/pull/25174.
+          parent: vcRef.injector,
+        });
 
         this.cmpRef = vcRef.createComponent(compFactory, 0, injector, []);
       }
@@ -202,7 +216,8 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
         this.cpPresetEmptyMessageClass, this.cpOKButton, this.cpOKButtonClass,
         this.cpOKButtonText, this.cpCancelButton, this.cpCancelButtonClass,
         this.cpCancelButtonText, this.cpAddColorButton, this.cpAddColorButtonClass,
-        this.cpAddColorButtonText, this.cpRemoveColorButtonClass, this.cpEyeDropper, this.elRef);
+        this.cpAddColorButtonText, this.cpRemoveColorButtonClass, this.cpEyeDropper, this.elRef,
+        this.cpExtraTemplate);
 
       this.dialog = this.cmpRef.instance;
 

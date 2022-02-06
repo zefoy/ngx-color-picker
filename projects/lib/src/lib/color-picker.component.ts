@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit,
   ViewChild, HostListener, ViewEncapsulation,
-  ElementRef, ChangeDetectorRef } from '@angular/core';
+  ElementRef, ChangeDetectorRef, TemplateRef } from '@angular/core';
 
 import { detectIE, calculateAutoPositioning } from './helpers';
 
@@ -121,6 +121,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public cpTriggerElement: ElementRef;
 
+  public cpExtraTemplate: TemplateRef<any>;
+
   @ViewChild('dialogPopup', { static: true }) dialogElement: ElementRef;
 
   @ViewChild('hueSlider', { static: true }) hueSlider: ElementRef;
@@ -216,7 +218,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     cpPresetEmptyMessageClass: string, cpOKButton: boolean, cpOKButtonClass: string,
     cpOKButtonText: string, cpCancelButton: boolean, cpCancelButtonClass: string,
     cpCancelButtonText: string, cpAddColorButton: boolean, cpAddColorButtonClass: string,
-    cpAddColorButtonText: string, cpRemoveColorButtonClass: string, cpEyeDropper: boolean, cpTriggerElement: ElementRef): void
+    cpAddColorButtonText: string, cpRemoveColorButtonClass: string, cpEyeDropper: boolean,
+    cpTriggerElement: ElementRef, cpExtraTemplate: TemplateRef<any>): void
   {
     this.setInitialColor(color);
 
@@ -273,6 +276,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cpRemoveColorButtonClass = cpRemoveColorButtonClass;
 
     this.cpTriggerElement = cpTriggerElement;
+    this.cpExtraTemplate = cpExtraTemplate;
 
     if (!cpPositionRelativeToArrow) {
       this.dialogArrowOffset = 0;

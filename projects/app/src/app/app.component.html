@@ -176,6 +176,27 @@
 
   <hr>
 
+  <div class="row" >
+    <div class="col-md-5" >
+      <input [value]="color9" [style.background]="color19" [cpEyeDropper]="true" [cpSaveClickOutside]="false" [cpOKButtonClass]= "'btn btn-primary btn-xs'"[(colorPicker)]="color19"/>
+    </div>
+
+    <div class="col-md-7">
+      <p>Enable Eye Dropper:</p>
+      <p>You can open the eye dropper by clicking the colored circle.</p>
+      <pre>
+&lt;input [value]="color"
+       [style.background]="color"
+       [cpEyeDropper]="true"
+       [cpSaveClickOutside]="false"
+       [cpOKButtonClass]= "'btn btn-primary btn-xs'"
+       [(colorPicker)]="color"/&gt;
+      </pre>
+    </div>
+  </div>
+
+  <hr>
+
   <div class="row">
     <div class="col-md-5">
       <input [style.background]="color10" [colorPicker]="color10" [cpCmykEnabled]="true" (cpCmykColorChange)="cmykValue=$event" (colorPickerChange)="cmykColor=onChangeColorCmyk($event);color10=$event"/>
@@ -685,6 +706,12 @@
             <td>cpPresetEmptyMessageClass</td>
             <td>
               Class to customize the empty colors message.
+            </td>
+          </tr>
+          <tr>
+            <td>cpEyeDropper</td>
+            <td>
+              Enable eye dropper on click of colored circle. Click again to pick a color.
             </td>
           </tr>
         </tbody>

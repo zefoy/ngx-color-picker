@@ -8,8 +8,6 @@ import { ColorPickerComponent } from './color-picker.component';
 export class ColorPickerService {
   private active: ColorPickerComponent | null = null;
 
-  constructor() {}
-
   public setActive(active: ColorPickerComponent | null): void {
     if (this.active && this.active !== active && this.active.cpDialogDisplay !== 'inline') {
       this.active.closeDialog();

@@ -2,7 +2,7 @@
   "name": "ngx-color-picker",
   "description": "Color picker widget for Angular",
   "bugs": "https://github.com/zefoy/ngx-color-picker/issues",
-  "version": "11.0.0",
+  "version": "12.0.0",
   "license": "MIT",
   "peerDependencies": {
     "@angular/common": ">=9.0.0",

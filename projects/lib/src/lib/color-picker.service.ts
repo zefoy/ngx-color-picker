@@ -138,13 +138,13 @@ export class ColorPickerService {
   }
 
   public rgbaToHex(rgba: Rgba, allowHex8?: boolean): string {
-    /* tslint:disable:no-bitwise */
+    /* eslint-disable no-bitwise */
     let hex = '#' + ((1 << 24) | (rgba.r << 16) | (rgba.g << 8) | rgba.b).toString(16).substr(1);
 
     if (allowHex8) {
       hex += ((1 << 8) | Math.round(rgba.a * 255)).toString(16).substr(1);
     }
-    /* tslint:enable:no-bitwise */
+    /* eslint-enable no-bitwise */
 
     return hex;
   }

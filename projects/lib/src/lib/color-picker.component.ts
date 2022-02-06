@@ -718,15 +718,15 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onCyanInput(value: { v: number, rg: number }): void {
-     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-     if (valid) {
+    if (valid) {
       this.cmyk.c = value.v;
 
       this.updateColorPicker(false, true, true);
     }
 
-     this.directiveInstance.inputChanged({
+    this.directiveInstance.inputChanged({
       input: 'cyan',
       valid: true,
       value: this.cmyk.c,
@@ -734,16 +734,16 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-   public onMagentaInput(value: { v: number, rg: number }): void {
+  public onMagentaInput(value: { v: number, rg: number }): void {
     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-     if (valid) {
+    if (valid) {
       this.cmyk.m = value.v;
 
       this.updateColorPicker(false, true, true);
     }
 
-     this.directiveInstance.inputChanged({
+    this.directiveInstance.inputChanged({
       input: 'magenta',
       valid: true,
       value: this.cmyk.m,
@@ -752,9 +752,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onYellowInput(value: { v: number, rg: number }): void {
-     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-     if (valid) {
+    if (valid) {
       this.cmyk.y = value.v;
 
       this.updateColorPicker(false, true, true);
@@ -768,16 +768,16 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-   public onBlackInput(value: { v: number, rg: number }): void {
-     const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
+  public onBlackInput(value: { v: number, rg: number }): void {
+    const valid = !isNaN(value.v) && value.v >= 0 && value.v <= value.rg;
 
-     if (valid) {
+    if (valid) {
       this.cmyk.k = value.v;
 
       this.updateColorPicker(false, true, true);
     }
 
-     this.directiveInstance.inputChanged({
+    this.directiveInstance.inputChanged({
       input: 'black',
       valid: true,
       value: this.cmyk.k,
@@ -898,7 +898,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       if (this.cpOutputFormat === 'auto') {
-        if (this.format !== ColorFormats.RGBA && this.format !== ColorFormats.CMYK) {
+        if (this.format !== ColorFormats.RGBA && this.format !== ColorFormats.CMYK && this.format !== ColorFormats.HSLA) {
           if (this.hsva.a < 1) {
             this.format = this.hsva.a < 1 ? ColorFormats.RGBA : ColorFormats.HEX;
           }
@@ -1022,7 +1022,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       } else if (usePosition === 'top-right' || usePosition === 'right-top') {
         this.top -= dialogHeight - boxDirective.height + boxDirective.height * this.cpPositionOffset / 100;
         this.left += boxDirective.width + this.dialogArrowSize - 2 - this.dialogArrowOffset;
-      } else if (usePosition === 'left' || usePosition === 'bottom-left' ||  usePosition === 'left-bottom') {
+      } else if (usePosition === 'left' || usePosition === 'bottom-left' || usePosition === 'left-bottom') {
         this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
         this.left -= this.cpWidth + this.dialogArrowSize - 2;
       } else { // usePosition === 'right' || usePosition === 'bottom-right' || usePosition === 'right-bottom'

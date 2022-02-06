@@ -30,7 +30,7 @@
       "repository": "git@github.com:zefoy/ngx-color-picker.git",
       "branch": "gh-pages",
       "folder": "dist/app",
-      "script": "ng build app --prod -- --base-href=ngx-color-picker --delete-output-path=false",
+      "script": "ng build app --configuration production -- --base-href=ngx-color-picker --delete-output-path=false",
       "commit": "Publishing $npm_package_version",
       "user": {
         "name": "ZEF Devel",

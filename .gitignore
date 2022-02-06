@@ -4,6 +4,8 @@ bundles/
 package/
 npm-debug.log
 node_modules/
+.angular/
+.vs/
 
 example/dist/
 example/npm-debug.log

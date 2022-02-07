@@ -1051,9 +1051,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private createDialogBox(element: any, offset: boolean): any {
+    const { top, left } = element.getBoundingClientRect();
     return {
-      top: element.getBoundingClientRect().top + (offset ? window.pageYOffset : 0),
-      left: element.getBoundingClientRect().left + (offset ? window.pageXOffset : 0),
+      top: top + (offset ? window.pageYOffset : 0),
+      left: left + (offset ? window.pageXOffset : 0),
       width: element.offsetWidth,
       height: element.offsetHeight
     };

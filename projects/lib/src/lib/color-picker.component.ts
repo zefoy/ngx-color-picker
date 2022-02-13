@@ -8,6 +8,7 @@ import { ColorFormats, Cmyk, Hsla, Hsva, Rgba } from './formats';
 import { AlphaChannel, OutputFormat, SliderDimension, SliderPosition } from './helpers';
 
 import { ColorPickerService } from './color-picker.service';
+import { colorOptions } from '../util/constants';
 
 @Component({
   selector: 'color-picker',
@@ -49,6 +50,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   ];
 
   private useRootViewContainer: boolean = false;
+
+  private nextAndPrevious: any;
+  private colorInputs: any;
 
   public show: boolean;
   public hidden: boolean;
@@ -159,6 +163,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.listenerResize = () => { this.onResize(); };
 
     this.openDialog(this.initialColor, false);
+
+    this.triggerAccessibility();
   }
 
   ngOnDestroy(): void {
@@ -281,6 +287,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     {
       this.cpAlphaChannel = 'disabled';
     }
+
+    this.nextAndPrevious = this.directiveInstance.nextAndPreviouscolorLabel;
+    this.colorInputs = this.directiveInstance.colorInputsLabel;
   }
 
   public setColorMode(mode: string): void {
@@ -1036,5 +1045,96 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       width: element.offsetWidth,
       height: element.offsetHeight
     };
+  }
+
+  /**
+   * ========================
+   * // Accessibility Area //
+   * ========================
+   */
+   
+  nextColorLabel: string;
+  previousColorLabel: string;
+
+  maxLabel: string;
+  minLabel: string;
+  andLabel: string;
+  stepLabel: string;
+
+  rgbaLabelledbyGroup: string;
+  rgbaLabel: string;
+  redLabel: string;
+  greenLabel: string;
+  blueLabel: string;
+  alphaLabel: string;
+
+  hexLabelledbyGroup: string;
+  hexLabel: string;
+  hexValueLabel: string;
+
+  hslaLabelledbyGroup: string;
+  hslaLabel: string;
+  hueLabel: string;
+  saturationLabel: string;
+  lightnessLabel: string;
+
+  grayscaleLabelledbyGroup: string;
+  grayscaleLabel: string;
+  grayscaleValueLabel: string;
+
+  cmykLabelledbyGroup: string;
+  cmykLabel: string;
+  cyanLabel: string;
+  magentaLabel: string;
+  yellowLabel: string;
+  keyBlackLabel: string;
+
+  triggerAccessibility(): void {
+      this.setNextAndPreviouscolorAriaLabel();
+      this.setColorInputsArias();
+  }
+
+  setNextAndPreviouscolorAriaLabel(): void {
+      this.nextColorLabel = this.nextAndPrevious?.next ? this.nextAndPrevious.next : colorOptions.DEFAULT_NEXT_COLOR_OPTION;
+      this.previousColorLabel = this.nextAndPrevious?.previous ? this.nextAndPrevious.previous : colorOptions.DEFAULT_PREVIOUS_COLOR_OPTION;
+  }
+
+  setColorInputsArias(): void {
+      this.maxLabel = this.colorInputs?.max ? this.colorInputs.max : colorOptions.DEFAULT_MAX;
+      this.minLabel = this.colorInputs?.min ? this.colorInputs.min : colorOptions.DEFAULT_MIN;
+      this.stepLabel = this.colorInputs?.step ? this.colorInputs.step : colorOptions.DEFAULT_STEP;
+      this.andLabel = this.colorInputs?.and ? this.colorInputs.and : colorOptions.DEFAULT_AND;
+
+      this.rgbaLabel = this.colorInputs?.rgba ? this.colorInputs.rgba : colorOptions.DEFAULT_RGBA;
+      this.redLabel = this.colorInputs?.red ? this.colorInputs.red : colorOptions.DEFAULT_RED;
+      this.greenLabel = this.colorInputs?.green ? this.colorInputs.green : colorOptions.DEFAULT_GREEN;
+      this.blueLabel = this.colorInputs?.blue ? this.colorInputs.blue : colorOptions.DEFAULT_BLUE;
+      this.alphaLabel = this.colorInputs?.alpha ? this.colorInputs.alpha : colorOptions.DEFAULT_ALPHA;
+
+      this.hexLabel = this.colorInputs?.hex ? this.colorInputs.hex : colorOptions.DEFAULT_HEX;
+      this.hexValueLabel = this.colorInputs?.hexValue ? this.colorInputs.hexValue : colorOptions.DEFAULT_HEX_VALUE;
+
+      this.cmykLabel = this.colorInputs?.cmyk ? this.colorInputs.cmyk : colorOptions.DEFAULT_CMYK;
+      this.cyanLabel = this.colorInputs?.cyan ? this.colorInputs.cyan : colorOptions.DEFAULT_CYAN;
+      this.magentaLabel = this.colorInputs?.magenta ? this.colorInputs.magenta : colorOptions.DEFAULT_MAGENTA;
+      this.yellowLabel = this.colorInputs?.yellow ? this.colorInputs.yellow : colorOptions.DEFAULT_YELLOW;
+      this.keyBlackLabel = this.colorInputs?.keyBlack ? this.colorInputs.keyBlack : colorOptions.DEFAULT_KEY_BLACK;
+
+      this.hslaLabel = this.colorInputs?.hsla ? this.colorInputs.hsla : colorOptions.DEFAULT_HSLA;
+      this.hueLabel = this.colorInputs?.hue ? this.colorInputs.hue : colorOptions.DEFAULT_HUE;
+      this.saturationLabel = this.colorInputs?.saturation ? this.colorInputs.saturation : colorOptions.DEFAULT_SATURATION;
+      this.lightnessLabel = this.colorInputs?.lightness ? this.colorInputs.lightness : colorOptions.DEFAULT_LIGHTNESS;
+
+      this.grayscaleLabel = this.colorInputs?.grayscale ? this.colorInputs.grayscale : colorOptions.DEFAULT_GRAYSCALE;
+      this.grayscaleValueLabel = this.colorInputs?.grayscaleValue ? this.colorInputs.grayscaleValue : colorOptions.DEFAULT_GRAYSCALE_VALUE;
+
+      // aria-labelledby over the individual inputs container
+      // in case users would like to add specific message when input group gets focused
+
+      this.rgbaLabelledbyGroup = this.colorInputs?.rgbaLabelledByGroup ? this.colorInputs.rgbaLabelledByGroup : '';
+      this.hexLabelledbyGroup = this.colorInputs?.hexLabelledByGroup ? this.colorInputs.hexLabelledByGroup : '';
+      this.hslaLabelledbyGroup = this.colorInputs?.hslaLabelledByGroup ? this.colorInputs.hslaLabelledByGroup : '';
+      this.grayscaleLabelledbyGroup = this.colorInputs?.grayscaleLabelledByGroup ? this.colorInputs.grayscaleLabelledByGroup : '';
+      this.cmykLabelledbyGroup = this.colorInputs?.cmykLabelledByGroup ? this.colorInputs.cmykLabelledByGroup : '';
   }
 }

@@ -11,7 +11,7 @@
 
       <div class="selected-color" [style.background-color]="selectedColor"></div>
 
-      <button *ngIf="cpAddColorButton" type="button" class="{{cpAddColorButtonClass}}" [disabled]="cpPresetColors && cpPresetColors.length >= cpMaxPresetColorsLength" (click)="onAddPresetColor($event, selectedColor)">
+      <button *ngIf="cpAddColorButton" role="button" type="button" class="{{cpAddColorButtonClass}}" [disabled]="cpPresetColors && cpPresetColors.length >= cpMaxPresetColorsLength" (click)="onAddPresetColor($event, selectedColor)">
         {{cpAddColorButtonText}}
       </button>
     </div>
@@ -33,13 +33,13 @@
     </div>
   </div>
 
-  <div *ngIf="!cpDisableInput && (cpColorMode || 1) === 1" class="cmyk-text" [style.display]="format !== 3 ? 'none' : 'block'">
+  <div role="group" attr.aria-labelledby="{{cmykLabelledbyGroup}}" attr.aria-label="{{cmykLabel}}" *ngIf="!cpDisableInput && (cpColorMode || 1) === 1" class="cmyk-text" [style.display]="format !== 3 ? 'none' : 'block'">
     <div class="box">
-      <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="cmykText?.c" (keyup.enter)="onAcceptColor($event)" (newValue)="onCyanInput($event)" />
-      <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="cmykText?.m" (keyup.enter)="onAcceptColor($event)" (newValue)="onMagentaInput($event)" />
-      <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="cmykText?.y" (keyup.enter)="onAcceptColor($event)" (newValue)="onYellowInput($event)" />
-      <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="cmykText?.k" (keyup.enter)="onAcceptColor($event)" (newValue)="onBlackInput($event)" />
-      <input *ngIf="cpAlphaChannel!=='disabled'" type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" [text] [rg]="1" [value]="cmykText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />
+      <input #cyanInput attr.aria-label="{{cyanLabel}} {{minLabel}} {{cyanInput.min}} {{maxLabel}} {{cyanInput.max}}" type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="cmykText?.c" (keyup.enter)="onAcceptColor($event)" (newValue)="onCyanInput($event)" />
+      <input #magentaInput attr.aria-label="{{magentaLabel}} {{minLabel}} {{magentaInput.min}} {{maxLabel}} {{magentaInput.max}}" type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="cmykText?.m" (keyup.enter)="onAcceptColor($event)" (newValue)="onMagentaInput($event)" />
+      <input #yellowLInput attr.aria-label="{{yellowLabel}} {{minLabel}} {{yellowLInput.min}} {{maxLabel}} {{yellowLInput.max}}" type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="cmykText?.y" (keyup.enter)="onAcceptColor($event)" (newValue)="onYellowInput($event)" />
+      <input #keyBlackInput attr.aria-label="{{keyBlackLabel}} {{minLabel}} {{keyBlackInput.min}} {{maxLabel}} {{keyBlackInput.max}}" type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="cmykText?.k" (keyup.enter)="onAcceptColor($event)" (newValue)="onBlackInput($event)" />
+      <input #cmykAlphaInput attr.aria-label="{{alphaLabel}} {{minLabel}} {{cmykAlphaInput.min}} {{maxLabel}} {{cmykAlphaInput.max}} {{andLabel}} {{cmykAlphaInput.step}}" *ngIf="cpAlphaChannel!=='disabled'" type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" [text] [rg]="1" [value]="cmykText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />
     </div>
 
      <div class="box">
@@ -47,12 +47,12 @@
     </div>
   </div>
 
-  <div *ngIf="!cpDisableInput && (cpColorMode || 1) === 1 " class="hsla-text" [style.display]="format !== 2 ? 'none' : 'block'">
+  <div role="group" attr.aria-labelledby="{{hslaLabelledbyGroup}}" attr.aria-label="{{hslaLabel}}" *ngIf="!cpDisableInput && (cpColorMode || 1) === 1 " class="hsla-text" [style.display]="format !== 2 ? 'none' : 'block'">
     <div class="box">
-      <input type="number" pattern="[0-9]*" min="0" max="360" [text] [rg]="360" [value]="hslaText?.h" (keyup.enter)="onAcceptColor($event)" (newValue)="onHueInput($event)" />
-      <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="hslaText?.s" (keyup.enter)="onAcceptColor($event)" (newValue)="onSaturationInput($event)" />
-      <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="hslaText?.l" (keyup.enter)="onAcceptColor($event)" (newValue)="onLightnessInput($event)" />
-      <input *ngIf="cpAlphaChannel!=='disabled'" type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" [text] [rg]="1" [value]="hslaText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />
+      <input #hueInput attr.aria-label="{{hueLabel}} {{minLabel}} {{hueInput.min}} {{maxLabel}} {{hueInput.max}}" type="number" pattern="[0-9]*" min="0" max="360" [text] [rg]="360" [value]="hslaText?.h" (keyup.enter)="onAcceptColor($event)" (newValue)="onHueInput($event)" />
+      <input #saturationInput attr.aria-label="{{saturationLabel}} {{minLabel}} {{saturationInput.min}} {{maxLabel}} {{saturationInput.max}}" type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="hslaText?.s" (keyup.enter)="onAcceptColor($event)" (newValue)="onSaturationInput($event)" />
+      <input #lightnessInput attr.aria-label="{{lightnessLabel}} {{minLabel}} {{lightnessInput.min}} {{maxLabel}} {{lightnessInput.max}}" type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="hslaText?.l" (keyup.enter)="onAcceptColor($event)" (newValue)="onLightnessInput($event)" />
+      <input #hslaAlphaInput attr.aria-label="{{alphaLabel}} {{minLabel}} {{hslaAlphaInput.min}} {{maxLabel}} {{hslaAlphaInput.max}} {{andLabel}} {{hslaAlphaInput.step}}" *ngIf="cpAlphaChannel!=='disabled'" type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" [text] [rg]="1" [value]="hslaText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />
     </div>
 
     <div class="box">
@@ -60,12 +60,12 @@
     </div>
   </div>
 
-  <div *ngIf="!cpDisableInput && (cpColorMode || 1) === 1 " [style.display]="format !== 1 ? 'none' : 'block'" class="rgba-text">
+  <div role="group" attr.aria-labelledby="{{rgbaLabelledbyGroup}}" attr.aria-label="{{rgbaLabel}}" *ngIf="!cpDisableInput && (cpColorMode || 1) === 1 " [style.display]="format !== 1 ? 'none' : 'block'" class="rgba-text">
     <div class="box">
-      <input type="number" pattern="[0-9]*" min="0" max="255" [text] [rg]="255" [value]="rgbaText?.r" (keyup.enter)="onAcceptColor($event)" (newValue)="onRedInput($event)" />
-      <input type="number" pattern="[0-9]*" min="0" max="255" [text] [rg]="255" [value]="rgbaText?.g" (keyup.enter)="onAcceptColor($event)" (newValue)="onGreenInput($event)" />
-      <input type="number" pattern="[0-9]*" min="0" max="255" [text] [rg]="255" [value]="rgbaText?.b" (keyup.enter)="onAcceptColor($event)" (newValue)="onBlueInput($event)" />
-      <input *ngIf="cpAlphaChannel!=='disabled'" type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" [text] [rg]="1" [value]="rgbaText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />
+      <input #redInput attr.aria-label="{{redLabel}} {{minLabel}} {{redInput.min}} {{maxLabel}} {{redInput.max}}" type="number" pattern="[0-9]*" min="0" max="255" [text] [rg]="255" [value]="rgbaText?.r" (keyup.enter)="onAcceptColor($event)" (newValue)="onRedInput($event)" />
+      <input #greenInput attr.aria-label="{{greenLabel}} {{minLabel}} {{greenInput.min}} {{maxLabel}} {{greenInput.max}}" type="number" pattern="[0-9]*" min="0" max="255" [text] [rg]="255" [value]="rgbaText?.g" (keyup.enter)="onAcceptColor($event)" (newValue)="onGreenInput($event)" />
+      <input #blueInput attr.aria-label="{{blueLabel}} {{minLabel}} {{blueInput.min}} {{maxLabel}} {{blueInput.max}}" type="number" pattern="[0-9]*" min="0" max="255" [text] [rg]="255" [value]="rgbaText?.b" (keyup.enter)="onAcceptColor($event)" (newValue)="onBlueInput($event)" />
+      <input #rgbAlphaInput attr.aria-label="{{alphaLabel}} {{minLabel}} {{rgbAlphaInput.min}} {{maxLabel}} {{rgbAlphaInput.max}} {{andLabel}} {{rgbAlphaInput.step}}" *ngIf="cpAlphaChannel!=='disabled'" type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" [text] [rg]="1" [value]="rgbaText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />
     </div>
 
     <div class="box">
@@ -73,11 +73,11 @@
     </div>
   </div>
 
-  <div *ngIf="!cpDisableInput && (cpColorMode || 1) === 1" class="hex-text" [class.hex-alpha]="cpAlphaChannel==='forced'"
+  <div role="group" attr.aria-labelledby="{{hexLabelledbyGroup}}" attr.aria-label="{{hexLabel}}" *ngIf="!cpDisableInput && (cpColorMode || 1) === 1" class="hex-text" [class.hex-alpha]="cpAlphaChannel==='forced'"
     [style.display]="format !== 0 ? 'none' : 'block'">
     <div class="box">
-      <input [text] [value]="hexText" (blur)="onHexInput(null)" (keyup.enter)="onAcceptColor($event)" (newValue)="onHexInput($event)"/>
-      <input *ngIf="cpAlphaChannel==='forced'" type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" [text] [rg]="1" [value]="hexAlpha" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)"/>
+      <input #hexInput attr.aria-label="{{hexValueLabel}}" [text] [value]="hexText" (blur)="onHexInput(null)" (keyup.enter)="onAcceptColor($event)" (newValue)="onHexInput($event)"/>
+      <input #hexAlphaInput attr.aria-label="{{alphaLabel}} {{minLabel}} {{hexAlphaInput.min}} {{maxLabel}} {{hexAlphaInput.max}} {{andLabel}} {{hexAlphaInput.step}}" *ngIf="cpAlphaChannel==='forced'" type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" [text] [rg]="1" [value]="hexAlpha" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)"/>
     </div>
 
     <div class="box">
@@ -86,10 +86,10 @@
     </div>
   </div>
 
-  <div *ngIf="!cpDisableInput && (cpColorMode || 1) === 2" class="value-text">
+  <div role="group" attr.aria-labelledby="{{grayscaleLabelledbyGroup}}" attr.aria-label="{{grayscaleLabel}}" *ngIf="!cpDisableInput && (cpColorMode || 1) === 2" class="value-text">
     <div class="box">
-      <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="hslaText?.l" (keyup.enter)="onAcceptColor($event)" (newValue)="onValueInput($event)" />
-      <input *ngIf="cpAlphaChannel!=='disabled'" type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1"  [text] [rg]="1" [value]="hslaText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />
+      <input #grayscaleInput attr.aria-label="{{grayscaleValueLabel}} {{minLabel}} {{grayscaleInput.min}} {{maxLabel}} {{grayscaleInput.max}}" type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="hslaText?.l" (keyup.enter)="onAcceptColor($event)" (newValue)="onValueInput($event)" />
+      <input #grayscaleAlphaInput attr.aria-label="{{alphaLabel}} {{minLabel}} {{grayscaleAlphaInput.min}} {{maxLabel}} {{grayscaleAlphaInput.max}} {{andLabel}} {{grayscaleAlphaInput.step}}" *ngIf="cpAlphaChannel!=='disabled'" type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1"  [text] [rg]="1" [value]="hslaText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />
     </div>
 
     <div class="box">
@@ -98,8 +98,8 @@
   </div>
 
   <div *ngIf="!cpDisableInput && (cpColorMode || 1) === 1" class="type-policy">
-    <span class="type-policy-arrow" (click)="onFormatToggle(-1)"></span>
-    <span class="type-policy-arrow" (click)="onFormatToggle(1)"></span>
+    <span role="button" attr.aria-label="{{previousColorLabel}}" tabindex="0" triggerKeyup class="type-policy-arrow" (click)="onFormatToggle(-1)"></span>
+    <span role="button" attr.aria-label="{{nextColorLabel}}" tabindex="0" triggerKeyup class="type-policy-arrow" (click)="onFormatToggle(1)"></span>
   </div>
 
   <div *ngIf="cpPresetColors?.length || cpAddColorButton" class="preset-area">
@@ -108,12 +108,12 @@
     <div class="preset-label">{{cpPresetLabel}}</div>
 
     <div *ngIf="cpPresetColors?.length" class="{{cpPresetColorsClass}}">
-      <div *ngFor="let color of cpPresetColors" class="preset-color" [style.backgroundColor]="color" (click)="setColorFromString(color)">
-        <span *ngIf="cpAddColorButton" class="{{cpRemoveColorButtonClass}}" (click)="onRemovePresetColor($event, color)"></span>
+      <div attr.aria-label="{{color}}" tabindex="0" triggerKeyup *ngFor="let color of cpPresetColors" class="preset-color" [style.backgroundColor]="color" (click)="setColorFromString(color)">
+        <span attr.aria-label="Remove Color {{color}}" tabindex="0" triggerKeyup *ngIf="cpAddColorButton" class="{{cpRemoveColorButtonClass}}" (click)="onRemovePresetColor($event, color)"></span>
       </div>
     </div>
 
-    <div *ngIf="!cpPresetColors?.length && cpAddColorButton" class="{{cpPresetEmptyMessageClass}}">{{cpPresetEmptyMessage}}</div>
+    <div role="alert" aria-live="polite" *ngIf="!cpPresetColors?.length && cpAddColorButton" class="{{cpPresetEmptyMessageClass}}">{{cpPresetEmptyMessage}}</div>
   </div>
 
   <div *ngIf="cpOKButton || cpCancelButton" class="button-area">

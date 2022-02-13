@@ -74,6 +74,9 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @Input() cpRemoveColorButtonClass: string = 'cp-remove-color-button-class';
 
+  @Input() nextAndPreviouscolorLabel: Object;
+  @Input() colorInputsLabel: Object;
+
   @Output() cpInputChange = new EventEmitter<{input: string, value: number | string, color: string}>(true);
 
   @Output() cpToggleChange = new EventEmitter<boolean>(true);

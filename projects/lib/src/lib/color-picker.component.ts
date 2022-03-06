@@ -1,6 +1,19 @@
-import { Component, OnInit, OnDestroy, AfterViewInit,
-  ViewChild, HostListener, ViewEncapsulation,
-  ElementRef, ChangeDetectorRef, TemplateRef, Inject, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  ViewChild,
+  HostListener,
+  ViewEncapsulation,
+  ElementRef,
+  ChangeDetectorRef,
+  TemplateRef,
+  NgZone,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
+
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 import { detectIE, calculateAutoPositioning } from './helpers';
@@ -9,6 +22,10 @@ import { ColorFormats, Cmyk, Hsla, Hsva, Rgba } from './formats';
 import { AlphaChannel, OutputFormat, SliderDimension, SliderPosition } from './helpers';
 
 import { ColorPickerService } from './color-picker.service';
+
+// Do not store that on the class instance since the condition will be run
+// every time the class is created.
+const SUPPORTS_TOUCH = typeof window !== 'undefined' && 'ontouchstart' in window;
 
 @Component({
   selector: 'color-picker',
@@ -31,7 +48,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   private fallbackColor: string;
 
   private listenerResize: any;
-  private listenerMouseDown: any;
+  private listenerMouseDown: EventListener;
 
   private directiveInstance: any;
 
@@ -143,6 +160,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   constructor(
+    private ngZone: NgZone,
     private elRef: ElementRef,
     private cdRef: ChangeDetectorRef,
     @Inject(DOCUMENT) private document: Document,
@@ -168,7 +186,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.format = ColorFormats.HEX;
     }
 
-    this.listenerMouseDown = (event: any) => { this.onMouseDown(event); };
+    this.listenerMouseDown = (event: MouseEvent) => { this.onMouseDown(event); };
     this.listenerResize = () => { this.onResize(); };
 
     this.openDialog(this.initialColor, false);
@@ -378,32 +396,36 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public onMouseDown(event: MouseEvent): void {
-    if (this.show &&
-        !this.isIE10 && this.cpDialogDisplay === 'popup' &&
-        event.target !== this.directiveElementRef.nativeElement &&
-        !this.isDescendant(this.elRef.nativeElement, event.target) &&
-        !this.isDescendant(this.directiveElementRef.nativeElement, event.target) &&
-        this.cpIgnoredElements.filter((item: any) => item === event.target).length === 0)
-    {
-      if (this.cpSaveClickOutside) {
-        this.directiveInstance.colorSelected(this.outputColor);
-      } else {
-        this.hsva = null;
+    if (
+      this.show &&
+      !this.isIE10 &&
+      this.cpDialogDisplay === 'popup' &&
+      event.target !== this.directiveElementRef.nativeElement &&
+      !this.isDescendant(this.elRef.nativeElement, event.target) &&
+      !this.isDescendant(this.directiveElementRef.nativeElement, event.target) &&
+      this.cpIgnoredElements.filter((item: any) => item === event.target).length === 0
+    ) {
+      this.ngZone.run(() => {
+        if (this.cpSaveClickOutside) {
+          this.directiveInstance.colorSelected(this.outputColor);
+        } else {
+          this.hsva = null;
 
-        this.setColorFromString(this.initialColor, false);
+          this.setColorFromString(this.initialColor, false);
 
-        if (this.cpCmykEnabled) {
-          this.directiveInstance.cmykChanged(this.cmykColor);
+          if (this.cpCmykEnabled) {
+            this.directiveInstance.cmykChanged(this.cmykColor);
+          }
+
+          this.directiveInstance.colorChanged(this.initialColor);
+
+          this.directiveInstance.colorCanceled();
         }
 
-        this.directiveInstance.colorChanged(this.initialColor);
-
-        this.directiveInstance.colorCanceled();
-      }
-
-      if (this.cpCloseClickOutside) {
-        this.closeColorPicker();
-      }
+        if (this.cpCloseClickOutside) {
+          this.closeColorPicker();
+        }
+      });
     }
   }
 
@@ -827,8 +849,18 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.directiveInstance.stateChanged(true);
 
       if (!this.isIE10) {
-        document.addEventListener('mousedown', this.listenerMouseDown);
-        document.addEventListener('touchstart', this.listenerMouseDown);
+        // The change detection should be run on `mousedown` event only when the condition
+        // is met within the `onMouseDown` method.
+        this.ngZone.runOutsideAngular(() => {
+          // There's no sense to add both event listeners on touch devices since the `touchstart`
+          // event is handled earlier than `mousedown`, so we'll get 2 change detections and the
+          // second one will be unnecessary.
+          if (SUPPORTS_TOUCH) {
+            document.addEventListener('touchstart', this.listenerMouseDown);
+          } else {
+            document.addEventListener('mousedown', this.listenerMouseDown);
+          }
+        });
       }
 
       window.addEventListener('resize', this.listenerResize);
@@ -842,8 +874,11 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.directiveInstance.stateChanged(false);
 
       if (!this.isIE10) {
-        document.removeEventListener('mousedown', this.listenerMouseDown);
-        document.removeEventListener('touchstart', this.listenerMouseDown);
+        if (SUPPORTS_TOUCH) {
+          document.removeEventListener('touchstart', this.listenerMouseDown);
+        } else {
+          document.removeEventListener('mousedown', this.listenerMouseDown);
+        }
       }
 
       window.removeEventListener('resize', this.listenerResize);

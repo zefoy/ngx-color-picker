@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, AfterViewInit,
   ViewChild, HostListener, ViewEncapsulation,
-  ElementRef, ChangeDetectorRef, TemplateRef } from '@angular/core';
+  ElementRef, ChangeDetectorRef, TemplateRef, Inject, PLATFORM_ID } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 import { detectIE, calculateAutoPositioning } from './helpers';
 
@@ -103,7 +104,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public cpCancelButtonText: string;
   public cpCancelButtonClass: string;
 
-  public eyeDropperSupported: boolean;
+  public eyeDropperSupported =
+    isPlatformBrowser(this.platformId) && 'EyeDropper' in this.document.defaultView;
   public cpEyeDropper: boolean;
 
   public cpPresetLabel: string;
@@ -140,7 +142,13 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef, private service: ColorPickerService) {}
+  constructor(
+    private elRef: ElementRef,
+    private cdRef: ChangeDetectorRef,
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(PLATFORM_ID) private platformId: string,
+    private service: ColorPickerService
+  ) {}
 
   ngOnInit(): void {
     this.slider = new SliderPosition(0, 0, 0, 0);
@@ -162,8 +170,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.listenerMouseDown = (event: any) => { this.onMouseDown(event); };
     this.listenerResize = () => { this.onResize(); };
-
-    this.eyeDropperSupported = 'EyeDropper' in window;
 
     this.openDialog(this.initialColor, false);
   }
@@ -433,7 +439,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  public onEyeDropper(event: Event): void {
+  public onEyeDropper(): void {
     if (!this.eyeDropperSupported) return;
     const eyeDropper = new (window as any).EyeDropper();
     eyeDropper.open().then((eyeDropperResult: {

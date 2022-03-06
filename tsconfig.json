@@ -20,7 +20,7 @@
     ],
     "paths": {
       "ngx-color-picker": [
-        "dist/lib"
+        "./projects/lib/src/public-api.ts"
       ]
     }
   },

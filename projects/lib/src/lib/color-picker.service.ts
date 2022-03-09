@@ -16,6 +16,14 @@ export class ColorPickerService {
     this.active = active;
   }
 
+  public isActive(active: ColorPickerComponent): boolean {
+    return this.active !== null && this.active === active;
+  }
+
+  public setInactive(): void {
+    this.active = null;
+  }
+
   public hsva2hsla(hsva: Hsva): Hsla {
     const h = hsva.h, s = hsva.s, v = hsva.v, a = hsva.a;
 

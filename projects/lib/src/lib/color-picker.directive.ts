@@ -117,8 +117,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   }
 
   constructor(private injector: Injector, private cfr: ComponentFactoryResolver,
-    private appRef: ApplicationRef, private vcRef: ViewContainerRef, private elRef: ElementRef,
-    private _service: ColorPickerService) {}
+    private appRef: ApplicationRef, private vcRef: ViewContainerRef, private elRef: ElementRef) {}
 
   ngOnDestroy(): void {
     if (this.cmpRef != null) {

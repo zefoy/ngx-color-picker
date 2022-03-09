@@ -142,7 +142,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public cpExtraTemplate: TemplateRef<any>;
 
-  @ViewChild('dialogPopup', { static: true }) dialogElement: ElementRef;
+  @ViewChild('dialogPopup', { static: true }) dialogElement: ElementRef<HTMLElement>;
 
   @ViewChild('hueSlider', { static: true }) hueSlider: ElementRef;
   @ViewChild('alphaSlider', { static: true }) alphaSlider: ElementRef;
@@ -190,10 +190,15 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.listenerResize = () => { this.onResize(); };
 
     this.openDialog(this.initialColor, false);
+
+    this.ngZone.runOutsideAngular(() => {
+      this.dialogElement.nativeElement.addEventListener('click', this.onDialogElementClick);
+    });
   }
 
   ngOnDestroy(): void {
     this.closeDialog();
+    this.dialogElement.nativeElement.removeEventListener('click', this.onDialogElementClick);
   }
 
   ngAfterViewInit(): void {
@@ -228,6 +233,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public closeDialog(): void {
+    if (this.service.isActive(this)) {
+      this.service.setInactive();
+    }
+
     this.closeColorPicker();
   }
 
@@ -1100,4 +1109,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       height: element.offsetHeight
     };
   }
+
+  private onDialogElementClick = (event: MouseEvent): void => event.stopPropagation();
 }

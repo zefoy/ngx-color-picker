@@ -6,15 +6,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { AppComponent } from './app.component';
 
 @NgModule({
-  bootstrap: [
-    AppComponent
-  ],
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    ColorPickerModule
-  ]
+  bootstrap: [AppComponent],
+  declarations: [AppComponent],
+  imports: [BrowserModule, ColorPickerModule],
 })
 export class AppModule {}

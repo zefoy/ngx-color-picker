@@ -5,6 +5,7 @@ import { Directive, OnChanges, OnDestroy, Input, Output, EventEmitter,
 import { ColorPickerService } from './color-picker.service';
 import { ColorPickerComponent } from './color-picker.component';
 
+import { BooleanInput, coerceBooleanProperty } from './coercion';
 import { AlphaChannel, ColorMode, OutputFormat } from './helpers';
 
 // Caretaker note: we have still left the `typeof` condition in order to avoid
@@ -32,8 +33,23 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   @Input() cpWidth: string = '230px';
   @Input() cpHeight: string = 'auto';
 
-  @Input() cpToggle: boolean = false;
-  @Input() cpDisabled: boolean = false;
+  @Input()
+  set cpToggle(cpToggle: BooleanInput) {
+    this._cpToggle = coerceBooleanProperty(cpToggle); 
+  }
+  get cpToggle() {
+    return this._cpToggle;
+  }
+  private _cpToggle = false;
+
+  @Input()
+  set cpDisabled(cpDisabled: BooleanInput) {
+    this._cpDisabled = coerceBooleanProperty(cpDisabled); 
+  }
+  get cpDisabled() {
+    return this._cpDisabled;
+  }
+  private _cpDisabled = false;
 
   @Input() cpIgnoredElements: any = [];
 
@@ -41,33 +57,100 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @Input() cpColorMode: ColorMode = 'color';
 
-  @Input() cpCmykEnabled: boolean = false;
+  @Input()
+  set cpCmykEnabled(cpCmykEnabled: BooleanInput) {
+    this._cpCmykEnabled = coerceBooleanProperty(cpCmykEnabled); 
+  }
+  get cpCmykEnabled(): boolean {
+    return this._cpCmykEnabled;
+  }
+  private _cpCmykEnabled = false;
 
   @Input() cpOutputFormat: OutputFormat = 'auto';
   @Input() cpAlphaChannel: AlphaChannel = 'enabled';
 
-  @Input() cpDisableInput: boolean = false;
+  @Input()
+  set cpDisableInput(cpDisableInput: BooleanInput) {
+    this._cpDisableInput = coerceBooleanProperty(cpDisableInput); 
+  }
+  get cpDisableInput(): boolean {
+    return this._cpDisableInput;
+  }
+  private _cpDisableInput = false;
 
   @Input() cpDialogDisplay: string = 'popup';
 
-  @Input() cpSaveClickOutside: boolean = true;
-  @Input() cpCloseClickOutside: boolean = true;
+  @Input()
+  set cpSaveClickOutside(cpSaveClickOutside: BooleanInput) {
+    this._cpSaveClickOutside = coerceBooleanProperty(cpSaveClickOutside); 
+  }
+  get cpSaveClickOutside(): boolean {
+    return this._cpSaveClickOutside;
+  }
+  private _cpSaveClickOutside = true;
 
-  @Input() cpUseRootViewContainer: boolean = false;
+  @Input()
+  set cpCloseClickOutside(cpCloseClickOutside: BooleanInput) {
+    this._cpCloseClickOutside = coerceBooleanProperty(cpCloseClickOutside); 
+  }
+  get cpCloseClickOutside(): boolean {
+    return this._cpCloseClickOutside;
+  }
+  private _cpCloseClickOutside = true;
+
+  @Input()
+  set cpUseRootViewContainer(cpUseRootViewContainer: BooleanInput) {
+    this._cpUseRootViewContainer = coerceBooleanProperty(cpUseRootViewContainer); 
+  }
+  get cpUseRootViewContainer(): boolean {
+    return this._cpUseRootViewContainer;
+  }
+  private _cpUseRootViewContainer = false;
 
   @Input() cpPosition: string = 'auto';
   @Input() cpPositionOffset: string = '0%';
-  @Input() cpPositionRelativeToArrow: boolean = false;
 
-  @Input() cpOKButton: boolean = false;
+  @Input()
+  set cpPositionRelativeToArrow(cpPositionRelativeToArrow: BooleanInput) {
+    this._cpPositionRelativeToArrow = coerceBooleanProperty(cpPositionRelativeToArrow); 
+  }
+  get cpPositionRelativeToArrow(): boolean {
+    return this._cpPositionRelativeToArrow;
+  }
+  private _cpPositionRelativeToArrow = false;
+
+  @Input()
+  set cpOKButton(cpOKButton: BooleanInput) {
+    this._cpOKButton = coerceBooleanProperty(cpOKButton); 
+  }
+  get cpOKButton(): boolean {
+    return this._cpOKButton;
+  }
+  private _cpOKButton = false;
+
   @Input() cpOKButtonText: string = 'OK';
   @Input() cpOKButtonClass: string = 'cp-ok-button-class';
 
-  @Input() cpCancelButton: boolean = false;
+  @Input()
+  set cpCancelButton(cpCancelButton: BooleanInput) {
+    this._cpCancelButton = coerceBooleanProperty(cpCancelButton); 
+  }
+  get cpCancelButton(): boolean {
+    return this._cpCancelButton;
+  }
+  private _cpCancelButton = false;
+
   @Input() cpCancelButtonText: string = 'Cancel';
   @Input() cpCancelButtonClass: string = 'cp-cancel-button-class';
 
-  @Input() cpEyeDropper: boolean = false;
+  @Input()
+  set cpEyeDropper(cpEyeDropper: BooleanInput) {
+    this._cpEyeDropper = coerceBooleanProperty(cpEyeDropper); 
+  }
+  get cpEyeDropper(): boolean {
+    return this._cpEyeDropper;
+  }
+  private _cpEyeDropper = false;
 
   @Input() cpPresetLabel: string = 'Preset colors';
   @Input() cpPresetColors: string[];
@@ -77,7 +160,15 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   @Input() cpPresetEmptyMessage: string = 'No colors added';
   @Input() cpPresetEmptyMessageClass: string = 'preset-empty-message';
 
-  @Input() cpAddColorButton: boolean = false;
+  @Input()
+  set cpAddColorButton(cpAddColorButton: BooleanInput) {
+    this._cpAddColorButton = coerceBooleanProperty(cpAddColorButton); 
+  }
+  get cpAddColorButton(): boolean {
+    return this._cpAddColorButton;
+  }
+  private _cpAddColorButton = false;
+
   @Input() cpAddColorButtonText: string = 'Add color';
   @Input() cpAddColorButtonClass: string = 'cp-add-color-button-class';
 

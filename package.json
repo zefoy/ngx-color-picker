@@ -6,6 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "husky": "husky",
     "ng": "ng",
     "lint": "ng lint",
     "start": "ng serve app",
@@ -13,7 +14,8 @@
     "deploy": "deploy-to-git",
     "prepare": "ng build lib --configuration production",
     "publish": "npm publish ./dist/lib",
-    "predeploy": "rimraf ./dist/app && mkdirp ./dist/app"
+    "predeploy": "rimraf ./dist/app && mkdirp ./dist/app",
+    "postinstall": "husky install"
   },
   "repository": {
     "type": "git",
@@ -37,7 +39,6 @@
     "@angular/common": "^13.2.1",
     "@angular/compiler": "^13.2.1",
     "@angular/core": "^13.2.1",
-    "@angular/flex-layout": "13.0.0-beta.38",
     "@angular/forms": "^13.2.1",
     "@angular/platform-browser": "^13.2.1",
     "@angular/platform-browser-dynamic": "^13.2.1"
@@ -58,8 +59,11 @@
     "cpx": "^1.5.0",
     "deploy-to-git": "^0.4.1",
     "eslint": "^8.2.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.5",
     "mkdirp": "^1.0.4",
     "ng-packagr": "^13.2.1",
+    "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
     "rxjs": "^7.5.2",
     "stylelint": "^14.3.0",

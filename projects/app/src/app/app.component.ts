@@ -6,7 +6,7 @@ import { ColorPickerService, Cmyk } from 'ngx-color-picker';
   selector: 'my-app',
   moduleId: 'src/app/app.component',
   templateUrl: 'app.component.html',
-  styleUrls: [ 'app.component.css' ]
+  styleUrls: ['app.component.css'],
 })
 export class AppComponent {
   public toggle: boolean = false;
@@ -18,7 +18,7 @@ export class AppComponent {
     color2: '#e920e9',
     color3: 'rgb(255,245,0)',
     color4: 'rgb(236,64,64)',
-    color5: 'rgba(45,208,45,1)'
+    color5: 'rgba(45,208,45,1)',
   };
 
   public selectedColor: string = 'color1';
@@ -47,7 +47,10 @@ export class AppComponent {
 
   public cmykColor: Cmyk = new Cmyk(0, 0, 0, 0);
 
-  constructor(public vcRef: ViewContainerRef, private cpService: ColorPickerService) {}
+  constructor(
+    public vcRef: ViewContainerRef,
+    private cpService: ColorPickerService
+  ) {}
 
   public onEventLog(event: string, data: any): void {
     console.log(event, data);

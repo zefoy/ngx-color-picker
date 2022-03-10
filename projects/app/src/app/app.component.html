@@ -3,11 +3,19 @@
   <h4>A Color Picker Directive for Angular with no dependencies.</h4>
   <h4><b>based on angular2-color-picker by Alberto Pujante</b></h4>
 
-  <hr>
+  <hr />
 
   <div class="row">
     <div class="col-md-5">
-      <input [style.background]="color1" [(colorPicker)]="color1" (colorPickerOpen)="onEventLog('colorPickerOpen', $event)" (colorPickerClose)="onEventLog('colorPickerClose', $event)" (cpInputChange)="onEventLog('cpInputChange', $event)" (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"/>
+      <input
+        [style.background]="color1"
+        [(colorPicker)]="color1"
+        (colorPickerOpen)="onEventLog('colorPickerOpen', $event)"
+        (colorPickerClose)="onEventLog('colorPickerClose', $event)"
+        (cpInputChange)="onEventLog('cpInputChange', $event)"
+        (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)"
+        (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"
+      />
     </div>
 
     <div class="col-md-7">
@@ -25,11 +33,20 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
   <div class="row">
     <div class="col-md-5">
-      <input [style.background]="color17" [(colorPicker)]="color17" [cpColorMode]="'grayscale'" (colorPickerOpen)="onEventLog('colorPickerOpen', $event)" (colorPickerClose)="onEventLog('colorPickerClose', $event)" (cpInputChange)="onEventLog('cpInputChange', $event)" (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)" (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"/>
+      <input
+        [style.background]="color17"
+        [(colorPicker)]="color17"
+        [cpColorMode]="'grayscale'"
+        (colorPickerOpen)="onEventLog('colorPickerOpen', $event)"
+        (colorPickerClose)="onEventLog('colorPickerClose', $event)"
+        (cpInputChange)="onEventLog('cpInputChange', $event)"
+        (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)"
+        (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"
+      />
     </div>
 
     <div class="col-md-7">
@@ -41,11 +58,15 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
   <div class="row">
     <div class="col-md-5">
-      <input [value]="color2" [style.background]="color2" [(colorPicker)]="color2"/>
+      <input
+        [value]="color2"
+        [style.background]="color2"
+        [(colorPicker)]="color2"
+      />
     </div>
 
     <div class="col-md-7">
@@ -58,15 +79,25 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
   <div class="row">
     <div class="col-md-5">
-      <input [value]="color3" [style.background]="color3" [cpOutputFormat]="'rgba'" [(colorPicker)]="color3"/>
+      <input
+        [value]="color3"
+        [style.background]="color3"
+        [cpOutputFormat]="'rgba'"
+        [(colorPicker)]="color3"
+      />
 
-      <br><br>
+      <br /><br />
 
-      <input [value]="color4" [style.background]="color4" [cpOutputFormat]="'hsla'" [(colorPicker)]="color4"/>
+      <input
+        [value]="color4"
+        [style.background]="color4"
+        [cpOutputFormat]="'hsla'"
+        [(colorPicker)]="color4"
+      />
     </div>
 
     <div class="col-md-7">
@@ -80,11 +111,16 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
-  <div class="row" >
-    <div class="col-md-5" >
-      <input [value]="color5" [style.background]="color5" [cpPosition]="'top-right'" [(colorPicker)]="color5"/>
+  <div class="row">
+    <div class="col-md-5">
+      <input
+        [value]="color5"
+        [style.background]="color5"
+        [cpPosition]="'top-right'"
+        [(colorPicker)]="color5"
+      />
     </div>
 
     <div class="col-md-7">
@@ -98,15 +134,26 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
-  <div class="row" >
-    <div class="col-md-5" >
-      <span class="change-me" [style.color]="color6" [cpPosition]="'bottom'" [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [(colorPicker)]="color6">Change me!</span>
+  <div class="row">
+    <div class="col-md-5">
+      <span
+        class="change-me"
+        [style.color]="color6"
+        [cpPosition]="'bottom'"
+        [cpPositionOffset]="'50%'"
+        [cpPositionRelativeToArrow]="true"
+        [(colorPicker)]="color6"
+        >Change me!</span
+      >
     </div>
 
     <div class="col-md-7">
-      <p>You can introduce a offset of the color picker relative to the html element:</p>
+      <p>
+        You can introduce a offset of the color picker relative to the html
+        element:
+      </p>
       <pre>
 &lt;span [style.color]="color"
       [cpPosition]="'bottom'"
@@ -117,11 +164,16 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
-  <div class="row" >
-    <div class="col-md-5" >
-      <input [value]="color7" [style.background]="color7" [cpCancelButton]="true" [(colorPicker)]="color7"/>
+  <div class="row">
+    <div class="col-md-5">
+      <input
+        [value]="color7"
+        [style.background]="color7"
+        [cpCancelButton]="true"
+        [(colorPicker)]="color7"
+      />
     </div>
 
     <div class="col-md-7">
@@ -135,15 +187,24 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
-  <div class="row" >
-    <div class="col-md-5" >
-      <input [value]="color8" [style.background]="color8" [cpCancelButton]="true" [cpCancelButtonClass]= "'btn btn-primary btn-xs'" [(colorPicker)]="color8"/>
+  <div class="row">
+    <div class="col-md-5">
+      <input
+        [value]="color8"
+        [style.background]="color8"
+        [cpCancelButton]="true"
+        [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+        [(colorPicker)]="color8"
+      />
     </div>
 
     <div class="col-md-7">
-      <p>Change cancel button class, in this example we are using a bootstrap button:</p>
+      <p>
+        Change cancel button class, in this example we are using a bootstrap
+        button:
+      </p>
       <pre>
 &lt;input [value]="color"
        [style.background]="color"
@@ -154,11 +215,18 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
-  <div class="row" >
-    <div class="col-md-5" >
-      <input [value]="color9" [style.background]="color9" [cpOKButton]="true" [cpSaveClickOutside]="false" [cpOKButtonClass]= "'btn btn-primary btn-xs'"[(colorPicker)]="color9"/>
+  <div class="row">
+    <div class="col-md-5">
+      <input
+        [value]="color9"
+        [style.background]="color9"
+        [cpOKButton]="true"
+        [cpSaveClickOutside]="false"
+        [cpOKButtonClass]="'btn btn-primary btn-xs'"
+        [(colorPicker)]="color9"
+      />
     </div>
 
     <div class="col-md-7">
@@ -174,11 +242,18 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
-  <div class="row" >
-    <div class="col-md-5" >
-      <input [value]="color9" [style.background]="color19" [cpEyeDropper]="true" [cpSaveClickOutside]="false" [cpOKButtonClass]= "'btn btn-primary btn-xs'"[(colorPicker)]="color19"/>
+  <div class="row">
+    <div class="col-md-5">
+      <input
+        [value]="color9"
+        [style.background]="color19"
+        [cpEyeDropper]="true"
+        [cpSaveClickOutside]="false"
+        [cpOKButtonClass]="'btn btn-primary btn-xs'"
+        [(colorPicker)]="color19"
+      />
     </div>
 
     <div class="col-md-7">
@@ -195,28 +270,53 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
   <div class="row">
     <div class="col-md-5">
-      <input [style.background]="color10" [colorPicker]="color10" [cpCmykEnabled]="true" (cpCmykColorChange)="cmykValue=$event" (colorPickerChange)="cmykColor=onChangeColorCmyk($event);color10=$event"/>
+      <input
+        [style.background]="color10"
+        [colorPicker]="color10"
+        [cpCmykEnabled]="true"
+        (cpCmykColorChange)="cmykValue = $event"
+        (colorPickerChange)="
+          cmykColor = onChangeColorCmyk($event); color10 = $event
+        "
+      />
 
       <div class="clearfix"></div>
 
-      <div>{{cmykValue}}</div>
+      <div>{{ cmykValue }}</div>
 
       <div>
-        <span class="cmyk-text" style="color: rgb(0,255,255);" [style.font-size.px]="100 * cmykColor.c">C</span>
+        <span
+          class="cmyk-text"
+          style="color: rgb(0, 255, 255)"
+          [style.font-size.px]="100 * cmykColor.c"
+          >C</span
+        >
 
-        <span class="cmyk-text" style="color: rgb(255,0,255)" [style.font-size.px]="100 * cmykColor.m">M</span>
+        <span
+          class="cmyk-text"
+          style="color: rgb(255, 0, 255)"
+          [style.font-size.px]="100 * cmykColor.m"
+          >M</span
+        >
       </div>
 
       <div class="clearfix"></div>
 
       <div>
-        <span class="cmyk-text" style="color: rgb(255,255,0)" [style.font-size.px]="100 * cmykColor.y">Y</span>
+        <span
+          class="cmyk-text"
+          style="color: rgb(255, 255, 0)"
+          [style.font-size.px]="100 * cmykColor.y"
+          >Y</span
+        >
 
-        <span class="cmyk-text" [style.font-size.px]="100 * cmykColor.k">K</span>
+        <span class="cmyk-text" [style.font-size.px]="100 * cmykColor.k"
+          >K</span
+        >
       </div>
 
       <div class="clearfix"></div>
@@ -239,11 +339,22 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
   <div class="row">
     <div class="col-md-5">
-      <input [style.background]="color11" [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']" [(colorPicker)]="color11"/>
+      <input
+        [style.background]="color11"
+        [cpPresetColors]="[
+          '#fff',
+          '#000',
+          '#2889e9',
+          '#e920e9',
+          '#fff500',
+          'rgb(236,64,64)'
+        ]"
+        [(colorPicker)]="color11"
+      />
     </div>
 
     <div class="col-md-7">
@@ -256,11 +367,18 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
   <div class="row">
     <div class="col-md-5">
-      <input [style.background]="color13" [cpAlphaChannel]="'always'" [cpOutputFormat]="'rgba'" [cpPresetColors]="['#fff', '#2889e9']" [cpAddColorButton]="true" [(colorPicker)]="color13"/>
+      <input
+        [style.background]="color13"
+        [cpAlphaChannel]="'always'"
+        [cpOutputFormat]="'rgba'"
+        [cpPresetColors]="['#fff', '#2889e9']"
+        [cpAddColorButton]="true"
+        [(colorPicker)]="color13"
+      />
     </div>
 
     <div class="col-md-7">
@@ -276,19 +394,30 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
   <div class="row">
     <div class="col-md-5">
-      <input #ignoredInput [style.background]="color12" [cpFallbackColor]="'#f200bd'" [cpIgnoredElements]="[ignoredButton, ignoredInput]" [(cpToggle)]="toggle" [(colorPicker)]="color12"/>
+      <input
+        #ignoredInput
+        [style.background]="color12"
+        [cpFallbackColor]="'#f200bd'"
+        [cpIgnoredElements]="[ignoredButton, ignoredInput]"
+        [(cpToggle)]="toggle"
+        [(colorPicker)]="color12"
+      />
 
       <div class="clearfix"></div>
 
-      <button #ignoredButton class="btn btn-primary" (click)="toggle=!toggle;">Toggle</button>
+      <button #ignoredButton class="btn btn-primary" (click)="toggle = !toggle">
+        Toggle
+      </button>
 
-      <br><br>
+      <br /><br />
 
-      <div><b>Toggle status: {{toggle}}</b></div>
+      <div>
+        <b>Toggle status: {{ toggle }}</b>
+      </div>
     </div>
 
     <div class="col-md-7">
@@ -305,11 +434,16 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
   <div class="row">
     <div class="col-md-5">
-      <input cpPosition="auto" [value]="color18" [style.background]="color18" [(colorPicker)]="color18" />
+      <input
+        cpPosition="auto"
+        [value]="color18"
+        [style.background]="color18"
+        [(colorPicker)]="color18"
+      />
     </div>
 
     <div class="col-md-7">
@@ -323,24 +457,50 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
   <div class="row">
     <div class="col-md-5">
-      <input [value]="color14" [style.background]="color14" [cpAlphaChannel]="'always'" [cpOutputFormat]="'rgba'" [(colorPicker)]="color14"/>
+      <input
+        [value]="color14"
+        [style.background]="color14"
+        [cpAlphaChannel]="'always'"
+        [cpOutputFormat]="'rgba'"
+        [(colorPicker)]="color14"
+      />
 
-      <br>
+      <br />
 
-      <input [value]="color13" [style.background]="color13" [cpAlphaChannel]="'disabled'" [cpOutputFormat]="'rgba'" [(colorPicker)]="color13"/>
+      <input
+        [value]="color13"
+        [style.background]="color13"
+        [cpAlphaChannel]="'disabled'"
+        [cpOutputFormat]="'rgba'"
+        [(colorPicker)]="color13"
+      />
 
-      <br>
+      <br />
 
-      <input [value]="color16" [style.background]="rgbaText" [cpAlphaChannel]="'always'" [cpOutputFormat]="'hex'" [colorPicker]="color16" (colorPickerChange)="rgbaText=onChangeColorHex8($event);color16=$event"/>
+      <input
+        [value]="color16"
+        [style.background]="rgbaText"
+        [cpAlphaChannel]="'always'"
+        [cpOutputFormat]="'hex'"
+        [colorPicker]="color16"
+        (colorPickerChange)="
+          rgbaText = onChangeColorHex8($event); color16 = $event
+        "
+      />
 
-      <br>
+      <br />
 
-      <input [value]="color15" [style.background]="color15" [cpAlphaChannel]="'forced'" [cpOutputFormat]="'hex'" [(colorPicker)]="color15"/>
-
+      <input
+        [value]="color15"
+        [style.background]="color15"
+        [cpAlphaChannel]="'forced'"
+        [cpOutputFormat]="'hex'"
+        [(colorPicker)]="color15"
+      />
     </div>
 
     <div class="col-md-7">
@@ -374,27 +534,54 @@
     </div>
   </div>
 
-  <hr>
+  <hr />
 
   <div class="row" style="height: 320px">
     <div class="col-md-3">
-      <span [style.background]="arrayColors[selectedColor]" [cpToggle]="true" [cpDialogDisplay]="'inline'" [cpCancelButton]="true" [cpCancelButtonClass]= "'btn btn-primary btn-xs'" [(colorPicker)]="arrayColors[selectedColor]"></span>
+      <span
+        [style.background]="arrayColors[selectedColor]"
+        [cpToggle]="true"
+        [cpDialogDisplay]="'inline'"
+        [cpCancelButton]="true"
+        [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+        [(colorPicker)]="arrayColors[selectedColor]"
+      ></span>
     </div>
 
     <div class="col-md-2">
-      <div class="color-box" [style.background]="arrayColors['color1']" (click)="selectedColor='color1'"></div>
+      <div
+        class="color-box"
+        [style.background]="arrayColors['color1']"
+        (click)="selectedColor = 'color1'"
+      ></div>
 
-      <div class="color-box" [style.background]="arrayColors['color2']" (click)="selectedColor='color2'"></div>
+      <div
+        class="color-box"
+        [style.background]="arrayColors['color2']"
+        (click)="selectedColor = 'color2'"
+      ></div>
 
-      <div class="color-box" [style.background]="arrayColors['color3']" (click)="selectedColor='color3'"></div>
+      <div
+        class="color-box"
+        [style.background]="arrayColors['color3']"
+        (click)="selectedColor = 'color3'"
+      ></div>
 
-      <div class="color-box" [style.background]="arrayColors['color4']" (click)="selectedColor='color4'"></div>
+      <div
+        class="color-box"
+        [style.background]="arrayColors['color4']"
+        (click)="selectedColor = 'color4'"
+      ></div>
 
-      <div class="color-box" [style.background]="arrayColors['color5']" (click)="selectedColor='color5'"></div>
+      <div
+        class="color-box"
+        [style.background]="arrayColors['color5']"
+        (click)="selectedColor = 'color5'"
+      ></div>
     </div>
 
     <div class="col-md-7">
-      <p>Show the dialog permanently: </p>
+      <p>Show the dialog permanently:</p>
       <pre>
 &lt;span [style.background]="arrayColors[selectedColor]"
       [cpToggle]="true"
@@ -411,34 +598,36 @@
     </div>
   </div>
 
-  <hr><br>
+  <hr />
+  <br />
 
-    <hr>
+  <hr />
 
-    <div class="row">
-        <div class="col-md-5">
-            <input (colorPickerClose)="onEventLog('colorPickerClose', $event)"
-                   (colorPickerOpen)="onEventLog('colorPickerOpen', $event)"
-                   (cpInputChange)="onEventLog('cpInputChange', $event)"
-                   (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"
-                   (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)"
-                   [colorPicker]="color18"
-                   [cpExtraTemplate]="customTemplate"
-                   [style.background]="color18"
-                   (keyup)="onEventLog('cpInputChange', $event)"
-                   cpAlphaChannel='disabled'
-            />
+  <div class="row">
+    <div class="col-md-5">
+      <input
+        (colorPickerClose)="onEventLog('colorPickerClose', $event)"
+        (colorPickerOpen)="onEventLog('colorPickerOpen', $event)"
+        (cpInputChange)="onEventLog('cpInputChange', $event)"
+        (cpSliderDragEnd)="onEventLog('cpSliderDragEnd', $event)"
+        (cpSliderDragStart)="onEventLog('cpSliderDragStart', $event)"
+        [colorPicker]="color18"
+        [cpExtraTemplate]="customTemplate"
+        [style.background]="color18"
+        (keyup)="onEventLog('cpInputChange', $event)"
+        cpAlphaChannel="disabled"
+      />
 
-            <ng-template #customTemplate>
-                <div class="">
-                    <h3>Custom template content here.</h3>
-                </div>
-            </ng-template>
+      <ng-template #customTemplate>
+        <div class="">
+          <h3>Custom template content here.</h3>
         </div>
+      </ng-template>
+    </div>
 
-        <div class="col-md-7">
-            <p>Custom template: </p>
-            <pre>
+    <div class="col-md-7">
+      <p>Custom template:</p>
+      <pre>
 &lt;input (colorPickerClose)="onEventLog('colorPickerClose', $event)"
        (colorPickerOpen)="onEventLog('colorPickerOpen', $event)"
        (cpInputChange)="onEventLog('cpInputChange', $event)"
@@ -453,338 +642,347 @@
         &lt;h3&gt;Custom template.&lt;/h3&gt;
     &lt;/div&gt;
 &lt;/ng-template&gt;
-            </pre>
-        </div>
-        <hr><br>
-
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Options</th>
-                        <th>Values (default values in bold)</th>
-                    </tr>
-                    </thead>
-
-        <tbody>
-          <tr>
-            <td>cpOutputFormat</td>
-            <td>
-              <b>'auto'</b>, 'hex', 'rgba', 'hsla'
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpPosition</td>
-            <td>
-              <b>'auto'</b>, 'top', 'bottom', 'top-right', 'top-left', 'bottom-left', 'bottom-right'
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpPositionOffset</td>
-            <td>
-              <b>'0%'</b><br>
-                Dialog offset (percent) relative to the element that contains the directive.
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpPositionRelativeToArrow</td>
-            <td>
-              <b>false</b>, true <br>
-              Dialog position is calculated relative to the dialog (false) or relative to the  dialog arrow (true).
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpWidth</td>
-            <td>
-              <b>'230px'</b><br>
-              Use this option to set color picker dialog width (pixels).
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpHeight</td>
-            <td>
-              <b>'auto'</b><br>
-              Use this option to force color picker dialog height (pixels).
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpSaveClickOutside</td>
-            <td>
-              <b>true</b>, false<br>
-              If true the initial color is restored when user clicks outside.
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpOKButton</td>
-            <td>
-              <b>false</b>, true<br>
-              Shows the Ok button. Saves the selected color.
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpOKButtonText</td>
-            <td>
-              <b>'OK'</b>
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpOKButtonClass</td>
-            <td>
-              Class to customize the OK button.
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpCancelButton</td>
-            <td>
-              <b>false</b>, true<br>
-              Shows the Cancel button. Cancel the selected color.
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpCancelButtonText</td>
-            <td>
-              <b>'Cancel'</b>
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpCancelButtonClass</td>
-            <td>
-              Class to customize the Cancel button.
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpFallbackColor</td>
-            <td>
-              <b>'#fff'</b><br>
-              Is used when the color is not well-formed or not defined.
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpPresetLabel</td>
-            <td>
-              <b>'Preset colors'</b><br>
-              Label for preset colors if any provided used.
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpPresetColors</td>
-            <td>
-              <b>[]</b><br>
-              Array of preset colors to show in the color picker dialog.
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpToggle</td>
-            <td>
-              <b>false</b>, true<br>
-              Input/ouput to open/close the color picker.
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpIgnoredElements</td>
-            <td>
-              <b>[]</b><br>
-              Array of HTML elements that will be ignored by the color picker when they are clicked.
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpDialogDisplay</td>
-            <td>
-              <b>'popup'</b>, 'inline'<br>
-              popup: dialog is showed when user clicks in the directive.<br>
-              inline: dialog is showed permanently. You can show/hide the dialog with cpToggle.<br>
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpDisableInput</td>
-            <td>
-              <b>false</b>, true<br>
-              Disables / hides the color input field from the dialog.<br>
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpAlphaChannel</td>
-            <td>
-              <b>'enabled'</b>, 'disabled', 'always', 'forced'<br>
-              enabled: alpha channel is not included for hexadecimal (hex6) values or for values without alpha (alpha = 1).<br>
-              disabled: alpha channel is completely disabled.<br>
-              always: alpha channel is included for hexadecimal (hex6) values and values without alpha (alpha = 1).<br>
-              forced: alpha channel field is added for hexadecimal (hex6) values.<br>
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpCmykEnabled</td>
-            <td>
-              <b>false</b>, true<br>
-              Enables CMYK color input and selected CMYK color event sending on color change.<br>
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpUseRootViewContainer</td>
-            <td>
-              <b>false</b>, true<br>
-              Create dialog component in the root view container instead the elements view container.<br>
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpAddColorButton</td>
-            <td>
-              <b>false</b>, true<br>
-              Add or remove colors into your preset panel. The [cpPresetColors] is needed<br>
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpAddColorButtonText</td>
-            <td>
-              <b>'Add color'</b>
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpAddColorButtonClass</td>
-            <td>
-              Class to customize the add color button.
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpRemoveColorButtonClass</td>
-            <td>
-              Class to customize the remove color button.
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpPresetColorsClass</td>
-            <td>
-              Class to customize the preset colors container.
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpMaxPresetColorsLength</td>
-            <td>
-              <b>8</b> (number)<br>
-              Use this option to set the max colors allowed into preset panel.
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpPresetEmptyMessage</td>
-            <td>
-              <b>'No colors added'</b><br>
-              Message for empty colors if any provided used.
-            </td>
-          </tr>
-
-          <tr>
-            <td>cpPresetEmptyMessageClass</td>
-            <td>
-              Class to customize the empty colors message.
-            </td>
-          </tr>
-          <tr>
-            <td>cpEyeDropper</td>
-            <td>
-              Enable eye dropper on click of colored circle. Click again to pick a color.
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </pre
+      >
     </div>
-  </div>
+    <hr />
+    <br />
 
-  <hr><br>
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Options</th>
+              <th>Values (default values in bold)</th>
+            </tr>
+          </thead>
 
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Events</th>
-            <th>Description (data format in bold)</th>
-          </tr>
-        </thead>
+          <tbody>
+            <tr>
+              <td>cpOutputFormat</td>
+              <td><b>'auto'</b>, 'hex', 'rgba', 'hsla'</td>
+            </tr>
 
-        <tbody>
-          <tr>
-            <td>colorPickerChange</td>
-            <td>
-              Changed color value, send when color is changed. <b>(value: string)</b>
-            </td>
-          </tr>
+            <tr>
+              <td>cpPosition</td>
+              <td>
+                <b>'auto'</b>, 'top', 'bottom', 'top-right', 'top-left',
+                'bottom-left', 'bottom-right'
+              </td>
+            </tr>
 
-          <tr>
-            <td>colorPickerSelect</td>
-            <td>
-              Selected color value, send when user presses the OK button. <b>(value: string)</b>
-            </td>
-          </tr>
+            <tr>
+              <td>cpPositionOffset</td>
+              <td>
+                <b>'0%'</b><br />
+                Dialog offset (percent) relative to the element that contains
+                the directive.
+              </td>
+            </tr>
 
-          <tr>
-            <td>cpToggleChange</td>
-            <td>
-              Status of the dialog, send when dialog is opened / closed. <b>(open: boolean)</b>
-            </td>
-          </tr>
+            <tr>
+              <td>cpPositionRelativeToArrow</td>
+              <td>
+                <b>false</b>, true <br />
+                Dialog position is calculated relative to the dialog (false) or
+                relative to the dialog arrow (true).
+              </td>
+            </tr>
 
-          <tr>
-            <td>cpInputChange</td>
-            <td>
-              Input name and its value, send when user changes color through inputs. <b>({{ '{' }}input: string, value: string{{ '}' }})</b>
-            </td>
-          </tr>
+            <tr>
+              <td>cpWidth</td>
+              <td>
+                <b>'230px'</b><br />
+                Use this option to set color picker dialog width (pixels).
+              </td>
+            </tr>
 
-          <tr>
-            <td>cpSliderChange</td>
-            <td>
-              Slider name and its value, send when user changes color through slider. <b>({{ '{' }}slider: string, value: Object{{ '}' }})</b>
-            </td>
-          </tr>
+            <tr>
+              <td>cpHeight</td>
+              <td>
+                <b>'auto'</b><br />
+                Use this option to force color picker dialog height (pixels).
+              </td>
+            </tr>
 
-          <tr>
-            <td>cpCmykColorChange</td>
-            <td>
-              CMYK color value, send when on color change if cpCmykEnabled is true. <b>(value: string)</b>
-            </td>
-          </tr>
+            <tr>
+              <td>cpSaveClickOutside</td>
+              <td>
+                <b>true</b>, false<br />
+                If true the initial color is restored when user clicks outside.
+              </td>
+            </tr>
 
-          <tr>
-            <td>cpPresetColorsChange</td>
-            <td>
-              Preset colors value, send when Add Color button is pressed. <b>(value: array)</b>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            <tr>
+              <td>cpOKButton</td>
+              <td>
+                <b>false</b>, true<br />
+                Shows the Ok button. Saves the selected color.
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpOKButtonText</td>
+              <td>
+                <b>'OK'</b>
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpOKButtonClass</td>
+              <td>Class to customize the OK button.</td>
+            </tr>
+
+            <tr>
+              <td>cpCancelButton</td>
+              <td>
+                <b>false</b>, true<br />
+                Shows the Cancel button. Cancel the selected color.
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpCancelButtonText</td>
+              <td>
+                <b>'Cancel'</b>
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpCancelButtonClass</td>
+              <td>Class to customize the Cancel button.</td>
+            </tr>
+
+            <tr>
+              <td>cpFallbackColor</td>
+              <td>
+                <b>'#fff'</b><br />
+                Is used when the color is not well-formed or not defined.
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpPresetLabel</td>
+              <td>
+                <b>'Preset colors'</b><br />
+                Label for preset colors if any provided used.
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpPresetColors</td>
+              <td>
+                <b>[]</b><br />
+                Array of preset colors to show in the color picker dialog.
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpToggle</td>
+              <td>
+                <b>false</b>, true<br />
+                Input/ouput to open/close the color picker.
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpIgnoredElements</td>
+              <td>
+                <b>[]</b><br />
+                Array of HTML elements that will be ignored by the color picker
+                when they are clicked.
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpDialogDisplay</td>
+              <td>
+                <b>'popup'</b>, 'inline'<br />
+                popup: dialog is showed when user clicks in the directive.<br />
+                inline: dialog is showed permanently. You can show/hide the
+                dialog with cpToggle.<br />
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpDisableInput</td>
+              <td>
+                <b>false</b>, true<br />
+                Disables / hides the color input field from the dialog.<br />
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpAlphaChannel</td>
+              <td>
+                <b>'enabled'</b>, 'disabled', 'always', 'forced'<br />
+                enabled: alpha channel is not included for hexadecimal (hex6)
+                values or for values without alpha (alpha = 1).<br />
+                disabled: alpha channel is completely disabled.<br />
+                always: alpha channel is included for hexadecimal (hex6) values
+                and values without alpha (alpha = 1).<br />
+                forced: alpha channel field is added for hexadecimal (hex6)
+                values.<br />
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpCmykEnabled</td>
+              <td>
+                <b>false</b>, true<br />
+                Enables CMYK color input and selected CMYK color event sending
+                on color change.<br />
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpUseRootViewContainer</td>
+              <td>
+                <b>false</b>, true<br />
+                Create dialog component in the root view container instead the
+                elements view container.<br />
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpAddColorButton</td>
+              <td>
+                <b>false</b>, true<br />
+                Add or remove colors into your preset panel. The
+                [cpPresetColors] is needed<br />
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpAddColorButtonText</td>
+              <td>
+                <b>'Add color'</b>
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpAddColorButtonClass</td>
+              <td>Class to customize the add color button.</td>
+            </tr>
+
+            <tr>
+              <td>cpRemoveColorButtonClass</td>
+              <td>Class to customize the remove color button.</td>
+            </tr>
+
+            <tr>
+              <td>cpPresetColorsClass</td>
+              <td>Class to customize the preset colors container.</td>
+            </tr>
+
+            <tr>
+              <td>cpMaxPresetColorsLength</td>
+              <td>
+                <b>8</b> (number)<br />
+                Use this option to set the max colors allowed into preset panel.
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpPresetEmptyMessage</td>
+              <td>
+                <b>'No colors added'</b><br />
+                Message for empty colors if any provided used.
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpPresetEmptyMessageClass</td>
+              <td>Class to customize the empty colors message.</td>
+            </tr>
+            <tr>
+              <td>cpEyeDropper</td>
+              <td>
+                Enable eye dropper on click of colored circle. Click again to
+                pick a color.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
 
-  <hr>
-  <br>
+    <hr />
+    <br />
+
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Events</th>
+              <th>Description (data format in bold)</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>colorPickerChange</td>
+              <td>
+                Changed color value, send when color is changed.
+                <b>(value: string)</b>
+              </td>
+            </tr>
+
+            <tr>
+              <td>colorPickerSelect</td>
+              <td>
+                Selected color value, send when user presses the OK button.
+                <b>(value: string)</b>
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpToggleChange</td>
+              <td>
+                Status of the dialog, send when dialog is opened / closed.
+                <b>(open: boolean)</b>
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpInputChange</td>
+              <td>
+                Input name and its value, send when user changes color through
+                inputs. <b>({{ '{' }}input: string, value: string{{ '}' }})</b>
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpSliderChange</td>
+              <td>
+                Slider name and its value, send when user changes color through
+                slider. <b>({{ '{' }}slider: string, value: Object{{ '}' }})</b>
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpCmykColorChange</td>
+              <td>
+                CMYK color value, send when on color change if cpCmykEnabled is
+                true. <b>(value: string)</b>
+              </td>
+            </tr>
+
+            <tr>
+              <td>cpPresetColorsChange</td>
+              <td>
+                Preset colors value, send when Add Color button is pressed.
+                <b>(value: array)</b>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <hr />
+    <br />
+  </div>
 </div>

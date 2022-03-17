@@ -2,6 +2,8 @@ export const colorOptions =  {
     DEFAULT_PREVIOUS_COLOR_OPTION: 'Previous color option',
     DEFAULT_NEXT_COLOR_OPTION: 'Next color option',
 
+    DEFAULT_COLOR: 'Color',
+    DEFAULT_REMOVE_COLOR: 'Remove Color',
     DEFAULT_MAX: 'Maximum',
     DEFAULT_MIN: 'Minimum',
     DEFAULT_STEP: 'Step',

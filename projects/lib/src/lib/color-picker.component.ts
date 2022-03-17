@@ -1056,6 +1056,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   nextColorLabel: string;
   previousColorLabel: string;
 
+  colorLabel: string;
+  removeColorLabel: string;
+
   maxLabel: string;
   minLabel: string;
   andLabel: string;
@@ -1136,5 +1139,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.hslaLabelledbyGroup = this.colorInputs?.hslaLabelledByGroup ? this.colorInputs.hslaLabelledByGroup : '';
       this.grayscaleLabelledbyGroup = this.colorInputs?.grayscaleLabelledByGroup ? this.colorInputs.grayscaleLabelledByGroup : '';
       this.cmykLabelledbyGroup = this.colorInputs?.cmykLabelledByGroup ? this.colorInputs.cmykLabelledByGroup : '';
+
+      // Specific color button for Preset Color (On Add Color)
+      this.colorLabel = this.colorInputs?.colorLabel ? this.colorInputs.colorLabel : colorOptions.DEFAULT_COLOR;
+      this.removeColorLabel = this.colorInputs?.removeColorLabel ? this.colorInputs.removeColorLabel : colorOptions.DEFAULT_REMOVE_COLOR;
   }
 }

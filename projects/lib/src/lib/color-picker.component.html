@@ -108,8 +108,8 @@
     <div class="preset-label">{{cpPresetLabel}}</div>
 
     <div *ngIf="cpPresetColors?.length" class="{{cpPresetColorsClass}}">
-      <div attr.aria-label="{{color}}" tabindex="0" triggerKeyup *ngFor="let color of cpPresetColors" class="preset-color" [style.backgroundColor]="color" (click)="setColorFromString(color)">
-        <span attr.aria-label="Remove Color {{color}}" tabindex="0" triggerKeyup *ngIf="cpAddColorButton" class="{{cpRemoveColorButtonClass}}" (click)="onRemovePresetColor($event, color)"></span>
+      <div role="button" attr.aria-label="{{colorLabel}} {{color}}" tabindex="0" triggerKeyup *ngFor="let color of cpPresetColors" class="preset-color" [style.backgroundColor]="color" (click)="setColorFromString(color)">
+        <span role="button" attr.aria-label="{{removeColorLabel}} {{color}}" tabindex="0" triggerKeyup *ngIf="cpAddColorButton" class="{{cpRemoveColorButtonClass}}" (click)="onRemovePresetColor($event, color)"></span>
       </div>
     </div>
 

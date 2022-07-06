@@ -1,12 +1,14 @@
 import { Component, ViewContainerRef } from '@angular/core';
 
-import { ColorPickerService, Cmyk } from 'ngx-color-picker';
+import { ColorPickerService, Cmyk, ColorPickerModule } from 'ngx-color-picker';
 
 @Component({
   selector: 'my-app',
   moduleId: 'src/app/app.component',
   templateUrl: 'app.component.html',
-  styleUrls: [ 'app.component.css' ]
+  styleUrls: [ 'app.component.css' ],
+  standalone: true,
+  imports: [ColorPickerModule]
 })
 export class AppComponent {
   public toggle: boolean = false;

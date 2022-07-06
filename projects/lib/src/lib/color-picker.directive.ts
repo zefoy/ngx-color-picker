@@ -2,7 +2,6 @@ import { Directive, OnChanges, OnDestroy, Input, Output, EventEmitter,
   HostListener, ApplicationRef, ComponentRef, ElementRef, ViewContainerRef,
   Injector, ComponentFactoryResolver, EmbeddedViewRef, TemplateRef } from '@angular/core';
 
-import { ColorPickerService } from './color-picker.service';
 import { ColorPickerComponent } from './color-picker.component';
 
 import { AlphaChannel, ColorMode, OutputFormat } from './helpers';
@@ -16,7 +15,8 @@ const NG_DEV_MODE = typeof ngDevMode === 'undefined' || !!ngDevMode;
 
 @Directive({
   selector: '[colorPicker]',
-  exportAs: 'ngxColorPicker'
+  exportAs: 'ngxColorPicker',
+  standalone: true,
 })
 export class ColorPickerDirective implements OnChanges, OnDestroy {
   private dialog: any;
@@ -116,9 +116,12 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
     this.inputChange(event);
   }
 
-  constructor(private injector: Injector, private cfr: ComponentFactoryResolver,
-    private appRef: ApplicationRef, private vcRef: ViewContainerRef, private elRef: ElementRef,
-    private _service: ColorPickerService) {}
+  constructor(
+    private injector: Injector,
+    private appRef: ApplicationRef,
+    private vcRef: ViewContainerRef,
+    private elRef: ElementRef,
+  ) {}
 
   ngOnDestroy(): void {
     if (this.cmpRef != null) {
@@ -189,10 +192,10 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
         }
       }
 
-      const compFactory = this.cfr.resolveComponentFactory(ColorPickerComponent);
-
       if (this.viewAttachedToAppRef) {
-        this.cmpRef = compFactory.create(this.injector);
+        const resolver = this.injector.get(ComponentFactoryResolver);
+        const factory = resolver.resolveComponentFactory(ColorPickerComponent);
+        this.cmpRef = factory.create(this.injector);
         this.appRef.attachView(this.cmpRef.hostView);
         document.body.appendChild((this.cmpRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement);
       } else {
@@ -203,7 +206,10 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
           parent: vcRef.injector,
         });
 
-        this.cmpRef = vcRef.createComponent(compFactory, 0, injector, []);
+        this.cmpRef = vcRef.createComponent(ColorPickerComponent, {
+          index: 0,
+          injector,
+        });
       }
 
       this.cmpRef.instance.setupDialog(this, this.elRef, this.colorPicker,

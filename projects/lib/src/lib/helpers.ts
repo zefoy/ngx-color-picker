@@ -71,26 +71,9 @@ export function calculateAutoPositioning(elBounds: BoundingRectangle, triggerElB
   return `${usePositionY}-${usePositionX}`;
 }
 
-export function detectIE(): boolean | number {
-  let ua = '';
-
-  if (typeof navigator !== 'undefined') {
-    ua = navigator.userAgent.toLowerCase();
-  }
-
-  const msie = ua.indexOf('msie ');
-
-  if (msie > 0) {
-    // IE 10 or older => return version number
-    return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
-  }
-
-  // Other browser
-  return false;
-}
-
 @Directive({
-  selector: '[text]'
+  selector: '[text]',
+  standalone: true,
 })
 export class TextDirective {
   @Input() rg: number;
@@ -112,7 +95,8 @@ export class TextDirective {
 }
 
 @Directive({
-  selector: '[slider]'
+  selector: '[slider]',
+  standalone: true,
 })
 export class SliderDirective {
   private listenerMove: any;

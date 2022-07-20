@@ -65,7 +65,7 @@
     "stylelint": "^14.3.0",
     "stylelint-config-standard": "^24.0.0",
     "stylelint-order": "^5.0.0",
-    "terser": "^5.10.0",
+    "terser": "^5.14.2",
     "ts-node": "^10.4.0",
     "tsickle": "^0.46.0",
     "tslib": "^2.3.1",

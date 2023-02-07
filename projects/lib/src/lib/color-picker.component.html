@@ -1,5 +1,5 @@
 <div #dialogPopup class="color-picker" [class.open]="show" [style.display]="!show ? 'none' : 'block'" [style.visibility]="hidden ? 'hidden' : 'visible'" [style.top.px]="top" [style.left.px]="left" [style.position]="position" [style.height.px]="cpHeight" [style.width.px]="cpWidth" (click)="$event.stopPropagation()">
-  <div *ngIf="cpDialogDisplay === 'popup'" class="arrow arrow-{{cpUsePosition}}" [style.top.px]="arrowTop"></div>
+  <div *ngIf="cpDialogDisplay === 'popup'" [style.left]="cpArrowPosition" class="arrow arrow-{{cpUsePosition}}" [style.top.px]="arrowTop"></div>
 
   <div *ngIf="(cpColorMode || 1) === 1" class="saturation-lightness" [slider] [rgX]="1" [rgY]="1" [style.background-color]="hueSliderColor" (newValue)="onColorChange($event)" (dragStart)="onDragStart('saturation-lightness')" (dragEnd)="onDragEnd('saturation-lightness')">
     <div class="cursor" [style.top.px]="slider?.v" [style.left.px]="slider?.s"></div>

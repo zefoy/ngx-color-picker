@@ -82,6 +82,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
   @Input() cpAddColorButtonClass: string = 'cp-add-color-button-class';
 
   @Input() cpRemoveColorButtonClass: string = 'cp-remove-color-button-class';
+  @Input() cpArrowPosition: number = 0;
 
   @Input() cpExtraTemplate: TemplateRef<any>;
 

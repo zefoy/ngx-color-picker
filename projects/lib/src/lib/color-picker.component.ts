@@ -137,6 +137,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public cpAddColorButtonText: string;
   public cpAddColorButtonClass: string;
   public cpRemoveColorButtonClass: string;
+  public cpArrowPosition: number;
 
   public cpTriggerElement: ElementRef;
 
@@ -1045,6 +1046,19 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (this.cpPosition === 'auto') {
         const dialogBounds = this.dialogElement.nativeElement.getBoundingClientRect();
+        const windowInnerHeight = window.innerHeight;
+        const windowInnerWidth = window.innerWidth;
+        const elRefClientRect = this.elRef.nativeElement.getBoundingClientRect();
+        const bottom = this.top + dialogBounds.height;
+        if (bottom > windowInnerHeight) {
+          this.top = windowInnerHeight - dialogBounds.height;
+          this.cpArrowPosition = elRefClientRect.x / 2 - 20;
+        }
+        const right = this.left + dialogBounds.width;
+        if (right > windowInnerWidth) {
+          this.left = windowInnerWidth - dialogBounds.width;
+          this.cpArrowPosition = elRefClientRect.x / 2 - 20;
+        }
         const triggerBounds = this.cpTriggerElement.nativeElement.getBoundingClientRect();
         usePosition = calculateAutoPositioning(dialogBounds, triggerBounds);
       }

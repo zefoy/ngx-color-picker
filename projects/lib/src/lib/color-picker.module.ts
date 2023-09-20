@@ -13,7 +13,6 @@ import './ng-dev-mode';
   imports: [ CommonModule ],
   exports: [ ColorPickerDirective ],
   providers: [ ColorPickerService ],
-  declarations: [ ColorPickerComponent, ColorPickerDirective, TextDirective, SliderDirective ],
-  entryComponents: [ ColorPickerComponent ]
+  declarations: [ ColorPickerComponent, ColorPickerDirective, TextDirective, SliderDirective ]
 })
 export class ColorPickerModule {}

@@ -121,9 +121,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public cpCancelButtonText: string;
   public cpCancelButtonClass: string;
 
-  public eyeDropperSupported =
-    isPlatformBrowser(this.platformId) && 'EyeDropper' in this.document.defaultView;
   public cpEyeDropper: boolean;
+  public eyeDropperSupported: boolean;
 
   public cpPresetLabel: string;
   public cpPresetColors: string[];
@@ -167,7 +166,9 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: string,
     private service: ColorPickerService
-  ) {}
+  ) {
+    this.eyeDropperSupported = isPlatformBrowser(this.platformId) && 'EyeDropper' in this.document.defaultView;
+  }
 
   ngOnInit(): void {
     this.slider = new SliderPosition(0, 0, 0, 0);

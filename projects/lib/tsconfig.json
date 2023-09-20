@@ -2,14 +2,14 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
-    "target": "es2015",
+    "target": "es2022",
     "declaration": true,
     "inlineSources": true,
     "stripInternal": true,
     "types": [],
     "lib": [
       "dom",
-      "es2018"
+      "es2022"
     ]
   },
   "angularCompilerOptions": {

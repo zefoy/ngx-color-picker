@@ -1044,45 +1044,63 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       let usePosition = this.cpPosition;
 
+      const dialogBounds = this.dialogElement.nativeElement.getBoundingClientRect();
       if (this.cpPosition === 'auto') {
-        const dialogBounds = this.dialogElement.nativeElement.getBoundingClientRect();
-        const windowInnerHeight = window.innerHeight;
-        const windowInnerWidth = window.innerWidth;
-        const elRefClientRect = this.elRef.nativeElement.getBoundingClientRect();
-        const bottom = this.top + dialogBounds.height;
-        if (bottom > windowInnerHeight) {
-          this.top = windowInnerHeight - dialogBounds.height;
-          this.cpArrowPosition = elRefClientRect.x / 2 - 20;
-        }
-        const right = this.left + dialogBounds.width;
-        if (right > windowInnerWidth) {
-          this.left = windowInnerWidth - dialogBounds.width;
-          this.cpArrowPosition = elRefClientRect.x / 2 - 20;
-        }
         const triggerBounds = this.cpTriggerElement.nativeElement.getBoundingClientRect();
         usePosition = calculateAutoPositioning(dialogBounds, triggerBounds);
       }
 
-      if (usePosition === 'top') {
-        this.arrowTop = dialogHeight - 1;
+      this.arrowTop = usePosition === 'top'
+        ? dialogHeight - 1
+        : undefined;
+      this.cpArrowPosition = undefined;
 
-        this.top -= dialogHeight + this.dialogArrowSize;
-        this.left += this.cpPositionOffset / 100 * boxDirective.width - this.dialogArrowOffset;
-      } else if (usePosition === 'bottom') {
-        this.top += boxDirective.height + this.dialogArrowSize;
-        this.left += this.cpPositionOffset / 100 * boxDirective.width - this.dialogArrowOffset;
-      } else if (usePosition === 'top-left' || usePosition === 'left-top') {
-        this.top -= dialogHeight - boxDirective.height + boxDirective.height * this.cpPositionOffset / 100;
-        this.left -= this.cpWidth + this.dialogArrowSize - 2 - this.dialogArrowOffset;
-      } else if (usePosition === 'top-right' || usePosition === 'right-top') {
-        this.top -= dialogHeight - boxDirective.height + boxDirective.height * this.cpPositionOffset / 100;
-        this.left += boxDirective.width + this.dialogArrowSize - 2 - this.dialogArrowOffset;
-      } else if (usePosition === 'left' || usePosition === 'bottom-left' || usePosition === 'left-bottom') {
-        this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
-        this.left -= this.cpWidth + this.dialogArrowSize - 2;
-      } else { // usePosition === 'right' || usePosition === 'bottom-right' || usePosition === 'right-bottom'
-        this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
-        this.left += boxDirective.width + this.dialogArrowSize - 2;
+      switch (usePosition) {
+        case 'top':
+          this.top -= dialogHeight + this.dialogArrowSize;
+          this.left += this.cpPositionOffset / 100 * boxDirective.width - this.dialogArrowOffset;
+          break;
+        case 'bottom':
+          this.top += boxDirective.height + this.dialogArrowSize;
+          this.left += this.cpPositionOffset / 100 * boxDirective.width - this.dialogArrowOffset;
+          break;
+        case 'top-left':
+        case 'left-top':
+          this.top -= dialogHeight - boxDirective.height + boxDirective.height * this.cpPositionOffset / 100;
+          this.left -= this.cpWidth + this.dialogArrowSize - 2 - this.dialogArrowOffset;
+          break;
+        case 'top-right':
+        case 'right-top':
+          this.top -= dialogHeight - boxDirective.height + boxDirective.height * this.cpPositionOffset / 100;
+          this.left += boxDirective.width + this.dialogArrowSize - 2 - this.dialogArrowOffset;
+          break;
+        case 'left':
+        case 'bottom-left':
+        case 'left-bottom':
+          this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
+          this.left -= this.cpWidth + this.dialogArrowSize - 2;
+          break;
+        case 'right':
+        case 'bottom-right':
+        case 'right-bottom':
+        default:
+          this.top += boxDirective.height * this.cpPositionOffset / 100 - this.dialogArrowOffset;
+          this.left += boxDirective.width + this.dialogArrowSize - 2;
+          break;
+      }
+
+      const windowInnerHeight = window.innerHeight;
+      const windowInnerWidth = window.innerWidth;
+      const elRefClientRect = this.elRef.nativeElement.getBoundingClientRect();
+      const bottom = this.top + dialogBounds.height;
+      if (bottom > windowInnerHeight) {
+        this.top = windowInnerHeight - dialogBounds.height;
+        this.cpArrowPosition = elRefClientRect.x / 2 - 20;
+      }
+      const right = this.left + dialogBounds.width;
+      if (right > windowInnerWidth) {
+        this.left = windowInnerWidth - dialogBounds.width;
+        this.cpArrowPosition = elRefClientRect.x / 2 - 20;
       }
 
       this.cpUsePosition = usePosition;

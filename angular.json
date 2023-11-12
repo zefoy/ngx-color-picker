@@ -14,14 +14,13 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/app",
             "index": "projects/app/src/index.html",
-            "main": "projects/app/src/main.ts",
-            "polyfills": "projects/app/src/polyfills.ts",
+            "browser": "projects/app/src/main.ts",
+            "polyfills": ["projects/app/src/polyfills.ts"],
             "tsConfig": "projects/app/tsconfig.json",
-            "aot": true,
             "assets": [
               "projects/app/src/favicon.ico",
               "projects/app/src/assets"
@@ -39,13 +38,6 @@
                   "with": "projects/app/src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "none",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -58,24 +50,34 @@
                   "maximumError": "50kb"
                 }
               ]
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "app:build"
+            "buildTarget": "app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "app:build:production"
+              "buildTarget": "app:build:production"
+            },
+            "development": {
+              "buildTarget": "app:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "app:build"
+            "buildTarget": "app:build"
           }
         },
         "lint": {

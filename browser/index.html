@@ -1,0 +1,66 @@
+<html data-critters-container>
+  <head>
+    <base href="ngx-color-picker">
+
+    <meta charset="UTF-8">
+
+    <title>Example app</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <style>
+      .loading,
+      .loading:after,
+      .loading:before {
+        content: ' ';
+        top: 0;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        animation: spinner 1600ms infinite ease-in-out;
+      }
+
+      .loading {
+        color: #555;
+        margin: 64px auto;
+        position: relative;
+        animation-delay: -160ms;
+      }
+
+      .loading:after {
+        left: 64px;
+      }
+
+      .loading:before {
+        left: -64px;
+        animation-delay: -320ms;
+      }
+
+      .loading:after,
+      .loading:before {
+        position: absolute;
+      }
+
+      @keyframes spinner {
+        40% {
+          box-shadow: 0 40px 0 0;
+        }
+
+        0%,
+        80%,
+        100% {
+          box-shadow: 0 40px 0 -20px;
+        }
+      }
+    </style>
+
+    <script>window.module = 'aot';</script>
+  <style>*,:before,:after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}:before,:after{--tw-content: ""}html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal}body{margin:0;line-height:inherit}*,:before,:after{--tw-border-spacing-x: 0;--tw-border-spacing-y: 0;--tw-translate-x: 0;--tw-translate-y: 0;--tw-rotate: 0;--tw-skew-x: 0;--tw-skew-y: 0;--tw-scale-x: 1;--tw-scale-y: 1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness: proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width: 0px;--tw-ring-offset-color: #fff;--tw-ring-color: rgb(59 130 246 / .5);--tw-ring-offset-shadow: 0 0 #0000;--tw-ring-shadow: 0 0 #0000;--tw-shadow: 0 0 #0000;--tw-shadow-colored: 0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }
+</style><link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles.css"></noscript></head>
+
+  <body>
+    <my-app><div class="loading"></div></my-app>
+  <script src="polyfills.js" type="module"></script><script src="main.js" type="module"></script></body>
+</html>

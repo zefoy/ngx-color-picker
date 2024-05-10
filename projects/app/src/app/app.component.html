@@ -345,6 +345,14 @@
 
       <input [value]="color15" [style.background]="color15" [cpAlphaChannel]="'forced'" [cpOutputFormat]="'hex'" [(colorPicker)]="color15"/>
 
+      <br>
+
+      <label>
+        Alpha enabled:
+        <input type="checkbox" [(ngModel)]="alphaEnabled"/>
+      </label>
+      <input [value]="color20" [style.background]="color20" [cpAlphaChannel]="alphaEnabled ? 'always' : 'disabled'" [cpOutputFormat]="'hex'" [(colorPicker)]="color20"/>
+
     </div>
 
     <div class="col-md-7">
@@ -372,6 +380,12 @@
 &lt;input [value]="color"
        [style.background]="color"
        [cpAlphaChannel]="'forced'"
+       [cpOutputFormat]="'hex'"
+       [(colorPicker)]="color"/&gt;
+
+&lt;input [value]="color"
+       [style.background]="color"
+       [cpAlphaChannel]="alphaEnabled ? 'always' : 'disabled'"
        [cpOutputFormat]="'hex'"
        [(colorPicker)]="color"/&gt;
       </pre>
@@ -461,15 +475,14 @@
         </div>
         <hr><br>
 
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Options</th>
-                        <th>Values (default values in bold)</th>
-                    </tr>
-                    </thead>
+        <div class="col-md-12">
+          <table class="table">
+            <thead>
+            <tr>
+                <th>Options</th>
+                <th>Values (default values in bold)</th>
+            </tr>
+            </thead>
 
         <tbody>
           <tr>

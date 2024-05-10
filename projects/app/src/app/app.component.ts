@@ -42,10 +42,13 @@ export class AppComponent {
   public color17: string = '#666666';
   public color18: string = '#fa8072';
   public color19: string = '#f88888';
+  public color20: string = '#ff0000';
 
   public cmykValue: string = '';
 
   public cmykColor: Cmyk = new Cmyk(0, 0, 0, 0);
+
+  public alphaEnabled = false;
 
   constructor(public vcRef: ViewContainerRef, private cpService: ColorPickerService) {}
 

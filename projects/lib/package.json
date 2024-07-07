@@ -1,6 +1,11 @@
 {
   "name": "ngx-color-picker",
   "description": "Color picker widget for Angular",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zefoy/ngx-color-picker.git",
+    "directory": "projects/lib"
+  },
   "bugs": "https://github.com/zefoy/ngx-color-picker/issues",
   "version": "16.0.0",
   "license": "MIT",

@@ -226,6 +226,10 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
         this.cmpRef.changeDetectorRef.detectChanges();
       }
     } else if (this.dialog) {
+      // Update properties.
+      this.cmpRef.instance.cpAlphaChannel = this.cpAlphaChannel;
+
+      // Open dialog.
       this.dialog.openDialog(this.colorPicker);
     }
   }

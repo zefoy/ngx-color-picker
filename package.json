@@ -64,6 +64,7 @@
     "stylelint": "^16.6.0",
     "stylelint-config-standard": "^36.0.0",
     "stylelint-order": "^6.0.0",
+    "tslib": "^2.3.0",
     "terser": "^5.31.0",
     "typescript": "~5.4.0",
     "watch": "^1.0.0"

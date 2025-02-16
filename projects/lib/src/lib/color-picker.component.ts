@@ -31,7 +31,8 @@ const SUPPORTS_TOUCH = typeof window !== 'undefined' && 'ontouchstart' in window
   selector: 'color-picker',
   templateUrl: './color-picker.component.html',
   styleUrls: [ './color-picker.component.css' ],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: false
 })
 export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   private isIE10: boolean = false;

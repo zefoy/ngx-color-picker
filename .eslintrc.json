@@ -22,9 +22,6 @@
         "@angular-eslint/component-selector": [
           "off"
         ],
-        "@angular-eslint/prefer-standalone": [
-          "off"
-        ],
         "@angular-eslint/directive-selector": [
           "off"
         ]

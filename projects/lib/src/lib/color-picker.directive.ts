@@ -5,6 +5,7 @@ import { Directive, OnChanges, OnDestroy, Input, Output, EventEmitter,
 import { ColorPickerComponent } from './color-picker.component';
 
 import { AlphaChannel, ColorMode, OutputFormat } from './helpers';
+import './ng-dev-mode';
 
 // Caretaker note: we have still left the `typeof` condition in order to avoid
 // creating a breaking change for projects that still use the View Engine.
@@ -15,8 +16,7 @@ const NG_DEV_MODE = typeof ngDevMode === 'undefined' || !!ngDevMode;
 
 @Directive({
   selector: '[colorPicker]',
-  exportAs: 'ngxColorPicker',
-  standalone: false
+  exportAs: 'ngxColorPicker'
 })
 export class ColorPickerDirective implements OnChanges, OnDestroy {
   private dialog: any;

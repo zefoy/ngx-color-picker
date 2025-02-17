@@ -14,9 +14,9 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 
-import { detectIE, calculateAutoPositioning } from './helpers';
+import { detectIE, calculateAutoPositioning, SliderDirective, TextDirective } from './helpers';
 
 import { ColorFormats, Cmyk, Hsla, Hsva, Rgba } from './formats';
 import { AlphaChannel, OutputFormat, SliderDimension, SliderPosition } from './helpers';
@@ -32,7 +32,11 @@ const SUPPORTS_TOUCH = typeof window !== 'undefined' && 'ontouchstart' in window
   templateUrl: './color-picker.component.html',
   styleUrls: [ './color-picker.component.css' ],
   encapsulation: ViewEncapsulation.None,
-  standalone: false
+  imports: [
+    SliderDirective,
+    TextDirective,
+    CommonModule
+  ]
 })
 export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   private isIE10: boolean = false;

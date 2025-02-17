@@ -90,8 +90,7 @@ export function detectIE(): boolean | number {
 }
 
 @Directive({
-  selector: '[text]',
-  standalone: false
+  selector: '[text]'
 })
 export class TextDirective {
   @Input() rg: number;
@@ -113,8 +112,7 @@ export class TextDirective {
 }
 
 @Directive({
-  selector: '[slider]',
-  standalone: false
+  selector: '[slider]'
 })
 export class SliderDirective {
   private listenerMove: any;

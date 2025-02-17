@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { ColorPickerModule } from 'ngx-color-picker';
-
 import { AppComponent } from './app.component';
+import { ColorPickerComponent, ColorPickerDirective, SliderDirective } from "ngx-color-picker";
 
 @NgModule({
   bootstrap: [
@@ -15,7 +14,8 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    ColorPickerModule,
+    ColorPickerComponent,
+    ColorPickerDirective,
     FormsModule,
   ]
 })

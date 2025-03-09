@@ -3,10 +3,10 @@ import { Component } from '@angular/core';
 import { ColorPickerService, Cmyk } from 'ngx-color-picker';
 
 @Component({
-  selector: 'my-app',
+  selector: 'app',
+  standalone: false,
   templateUrl: 'app.component.html',
-  styleUrls: [ 'app.component.css' ],
-  standalone: false
+  styleUrls: [ 'app.component.css' ]
 })
 export class AppComponent {
   public toggle: boolean = false;

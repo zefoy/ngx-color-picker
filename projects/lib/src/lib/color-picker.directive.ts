@@ -1,18 +1,10 @@
 import { Directive, OnChanges, OnDestroy, Input, Output, EventEmitter,
   HostListener, ApplicationRef, ComponentRef, ElementRef, ViewContainerRef,
-  Injector, EmbeddedViewRef, TemplateRef } from '@angular/core';
+  Injector, EmbeddedViewRef, TemplateRef, isDevMode } from '@angular/core';
 
 import { ColorPickerComponent } from './color-picker.component';
 
 import { AlphaChannel, ColorMode, OutputFormat } from './helpers';
-import './ng-dev-mode';
-
-// Caretaker note: we have still left the `typeof` condition in order to avoid
-// creating a breaking change for projects that still use the View Engine.
-// The `ngDevMode` is always available when Ivy is enabled.
-// This will be evaluated during compilation into `const NG_DEV_MODE = false`,
-// thus Terser will be able to tree-shake `console.warn` calls.
-const NG_DEV_MODE = typeof ngDevMode === 'undefined' || !!ngDevMode;
 
 @Directive({
   selector: '[colorPicker]',
@@ -183,7 +175,7 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
         if (appInstance !== Injector.NULL) {
           vcRef = appInstance.vcRef || appInstance.viewContainerRef || this.vcRef;
 
-          if (NG_DEV_MODE && vcRef === this.vcRef) {
+          if (isDevMode() && vcRef === this.vcRef) {
             console.warn('You are using cpUseRootViewContainer, ' +
               'but the root component is not exposing viewContainerRef!' +
               'Please expose it by adding \'public vcRef: ViewContainerRef\' to the constructor.');

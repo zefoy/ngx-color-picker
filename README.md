@@ -32,7 +32,7 @@ npm run start
 npm install ngx-color-picker --save
 ```
 
-##### Import the library into you project:
+##### Import the library into your project:
 
 ```javascript
 import { ColorPickerComponent, ColorPickerDirective } from 'ngx-color-picker';

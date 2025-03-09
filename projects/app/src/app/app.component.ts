@@ -1,12 +1,12 @@
-import { Component, ViewContainerRef } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { ColorPickerService, Cmyk } from 'ngx-color-picker';
 
 @Component({
   selector: 'my-app',
-  moduleId: 'src/app/app.component',
   templateUrl: 'app.component.html',
-  styleUrls: [ 'app.component.css' ]
+  styleUrls: [ 'app.component.css' ],
+  standalone: false
 })
 export class AppComponent {
   public toggle: boolean = false;
@@ -50,14 +50,10 @@ export class AppComponent {
 
   public alphaEnabled = false;
 
-  constructor(public vcRef: ViewContainerRef, private cpService: ColorPickerService) {}
+  constructor(private cpService: ColorPickerService) {}
 
   public onEventLog(event: string, data: any): void {
     console.log(event, data);
-  }
-
-  public onChangeColor(color: string): void {
-    console.log('Color changed:', color);
   }
 
   public onChangeColorCmyk(color: string): Cmyk {

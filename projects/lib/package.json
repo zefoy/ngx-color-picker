@@ -1,6 +1,6 @@
 {
   "license": "MIT",
-  "version": "17.0.0",
+  "version": "18.0.0",
   "name": "ngx-color-picker",
   "description": "Color picker widget for Angular",
   "bugs": "https://github.com/zefoy/ngx-color-picker/issues",

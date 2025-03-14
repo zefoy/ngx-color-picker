@@ -10,7 +10,7 @@ This documentation is for the latest version which requires Angular 5 or newer. 
 
 [Example application](https://zefoy.github.io/ngx-color-picker/)
  |
-[StackBlitz example](https://stackblitz.com/github/zefoy/ngx-color-picker/tree/master)
+[StackBlitz example](https://stackblitz.com/github/zefoy/ngx-color-picker/tree/main)
 
 ### Building the library
 

@@ -14,7 +14,7 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 
-import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
 
 import { detectIE, calculateAutoPositioning, SliderDirective, TextDirective } from './helpers';
 
@@ -35,7 +35,9 @@ const SUPPORTS_TOUCH = typeof window !== 'undefined' && 'ontouchstart' in window
   imports: [
     SliderDirective,
     TextDirective,
-    CommonModule
+    NgIf,
+    NgForOf,
+    NgTemplateOutlet
   ]
 })
 export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {

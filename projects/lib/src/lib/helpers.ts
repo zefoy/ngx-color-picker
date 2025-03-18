@@ -1,4 +1,5 @@
-import { Directive, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Directive, Input, Output, EventEmitter, HostListener, ElementRef, Inject } from '@angular/core';
 
 export type ColorMode = 'color' | 'c' | '1' |
   'grayscale' | 'g' | '2' | 'presets' | 'p' | '3';
@@ -16,7 +17,7 @@ export type BoundingRectangle = {
 
 export type OutputFormat = 'auto' | 'hex' | 'rgba' | 'hsla';
 
-export function calculateAutoPositioning(elBounds: BoundingRectangle, triggerElBounds: BoundingRectangle): string {
+export function calculateAutoPositioning(elBounds: BoundingRectangle, triggerElBounds: BoundingRectangle, window: Window): string {
   // Defaults
   let usePositionX = 'right';
   let usePositionY = 'bottom';
@@ -136,7 +137,7 @@ export class SliderDirective {
     this.start(event);
   }
 
-  constructor(private elRef: ElementRef) {
+  constructor(private elRef: ElementRef, @Inject(DOCUMENT) private document: Document) {
     this.listenerMove = (event: any) => this.move(event);
 
     this.listenerStop = () => this.stop();
@@ -153,19 +154,19 @@ export class SliderDirective {
 
     event.stopPropagation();
 
-    document.addEventListener('mouseup', this.listenerStop);
-    document.addEventListener('touchend', this.listenerStop);
-    document.addEventListener('mousemove', this.listenerMove);
-    document.addEventListener('touchmove', this.listenerMove);
+    this.document.addEventListener('mouseup', this.listenerStop);
+    this.document.addEventListener('touchend', this.listenerStop);
+    this.document.addEventListener('mousemove', this.listenerMove);
+    this.document.addEventListener('touchmove', this.listenerMove);
 
     this.dragStart.emit();
   }
 
   private stop(): void {
-    document.removeEventListener('mouseup', this.listenerStop);
-    document.removeEventListener('touchend', this.listenerStop);
-    document.removeEventListener('mousemove', this.listenerMove);
-    document.removeEventListener('touchmove', this.listenerMove);
+    this.document.removeEventListener('mouseup', this.listenerStop);
+    this.document.removeEventListener('touchend', this.listenerStop);
+    this.document.removeEventListener('mousemove', this.listenerMove);
+    this.document.removeEventListener('touchmove', this.listenerMove);
 
     this.dragEnd.emit();
   }

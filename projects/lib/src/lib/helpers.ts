@@ -116,13 +116,11 @@ export class TextDirective {
   selector: '[slider]'
 })
 export class SliderDirective {
-  private listenerMove: any;
-  private listenerStop: any;
+  private readonly listenerMove: (event: Event) => void;
+  private readonly listenerStop: () => void;
 
   @Input() rgX: number;
   @Input() rgY: number;
-
-  @Input() slider: string;
 
   @Output() dragEnd = new EventEmitter();
   @Output() dragStart = new EventEmitter();
@@ -138,18 +136,18 @@ export class SliderDirective {
   }
 
   constructor(private elRef: ElementRef, @Inject(DOCUMENT) private document: Document) {
-    this.listenerMove = (event: any) => this.move(event);
+    this.listenerMove = (event: Event) => this.move(event);
 
     this.listenerStop = () => this.stop();
   }
 
-  private move(event: any): void {
+  private move(event: Event): void {
     event.preventDefault();
 
     this.setCursor(event);
   }
 
-  private start(event: any): void {
+  private start(event: Event): void {
     this.setCursor(event);
 
     event.stopPropagation();

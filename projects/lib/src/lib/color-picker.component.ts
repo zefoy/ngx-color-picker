@@ -1,4 +1,18 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, HostListener, ViewEncapsulation, ElementRef, ChangeDetectorRef, TemplateRef, NgZone, PLATFORM_ID, inject } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  ViewChild,
+  HostListener,
+  ViewEncapsulation,
+  ElementRef,
+  ChangeDetectorRef,
+  TemplateRef,
+  NgZone,
+  PLATFORM_ID,
+  inject,
+} from "@angular/core";
 
 import { CommonModule, DOCUMENT, isPlatformBrowser } from "@angular/common";
 
@@ -38,8 +52,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   private document = inject<Document>(DOCUMENT);
   private platformId = inject(PLATFORM_ID);
   private service = inject(ColorPickerService);
-
-  private isIE10: boolean = false;
 
   private cmyk: Cmyk;
   private hsva: Hsva;
@@ -293,8 +305,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.setColorMode(cpColorMode);
 
-    this.isIE10 = detectIE() === 10;
-
     this.directiveInstance = instance;
     this.directiveElementRef = elementRef;
 
@@ -457,7 +467,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   public onMouseDown(event: MouseEvent): void {
     if (
       this.show &&
-      !this.isIE10 &&
       this.cpDialogDisplay === "popup" &&
       event.target !== this.directiveElementRef.nativeElement &&
       !this.isDescendant(this.elRef.nativeElement, event.target) &&
@@ -912,20 +921,18 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.directiveInstance.stateChanged(true);
 
-      if (!this.isIE10) {
-        // The change detection should be run on `mousedown` event only when the condition
-        // is met within the `onMouseDown` method.
-        this.ngZone.runOutsideAngular(() => {
-          // There's no sense to add both event listeners on touch devices since the `touchstart`
-          // event is handled earlier than `mousedown`, so we'll get 2 change detections and the
-          // second one will be unnecessary.
-          if (SUPPORTS_TOUCH) {
-            document.addEventListener("touchstart", this.listenerMouseDown);
-          } else {
-            document.addEventListener("mousedown", this.listenerMouseDown);
-          }
-        });
-      }
+      // The change detection should be run on `mousedown` event only when the condition
+      // is met within the `onMouseDown` method.
+      this.ngZone.runOutsideAngular(() => {
+        // There's no sense to add both event listeners on touch devices since the `touchstart`
+        // event is handled earlier than `mousedown`, so we'll get 2 change detections and the
+        // second one will be unnecessary.
+        if (SUPPORTS_TOUCH) {
+          document.addEventListener("touchstart", this.listenerMouseDown);
+        } else {
+          document.addEventListener("mousedown", this.listenerMouseDown);
+        }
+      });
 
       window.addEventListener("resize", this.listenerResize);
     }
@@ -937,12 +944,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.directiveInstance.stateChanged(false);
 
-      if (!this.isIE10) {
-        if (SUPPORTS_TOUCH) {
-          document.removeEventListener("touchstart", this.listenerMouseDown);
-        } else {
-          document.removeEventListener("mousedown", this.listenerMouseDown);
-        }
+      if (SUPPORTS_TOUCH) {
+        document.removeEventListener("touchstart", this.listenerMouseDown);
+      } else {
+        document.removeEventListener("mousedown", this.listenerMouseDown);
       }
 
       window.removeEventListener("resize", this.listenerResize);

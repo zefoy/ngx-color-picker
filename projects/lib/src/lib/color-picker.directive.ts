@@ -1,6 +1,4 @@
-import { Directive, OnChanges, OnDestroy, Input, Output, EventEmitter,
-  HostListener, ApplicationRef, ComponentRef, ElementRef, ViewContainerRef,
-  Injector, EmbeddedViewRef, TemplateRef, isDevMode } from '@angular/core';
+import { Directive, OnChanges, OnDestroy, Input, Output, EventEmitter, HostListener, ApplicationRef, ComponentRef, ElementRef, ViewContainerRef, Injector, EmbeddedViewRef, TemplateRef, isDevMode, inject } from '@angular/core';
 
 import { ColorPickerComponent } from './color-picker.component';
 
@@ -11,6 +9,11 @@ import { AlphaChannel, ColorMode, OutputFormat } from './helpers';
   exportAs: 'ngxColorPicker'
 })
 export class ColorPickerDirective implements OnChanges, OnDestroy {
+  private readonly injector = inject(Injector);
+  private readonly appRef = inject(ApplicationRef);
+  private readonly vcRef = inject(ViewContainerRef);
+  private readonly elRef = inject(ElementRef);
+
   private dialog: any;
 
   private dialogCreated: boolean = false;
@@ -107,13 +110,6 @@ export class ColorPickerDirective implements OnChanges, OnDestroy {
 
   @HostListener('input', ['$event']) handleInput(event: any): void {
     this.inputChange(event);
-  }
-
-  constructor(
-    private readonly injector: Injector,
-    private readonly appRef: ApplicationRef,
-    private readonly vcRef: ViewContainerRef,
-    private readonly elRef: ElementRef) {
   }
 
   ngOnDestroy(): void {

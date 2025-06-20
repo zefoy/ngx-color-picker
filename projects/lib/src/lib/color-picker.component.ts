@@ -14,7 +14,7 @@ import {
   inject,
 } from "@angular/core";
 
-import { CommonModule, DOCUMENT, isPlatformBrowser } from "@angular/common";
+import { DOCUMENT, isPlatformBrowser, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
 
 import {
   detectIE,
@@ -43,7 +43,13 @@ const SUPPORTS_TOUCH =
   templateUrl: "./color-picker.component.html",
   styleUrls: ["./color-picker.component.css"],
   encapsulation: ViewEncapsulation.None,
-  imports: [SliderDirective, TextDirective, CommonModule],
+  imports: [
+    SliderDirective,
+    TextDirective,
+    NgIf,
+    NgForOf,
+    NgTemplateOutlet
+  ]
 })
 export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   private ngZone = inject(NgZone);
@@ -84,6 +90,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   ];
 
   private useRootViewContainer: boolean = false;
+
+  private readonly window: Window;
 
   public show: boolean;
   public hidden: boolean;
@@ -178,10 +186,16 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  constructor() {
-    this.eyeDropperSupported =
-      isPlatformBrowser(this.platformId) &&
-      "EyeDropper" in this.document.defaultView;
+  constructor(
+    private ngZone: NgZone,
+    private elRef: ElementRef,
+    private cdRef: ChangeDetectorRef,
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(PLATFORM_ID) private platformId: string,
+    private service: ColorPickerService
+  ) {
+    this.window = this.document.defaultView;
+    this.eyeDropperSupported = isPlatformBrowser(this.platformId) && 'EyeDropper' in this.window;
   }
 
   ngOnInit(): void {
@@ -928,13 +942,13 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
         // event is handled earlier than `mousedown`, so we'll get 2 change detections and the
         // second one will be unnecessary.
         if (SUPPORTS_TOUCH) {
-          document.addEventListener("touchstart", this.listenerMouseDown);
+          this.document.addEventListener("touchstart", this.listenerMouseDown);
         } else {
-          document.addEventListener("mousedown", this.listenerMouseDown);
+          this.document.addEventListener("mousedown", this.listenerMouseDown);
         }
       });
 
-      window.addEventListener("resize", this.listenerResize);
+      this.window.addEventListener("resize", this.listenerResize);
     }
   }
 
@@ -945,12 +959,12 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.directiveInstance.stateChanged(false);
 
       if (SUPPORTS_TOUCH) {
-        document.removeEventListener("touchstart", this.listenerMouseDown);
+        this.document.removeEventListener("touchstart", this.listenerMouseDown);
       } else {
-        document.removeEventListener("mousedown", this.listenerMouseDown);
+        this.document.removeEventListener("mousedown", this.listenerMouseDown);
       }
 
-      window.removeEventListener("resize", this.listenerResize);
+      this.window.removeEventListener("resize", this.listenerResize);
 
       if (!this.cdRef["destroyed"]) {
         this.cdRef.detectChanges();
@@ -1103,10 +1117,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       const dialogHeight = this.dialogElement.nativeElement.offsetHeight;
 
-      while (node !== null && node.tagName !== "HTML") {
-        style = window.getComputedStyle(node);
-        position = style.getPropertyValue("position");
-        transform = style.getPropertyValue("transform");
+      while (node !== null && node.tagName !== 'HTML') {
+        style = this.window.getComputedStyle(node);
+        position = style.getPropertyValue('position');
+        transform = style.getPropertyValue('transform');
 
         if (position !== "static" && parentNode === null) {
           parentNode = node;
@@ -1157,12 +1171,10 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
 
       let usePosition = this.cpPosition;
 
-      const dialogBounds =
-        this.dialogElement.nativeElement.getBoundingClientRect();
-      if (this.cpPosition === "auto") {
-        const triggerBounds =
-          this.cpTriggerElement.nativeElement.getBoundingClientRect();
-        usePosition = calculateAutoPositioning(dialogBounds, triggerBounds);
+      const dialogBounds = this.dialogElement.nativeElement.getBoundingClientRect();
+      if (this.cpPosition === 'auto') {
+        const triggerBounds = this.cpTriggerElement.nativeElement.getBoundingClientRect();
+        usePosition = calculateAutoPositioning(dialogBounds, triggerBounds, this.window);
       }
 
       this.arrowTop = usePosition === "top" ? dialogHeight - 1 : undefined;
@@ -1221,8 +1233,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
           break;
       }
 
-      const windowInnerHeight = window.innerHeight;
-      const windowInnerWidth = window.innerWidth;
+      const windowInnerHeight = this.window.innerHeight;
+      const windowInnerWidth = this.window.innerWidth;
       const elRefClientRect = this.elRef.nativeElement.getBoundingClientRect();
       const bottom = this.top + dialogBounds.height;
       if (bottom > windowInnerHeight) {
@@ -1258,8 +1270,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   private createDialogBox(element: any, offset: boolean): any {
     const { top, left } = element.getBoundingClientRect();
     return {
-      top: top + (offset ? window.pageYOffset : 0),
-      left: left + (offset ? window.pageXOffset : 0),
+      top: top + (offset ? this.window.pageYOffset : 0),
+      left: left + (offset ? this.window.pageXOffset : 0),
       width: element.offsetWidth,
       height: element.offsetHeight,
     };

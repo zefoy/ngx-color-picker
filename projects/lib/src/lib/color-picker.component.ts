@@ -1,18 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  AfterViewInit,
-  ViewChild,
-  HostListener,
-  ViewEncapsulation,
-  ElementRef,
-  ChangeDetectorRef,
-  TemplateRef,
-  NgZone,
-  Inject,
-  PLATFORM_ID,
-} from "@angular/core";
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, HostListener, ViewEncapsulation, ElementRef, ChangeDetectorRef, TemplateRef, NgZone, PLATFORM_ID, inject } from "@angular/core";
 
 import { CommonModule, DOCUMENT, isPlatformBrowser } from "@angular/common";
 
@@ -46,6 +32,13 @@ const SUPPORTS_TOUCH =
   imports: [SliderDirective, TextDirective, CommonModule],
 })
 export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
+  private ngZone = inject(NgZone);
+  private elRef = inject(ElementRef);
+  private cdRef = inject(ChangeDetectorRef);
+  private document = inject<Document>(DOCUMENT);
+  private platformId = inject(PLATFORM_ID);
+  private service = inject(ColorPickerService);
+
   private isIE10: boolean = false;
 
   private cmyk: Cmyk;
@@ -173,14 +166,7 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  constructor(
-    private ngZone: NgZone,
-    private elRef: ElementRef,
-    private cdRef: ChangeDetectorRef,
-    @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) private platformId: string,
-    private service: ColorPickerService
-  ) {
+  constructor() {
     this.eyeDropperSupported =
       isPlatformBrowser(this.platformId) &&
       "EyeDropper" in this.document.defaultView;

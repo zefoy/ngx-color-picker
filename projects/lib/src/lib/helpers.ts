@@ -1,4 +1,4 @@
-import { Directive, Input, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
+import { Directive, Input, Output, EventEmitter, HostListener, ElementRef, inject } from '@angular/core';
 
 export type ColorMode = 'color' | 'c' | '1' |
   'grayscale' | 'g' | '2' | 'presets' | 'p' | '3';
@@ -115,6 +115,8 @@ export class TextDirective {
   selector: '[slider]'
 })
 export class SliderDirective {
+  private elRef = inject(ElementRef);
+
   private listenerMove: any;
   private listenerStop: any;
 
@@ -136,7 +138,7 @@ export class SliderDirective {
     this.start(event);
   }
 
-  constructor(private elRef: ElementRef) {
+  constructor() {
     this.listenerMove = (event: any) => this.move(event);
 
     this.listenerStop = () => this.stop();

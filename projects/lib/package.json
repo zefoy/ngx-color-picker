@@ -1,6 +1,6 @@
 {
   "license": "MIT",
-  "version": "19.0.0",
+  "version": "20.0.0",
   "name": "ngx-color-picker",
   "description": "Color picker widget for Angular",
   "bugs": "https://github.com/zefoy/ngx-color-picker/issues",
@@ -10,8 +10,8 @@
     "directory": "projects/lib"
   },
   "peerDependencies": {
-    "@angular/common": ">=9.0.0",
-    "@angular/core": ">=9.0.0",
-    "@angular/forms": ">=9.0.0"
+    "@angular/common": ">=10.0.0",
+    "@angular/core": ">=10.0.0",
+    "@angular/forms": ">=10.0.0"
   }
 }

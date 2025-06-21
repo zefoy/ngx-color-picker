@@ -23,7 +23,6 @@ import {
 } from '@angular/common'
 
 import {
-  detectIE,
   calculateAutoPositioning,
   SliderDirective,
   TextDirective,
@@ -921,8 +920,6 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.hidden = true
 
       setTimeout(() => {
-        this.hidden = false
-
         this.setDialogPosition()
 
         this.cdRef.detectChanges()

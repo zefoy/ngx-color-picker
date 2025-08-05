@@ -110,8 +110,6 @@ export function calculateAutoPositioning(
 })
 export class TextDirective {
   @Input() rg: number
-  @Input() text: any
-
   @Output() newValue = new EventEmitter<any>()
 
   @HostListener('input', ['$event']) inputChange(event: any): void {

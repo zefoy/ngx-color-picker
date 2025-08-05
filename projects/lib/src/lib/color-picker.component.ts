@@ -13,14 +13,7 @@ import {
   PLATFORM_ID,
   inject,
 } from '@angular/core'
-
-import {
-  DOCUMENT,
-  isPlatformBrowser,
-  NgForOf,
-  NgIf,
-  NgTemplateOutlet,
-} from '@angular/common'
+import { DOCUMENT, isPlatformBrowser, NgTemplateOutlet } from '@angular/common';
 
 import {
   calculateAutoPositioning,
@@ -47,7 +40,7 @@ const SUPPORTS_TOUCH = typeof window !== 'undefined' && 'ontouchstart' in window
   templateUrl: './color-picker.component.html',
   styleUrls: ['./color-picker.component.css'],
   encapsulation: ViewEncapsulation.None,
-  imports: [SliderDirective, TextDirective, NgIf, NgForOf, NgTemplateOutlet],
+  imports: [SliderDirective, TextDirective, NgTemplateOutlet],
 })
 export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   private ngZone = inject(NgZone)

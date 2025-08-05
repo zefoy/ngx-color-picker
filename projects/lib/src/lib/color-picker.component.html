@@ -48,12 +48,12 @@
   @if (!cpDisableInput && (cpColorMode || 1) === 1) {
     <div class="cmyk-text" [style.display]="format !== 3 ? 'none' : 'block'">
       <div class="box">
-        <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="cmykText?.c" (keyup.enter)="onAcceptColor($event)" (newValue)="onCyanInput($event)" />
-        <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="cmykText?.m" (keyup.enter)="onAcceptColor($event)" (newValue)="onMagentaInput($event)" />
-        <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="cmykText?.y" (keyup.enter)="onAcceptColor($event)" (newValue)="onYellowInput($event)" />
-        <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="cmykText?.k" (keyup.enter)="onAcceptColor($event)" (newValue)="onBlackInput($event)" />
+        <input type="number" pattern="[0-9]*" min="0" max="100" text [rg]="100" [value]="cmykText?.c" (keyup.enter)="onAcceptColor($event)" (newValue)="onCyanInput($event)" />
+        <input type="number" pattern="[0-9]*" min="0" max="100" text [rg]="100" [value]="cmykText?.m" (keyup.enter)="onAcceptColor($event)" (newValue)="onMagentaInput($event)" />
+        <input type="number" pattern="[0-9]*" min="0" max="100" text [rg]="100" [value]="cmykText?.y" (keyup.enter)="onAcceptColor($event)" (newValue)="onYellowInput($event)" />
+        <input type="number" pattern="[0-9]*" min="0" max="100" text [rg]="100" [value]="cmykText?.k" (keyup.enter)="onAcceptColor($event)" (newValue)="onBlackInput($event)" />
         @if (cpAlphaChannel !== 'disabled') {
-          <input type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" [text] [rg]="1" [value]="cmykText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />
+          <input type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" text [rg]="1" [value]="cmykText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />
         }
       </div>
       <div class="box">
@@ -65,11 +65,11 @@
 @if (!cpDisableInput && (cpColorMode || 1) === 1 ) {
   <div class="hsla-text" [style.display]="format !== 2 ? 'none' : 'block'">
     <div class="box">
-      <input type="number" pattern="[0-9]*" min="0" max="360" [text] [rg]="360" [value]="hslaText?.h" (keyup.enter)="onAcceptColor($event)" (newValue)="onHueInput($event)" />
-      <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="hslaText?.s" (keyup.enter)="onAcceptColor($event)" (newValue)="onSaturationInput($event)" />
-      <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="hslaText?.l" (keyup.enter)="onAcceptColor($event)" (newValue)="onLightnessInput($event)" />
+      <input type="number" pattern="[0-9]*" min="0" max="360" text [rg]="360" [value]="hslaText?.h" (keyup.enter)="onAcceptColor($event)" (newValue)="onHueInput($event)" />
+      <input type="number" pattern="[0-9]*" min="0" max="100" text [rg]="100" [value]="hslaText?.s" (keyup.enter)="onAcceptColor($event)" (newValue)="onSaturationInput($event)" />
+      <input type="number" pattern="[0-9]*" min="0" max="100" text [rg]="100" [value]="hslaText?.l" (keyup.enter)="onAcceptColor($event)" (newValue)="onLightnessInput($event)" />
       @if (cpAlphaChannel !== 'disabled') {
-        <input type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" [text] [rg]="1" [value]="hslaText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />
+        <input type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" text [rg]="1" [value]="hslaText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />
       }
     </div>
     <div class="box">
@@ -81,11 +81,11 @@
 @if (!cpDisableInput && (cpColorMode || 1) === 1 ) {
   <div [style.display]="format !== 1 ? 'none' : 'block'" class="rgba-text">
     <div class="box">
-      <input type="number" pattern="[0-9]*" min="0" max="255" [text] [rg]="255" [value]="rgbaText?.r" (keyup.enter)="onAcceptColor($event)" (newValue)="onRedInput($event)" />
-      <input type="number" pattern="[0-9]*" min="0" max="255" [text] [rg]="255" [value]="rgbaText?.g" (keyup.enter)="onAcceptColor($event)" (newValue)="onGreenInput($event)" />
-      <input type="number" pattern="[0-9]*" min="0" max="255" [text] [rg]="255" [value]="rgbaText?.b" (keyup.enter)="onAcceptColor($event)" (newValue)="onBlueInput($event)" />
+      <input type="number" pattern="[0-9]*" min="0" max="255" text [rg]="255" [value]="rgbaText?.r" (keyup.enter)="onAcceptColor($event)" (newValue)="onRedInput($event)" />
+      <input type="number" pattern="[0-9]*" min="0" max="255" text [rg]="255" [value]="rgbaText?.g" (keyup.enter)="onAcceptColor($event)" (newValue)="onGreenInput($event)" />
+      <input type="number" pattern="[0-9]*" min="0" max="255" text [rg]="255" [value]="rgbaText?.b" (keyup.enter)="onAcceptColor($event)" (newValue)="onBlueInput($event)" />
       @if (cpAlphaChannel !== 'disabled') {
-        <input type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" [text] [rg]="1" [value]="rgbaText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />
+        <input type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" text [rg]="1" [value]="rgbaText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />
       }
     </div>
     <div class="box">
@@ -98,9 +98,9 @@
   <div class="hex-text" [class.hex-alpha]="cpAlphaChannel === 'forced'"
     [style.display]="format !== 0 ? 'none' : 'block'">
     <div class="box">
-      <input [text] [value]="hexText" (blur)="onHexInput(null)" (keyup.enter)="onAcceptColor($event)" (newValue)="onHexInput($event)"/>
+      <input text [value]="hexText" (blur)="onHexInput(null)" (keyup.enter)="onAcceptColor($event)" (newValue)="onHexInput($event)"/>
       @if (cpAlphaChannel === 'forced') {
-        <input type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" [text] [rg]="1" [value]="hexAlpha" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)"/>
+        <input type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1" text [rg]="1" [value]="hexAlpha" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)"/>
       }
     </div>
     <div class="box">
@@ -115,9 +115,9 @@
 @if (!cpDisableInput && (cpColorMode || 1) === 2) {
   <div class="value-text">
     <div class="box">
-      <input type="number" pattern="[0-9]*" min="0" max="100" [text] [rg]="100" [value]="hslaText?.l" (keyup.enter)="onAcceptColor($event)" (newValue)="onValueInput($event)" />
+      <input type="number" pattern="[0-9]*" min="0" max="100" text [rg]="100" [value]="hslaText?.l" (keyup.enter)="onAcceptColor($event)" (newValue)="onValueInput($event)" />
       @if (cpAlphaChannel !== 'disabled') {
-        <input type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1"  [text] [rg]="1" [value]="hslaText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />
+        <input type="number" pattern="[0-9]+([\.,][0-9]{1,2})?" min="0" max="1" step="0.1"  text [rg]="1" [value]="hslaText?.a" (keyup.enter)="onAcceptColor($event)" (newValue)="onAlphaInput($event)" />
       }
     </div>
     <div class="box">

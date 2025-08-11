@@ -920,6 +920,8 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.hidden = true
 
       setTimeout(() => {
+        this.hidden = false
+
         this.setDialogPosition()
 
         this.cdRef.detectChanges()

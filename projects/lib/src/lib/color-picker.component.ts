@@ -183,7 +183,11 @@ export class ColorPickerComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostListener('document:keyup.enter', ['$event']) handleEnter(
     event: any
   ): void {
-    if (this.show && this.cpDialogDisplay === 'popup') {
+    if (
+      this.show &&
+      this.cpDialogDisplay === 'popup' &&
+      !(event.target instanceof HTMLButtonElement)
+    ) {
       this.onAcceptColor(event)
     }
   }
